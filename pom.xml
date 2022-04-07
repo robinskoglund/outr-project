@@ -33,7 +33,44 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+<!--	For	Tomcat dependecy-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+<!-- To here -->
 	</dependencies>
+
+<!--	For Tomcat repositories-->
+	<repositories>
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/libs-release</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>synergian-repo</id>
+			<url>https://raw.github.com/synergian/wagon-git/releases</url>
+		</pluginRepository>
+	</pluginRepositories>
+<!-- To here -->
+
+<!--	For Tomcat distributionManagement-->
+
+	<distributionManagement>
+		<repository>
+			<id>internal.repo</id>
+			<name>Github repo</name>
+			<url>https://github.com/robinskoglund/pvt4</url>
+		</repository>
+	</distributionManagement>
+<!-- To here -->
 
 	<build>
 		<plugins>
@@ -42,6 +79,16 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+<!--	For Tomcat extensions-->
+		<extensions>
+			<extension>
+				<groupId>ar.com.synergian</groupId>
+				<artifactId>wagon-git</artifactId>
+				<version>0.2.5</version>
+			</extension>
+		</extensions>
+<!-- To here -->
 	</build>
+
 
 </project>
