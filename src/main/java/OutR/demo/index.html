@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OutR Map</title>
+    <style>
+        #map{
+            height: 500px;
+            width: 1000px;
+            margin-left: 520px;
+        }
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            height: 100vh;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+<img src="https://i.imgur.com/aTU2vAu.png" style="width: 200px;height: 200px;margin-left: 915px">
+<h1 style="color: black; text-align: center;font-size: 50px">OutR Map</h1>
+<div id="map"></div>
+<script>
+
+    function initMap(){
+        var options = {
+            zoom:11,
+            center:{lat:59.349883,lng:18.049209}
+        }
+        var map = new google.maps.Map(document.getElementById('map'), options);
+        }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBft5JWXerjJEjAZzbEaC_jr8dcscRfVXU&map_ids=a93da9c7714f49b1&callback=initMap">
+</script>
+</body>
+</html>
