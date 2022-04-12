@@ -23,6 +23,7 @@ public class DemoApplication extends SpringBootServletInitializer {
 	@GetMapping("/map")
 	public String map(@RequestParam(value = "names", defaultValue = "World ") String name) {
 		return String.format("Hello %s!", name + " varför jobbar du inte?"+ "hej");
+
 	}
 
 
