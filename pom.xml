@@ -1,106 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.6</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>OutR</groupId>
-	<artifactId>demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.6</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>OutR</groupId>
+    <artifactId>demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>demo</name>
+    <description>Demo project for Spring Boot</description>
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-		<!--	For JUnit Unsure if it's the latest version -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
-			<scope>test</scope>
-		</dependency>
-		<!---->
+        <!--	CoordinateTransformationLibrary -->
+        <dependency>
+            <groupId>com.github.goober</groupId>
+            <artifactId>coordinate-transformation-library</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <!-- To here -->
 
-		<!--	For	Tomcat dependecy-->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-		</dependency>
-	</dependencies>
+        <!--	For JUnit Unsure if it's the latest version -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!---->
 
-	<!-- To here -->
+        <!--	For	Tomcat dependecy-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+    </dependencies>
 
-		<!--	For Tomcat repositories-->
-		<repositories>
-			<repository>
-				<id>spring-releases</id>
-				<url>https://repo.spring.io/libs-release</url>
-			</repository>
-		</repositories>
+    <!-- To here -->
 
-		<pluginRepositories>
-			<pluginRepository>
-				<id>spring-releases</id>
-				<url>https://repo.spring.io/libs-release</url>
-			</pluginRepository>
-			<pluginRepository>
-				<id>synergian-repo</id>
-				<url>https://raw.github.com/synergian/wagon-git/releases</url>
-			</pluginRepository>
-		</pluginRepositories>
-		<!-- To here -->
+    <!--	For Tomcat repositories-->
+    <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
 
-		<!--	For Tomcat distributionManagement-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>synergian-repo</id>
+            <url>https://raw.github.com/synergian/wagon-git/releases</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <!-- To here -->
 
-		<distributionManagement>
-			<repository>
-				<id>internal.repo</id>
-				<name>Github repo</name>
-				<url>https://github.com/robinskoglund/pvt4</url>
-			</repository>
-		</distributionManagement>
-		<!-- To here -->
+    <!--	For Tomcat distributionManagement-->
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
+    <distributionManagement>
+        <repository>
+            <id>internal.repo</id>
+            <name>Github repo</name>
+            <url>https://github.com/robinskoglund/pvt4</url>
+        </repository>
+    </distributionManagement>
+    <!-- To here -->
 
-		<!--	For Tomcat extensions-->
-		<extensions>
-			<extension>
-				<groupId>ar.com.synergian</groupId>
-				<artifactId>wagon-git</artifactId>
-				<version>0.2.5</version>
-			</extension>
-		</extensions>
-		<!-- To here -->
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+
+        <!--	For Tomcat extensions-->
+        <extensions>
+            <extension>
+                <groupId>ar.com.synergian</groupId>
+                <artifactId>wagon-git</artifactId>
+                <version>0.2.5</version>
+            </extension>
+        </extensions>
+        <!-- To here -->
+    </build>
 
 </project>
