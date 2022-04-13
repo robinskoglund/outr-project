@@ -15,7 +15,6 @@
             animation: gradient 15s ease infinite;
             height: 100vh;
         }
-
         @keyframes gradient {
             0% {
                 background-position: 0% 50%;
@@ -35,13 +34,47 @@
 <div id="map"></div>
 <script>
 
-    function initMap(){
+    function initMap() {
         var options = {
-            zoom:11,
-            center:{lat:59.349883,lng:18.049209}
+            zoom: 11,
+            center: {lat: 59.349883, lng: 18.049209}
         }
         var map = new google.maps.Map(document.getElementById('map'), options);
+        var markers = [
+            {
+                coords: {lat: 59.307059, lng: 18.025771},
+                iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                content: '<h1>Hejsan2</h1>'
+            },
+            {
+                coords: {lat: 59.33325546383478, lng: 18.036918647488562},
+                iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                content: '<h1>Hejsan</h1>'
+            },
+        ];
+        for (var i = 0; i < markers.length; i++) {
+            addMarker(markers[i]);
         }
+        function addMarker(gym) {
+            var marker = new google.maps.Marker({
+                position: gym.coords,
+                map: map,
+            });
+            if (gym.iconImage) {
+                marker.setIcon(gym.iconImage);
+            }
+            if (gym.content) {
+                var infoWindow = new google.maps.InfoWindow({
+                    content: gym.content
+                });
+                marker.addListener('click', function() {
+                    infoWindow.open(map, marker);
+                });
+            }
+
+        }
+
+    }
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBft5JWXerjJEjAZzbEaC_jr8dcscRfVXU&map_ids=a93da9c7714f49b1&callback=initMap">
