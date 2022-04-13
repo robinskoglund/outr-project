@@ -43,7 +43,15 @@
         </dependency>
         <!-- To here -->
 
-        <!--	For JUnit Unsure if it's the latest version -->
+        <!--    For reading JSON -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
+        </dependency>
+        <!-- To here -->
+
+        <!-- For JUnit Unsure if it's the latest version -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
