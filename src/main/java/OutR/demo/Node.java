@@ -14,6 +14,7 @@ public class Node {
     }
     public Double getLongitude(){return longitude;}
     public Double getLatitude(){return latitude;}
+    public Integer getId() {return id;}
     public String toString() {
         return "Longitude: " +longitude + " Latitude: " + latitude;
     }
