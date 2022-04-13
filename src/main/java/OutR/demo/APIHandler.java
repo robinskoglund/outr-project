@@ -12,12 +12,12 @@ import java.util.LinkedHashMap;
 public class APIHandler<T> {
 
     /**
-     * Takes a String URL and returns the connected URL
+     * Takes a String URL and returns the connected URL using a GET-request
      * @param inputURL String url
      * @return URL the connected url from @param
      * @author Johan
      */
-    public URL connectURL(String inputURL) {
+    public URL getFromURL(String inputURL) {
         try {
             URL url = new URL(inputURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -39,9 +39,13 @@ public class APIHandler<T> {
     /**
      * This is built to work with Utegym only for now
      * TODO: Fix unchecked casts
+     * TODO: Generify so it's usable for more types of data?
+     * @param inputURL String URL for the outDoorGym-data
+     * @return ArrayList of all OutdoorGyms in URL
+     * @author Johan
      */
     public ArrayList<OutdoorGym> unpackOutdoorGym(String inputURL) throws IOException {
-        URL url = connectURL(inputURL);
+        URL url = getFromURL(inputURL);
         HashMap<T, T> result = new ObjectMapper().readValue(url.openStream(), HashMap.class);
 
         ArrayList<OutdoorGym> outdoorGyms = new ArrayList<>();
