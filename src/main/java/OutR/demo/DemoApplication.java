@@ -29,8 +29,8 @@ public class DemoApplication extends SpringBootServletInitializer {
 	@GetMapping("/routes")
 	@ResponseBody
 	public String routes(@RequestParam String location1, String location2) {
-		Node node1 = new Node(59.107059, 18.125771, 10);
-		Node node2 = new Node(59.307059, 18.025771, 11);
+		Node node1 = new Node(59.107059, 18.125771);
+		Node node2 = new Node(59.307059, 18.025771);
 		return "https://maps.googleapis.com/maps/api/directions/json?origin=" + node1.getLongitude() + "," + node1.getLatitude() +"&destination=" + node2.getLongitude() + "," + node2.getLatitude() + "&key=AIzaSyAof5d9wSMDRtbrMAn64WD2swKSJ8JEDNY";
 	}
 }
