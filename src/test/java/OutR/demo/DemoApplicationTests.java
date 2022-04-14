@@ -2,10 +2,10 @@ package OutR.demo;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 @SpringBootTest
@@ -38,6 +38,12 @@ class DemoApplicationTests {
                 CoreMatchers.containsString("18.02577")
         ));
 
+    }
+
+    @Test
+    void readJson() throws IOException {
+        Stockholm stockholm = new Stockholm();
+        stockholm.populateOutdoorGyms();
     }
 
 }

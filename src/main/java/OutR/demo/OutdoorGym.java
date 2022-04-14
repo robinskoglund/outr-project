@@ -1,10 +1,13 @@
 package OutR.demo;
 
 public class OutdoorGym extends Node {
-    public OutdoorGym(Double longitude, Double latitude, Integer id) {
-        super(longitude, latitude, id);
+    private final String name;
+
+    public OutdoorGym(String name, Double longitude, Double latitude) {
+        super(longitude, latitude);
+        this.name = name;
     }
     public String toString() {
-        return "Longitude: " +getLongitude() + " Latitude: " + getLatitude();
+        return "Name: " + name + " Longitude: " + getLongitude() + " Latitude: " + getLatitude();
     }
 }

@@ -3,8 +3,17 @@ package OutR.demo;
 import com.github.goober.coordinatetransformation.positions.SWEREF99Position;
 import com.github.goober.coordinatetransformation.positions.WGS84Position;
 
+import java.io.IOException;
 
 public class Stockholm {
+
+    private static final String OUTDOORGYM_URL = "https://apigw.stockholm.se/NoAuth/VirtualhittaserviceDMZ/Rest/serviceunits?&filter[servicetype.id]=" +
+            "122&page[limit]=1500&page[offset]=0&sort=name";
+
+    public void populateOutdoorGyms () throws IOException {
+        APIHandler apiHandler = new APIHandler();
+        apiHandler.unpackOutdoorGym(OUTDOORGYM_URL);
+    }
 
     /**
      * Takes coordinates as written in Stockholms stads API (utegym at least) and returns a String that is searchable
