@@ -60,10 +60,11 @@ public class APIHandler<T> {
             int north = Integer.parseInt(coords.get("north").toString());
             int east = Integer.parseInt(coords.get("east").toString());
 
-            Stockholm stockholm = new Stockholm();
-            double[] coordinates = stockholm.convertCoordinates(north, east);
-            OutdoorGym outdoorGym = new OutdoorGym((String) map.get("name"), coordinates[0], coordinates[1]);
+            StockholmData stockholmData = new StockholmData();
+            double[] coordinates = stockholmData.convertCoordinates(north, east);
 
+            // Adds to collection
+            OutdoorGym outdoorGym = new OutdoorGym((String) map.get("name"), coordinates[0], coordinates[1]);
             outdoorGyms.add(outdoorGym);
         }
 
