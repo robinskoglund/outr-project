@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Handles HTTP Requests to the OutR-application
+ * Handles HTTP Requests to the OutR-database
  * See https://www.dropbox.com/s/1lpupa5ss9j68k4/SpringBoot%20Database%20instructions.pdf?dl=0 for guide
  */
 @Controller
@@ -14,6 +14,13 @@ public class MainController {
     @Autowired
     private OutdoorGymRepository outdoorGymRepository;
 
+    /**
+     * POST method for adding OutdoorGyms to the database
+     * @param name name of the OutdoorGym
+     * @param longitude longitude coordinate of the OutdoorGym
+     * @param latitude latitude coordinate of the OutdoorGym
+     * @return A response if it was successfully added
+     */
     @PostMapping(path = "/add")
     public @ResponseBody String addNewOutdoorGym (@RequestParam String name, @RequestParam double longitude,
                                                   @RequestParam double latitude) {
