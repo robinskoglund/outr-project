@@ -1,17 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_builder.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 
 void main() => runApp(MaterialApp(
-  home: Scaffold(
-    appBar: AppBar(
-      title: Text('Outr Demo'),
-      centerTitle: true,
-    ),
-    body: Center(
-      child: Text('Outr demo test'),
-    ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: () {  },
-      child: Text('click'),
-    ),
-  ),
+  home: Home()
 ));
+
+class Home extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Outr Demo'),
+        centerTitle: true,
+        backgroundColor: Colors.green[900],
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          SignInButtonBuilder(
+            text: 'login with facebook',
+            icon: Icons.facebook,
+            onPressed: () {},
+            backgroundColor: Colors.blue[900]!,
+          ),
+          SignInButton(
+            Buttons.LinkedIn,
+            text: "login with linkedin",
+            onPressed: () {},
+          ),
+          SignInButtonBuilder(
+            text: 'map tester',
+            icon: Icons.map_sharp,
+            onPressed: () {},
+            backgroundColor: Colors.green,
+          ),
+        ]
+      ),
+    );
+  }
+}
