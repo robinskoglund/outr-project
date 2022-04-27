@@ -16,29 +16,37 @@ class Home extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.green[900],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 250.0, horizontal: 135.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            SignInButtonBuilder(
-              text: 'login with facebook',
-              icon: Icons.facebook,
-              onPressed: () {},
-              backgroundColor: Colors.blue[900]!,
-            ),
-            SignInButton(
-              Buttons.LinkedIn,
-              text: "login with linkedin",
-              onPressed: () {},
-            ),
-            SignInButtonBuilder(
-              text: 'map tester',
-              icon: Icons.map_sharp,
-              onPressed: () {},
-              backgroundColor: Colors.green,
-            ),
-          ]
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/greenbackgroundtest.jpg'),
+            fit: BoxFit.cover,
+          )
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 250.0, horizontal: 135.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              SignInButtonBuilder(
+                text: 'login with facebook',
+                icon: Icons.facebook,
+                onPressed: () {},
+                backgroundColor: Colors.blue[900]!,
+              ),
+              SignInButton(
+                Buttons.LinkedIn,
+                text: "login with linkedin",
+                onPressed: () {},
+              ),
+              SignInButtonBuilder(
+                text: 'map tester',
+                icon: Icons.map_sharp,
+                onPressed: () {},
+                backgroundColor: Colors.green,
+              ),
+            ]
+          ),
         ),
       ),
     );
