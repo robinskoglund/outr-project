@@ -42,11 +42,35 @@ class Home extends StatelessWidget {
               SignInButtonBuilder(
                 text: 'map tester',
                 icon: Icons.map_sharp,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MapViewTest()),
+                  );
+                },
                 backgroundColor: Colors.green,
               ),
             ]
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class MapViewTest extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Map View')
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Go back!'),
         ),
       ),
     );
