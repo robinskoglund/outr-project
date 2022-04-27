@@ -1,17 +1,23 @@
 package OutR.demo;
 
 public class Node {
-    private final Double  longitude;
-    private final Double latitude;
+    private final double longitude;
+    private final double latitude;
 
-    public Node(Double longitude, Double latitude){
-        this.longitude=longitude;
-        this.latitude=latitude;
+    public Node(double longitude, double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
-    public Double getLongitude(){return longitude;}
-    public Double getLatitude(){return latitude;}
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
     public String toString() {
-        return "Longitude: " +longitude + " Latitude: " + latitude;
+        return "Longitude: " + longitude + " Latitude: " + latitude;
     }
 }
