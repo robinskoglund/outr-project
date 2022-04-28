@@ -25,15 +25,15 @@ class DemoApplicationTests {
         final int vasaParkenN = 6580442;
         final int vasaParkenE = 152307;
 
-        Stockholm stockholm = new Stockholm();
+        StockholmData stockholmData = new StockholmData();
 
         // Since google maps coordinates are rounded, comparison is made with one less decimal.
         // The actual difference is minimal on the map
-        MatcherAssert.assertThat(Arrays.toString(stockholm.convertCoordinates(vasaParkenN, vasaParkenE)), CoreMatchers.allOf(
+        MatcherAssert.assertThat(Arrays.toString(stockholmData.convertCoordinates(vasaParkenN, vasaParkenE)), CoreMatchers.allOf(
                 CoreMatchers.containsString("59.33907"),
                 CoreMatchers.containsString("18.04053")
         ));
-        MatcherAssert.assertThat(Arrays.toString(stockholm.convertCoordinates(testValueN, testValueE)), CoreMatchers.allOf(
+        MatcherAssert.assertThat(Arrays.toString(stockholmData.convertCoordinates(testValueN, testValueE)), CoreMatchers.allOf(
                 CoreMatchers.containsString("59.30705"),
                 CoreMatchers.containsString("18.02577")
         ));
@@ -42,8 +42,8 @@ class DemoApplicationTests {
 
     @Test
     void readJson() throws IOException {
-        Stockholm stockholm = new Stockholm();
-        stockholm.populateOutdoorGyms();
+        StockholmData stockholmData = new StockholmData();
+        stockholmData.populateOutdoorGyms();
     }
 
 }
