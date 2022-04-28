@@ -31,7 +31,6 @@ public class DemoApplication extends SpringBootServletInitializer {
 	 * If database is already populated and the size of the API call isn't the same as
 	 * the size of the database, all entries are in the database is first deleted
 	 * @param repository the outdoor_gym table in the database
-	 * @return ?
 	 * @author Johan & Erik
 	 */
 	@Bean
@@ -48,6 +47,7 @@ public class DemoApplication extends SpringBootServletInitializer {
 		};
 	}
 
+	//TODO: Vi kan väl ta bort de här sidorna?
 	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name", defaultValue = "World Hehe") String name) {
 		return String.format("Hello %s!", name + " varför jobbar du inte?"+ "hej");

@@ -6,15 +6,19 @@ import com.github.goober.coordinatetransformation.positions.WGS84Position;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Class for handling Stockholms stads' data.
+ * @author johan
+ */
 public class StockholmData {
 
-    private static final String OUTDOORGYM_URL = "https://apigw.stockholm.se/NoAuth/VirtualhittaserviceDMZ/Rest/serviceunits?&filter[servicetype.id]=" +
-            "122&page[limit]=1500&page[offset]=0&sort=name";
+    private static final String OUTDOOR_GYM_URL = "https://apigw.stockholm.se/NoAuth/VirtualhittaserviceDMZ/Rest/" +
+            "serviceunits?&filter[servicetype.id]=122&page[limit]=1500&page[offset]=0&sort=name";
     private ArrayList<OutdoorGym> outdoorGyms = new ArrayList<>();
 
     public void populateOutdoorGyms() throws IOException {
         APIHandler apiHandler = new APIHandler();
-        outdoorGyms = apiHandler.unpackOutdoorGym(OUTDOORGYM_URL);
+        outdoorGyms = apiHandler.unpackOutdoorGym(OUTDOOR_GYM_URL);
     }
 
     public ArrayList<OutdoorGym> getOutdoorGyms() {

@@ -1,5 +1,6 @@
 package OutR.demo;
 
+//TODO: Ska vi ta bort den här klassen?
 public class Node {
     private final double longitude;
     private final double latitude;
