@@ -47,7 +47,7 @@ class Home extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MapViewTest()),
+                    MaterialPageRoute(builder: (context) => MapPage()),
                   );
                 },
                 backgroundColor: Colors.green,
