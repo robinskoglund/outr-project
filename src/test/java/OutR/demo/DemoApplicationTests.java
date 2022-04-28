@@ -2,6 +2,8 @@ package OutR.demo;
 
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,9 +18,7 @@ class DemoApplicationTests {
     }
 
     @Test
-    void coordinates() {
-        //TODO: Automatisera de här testerna. Just nu har jag skrivit in resultatmatchningen manuellt
-
+    void coordinates() throws IOException {
         // Two pairs of outdoor gym coordinates from Stockholms Utegym-API
         final int testValueN = 6576875;
         final int testValueE = 151468;
@@ -26,18 +26,26 @@ class DemoApplicationTests {
         final int vasaParkenE = 152307;
 
         StockholmData stockholmData = new StockholmData();
+        stockholmData.populateOutdoorGyms();
 
         // Since google maps coordinates are rounded, comparison is made with one less decimal.
         // The actual difference is minimal on the map
-        MatcherAssert.assertThat(Arrays.toString(stockholmData.convertCoordinates(vasaParkenN, vasaParkenE)), CoreMatchers.allOf(
-                CoreMatchers.containsString("59.33907"),
-                CoreMatchers.containsString("18.04053")
-        ));
-        MatcherAssert.assertThat(Arrays.toString(stockholmData.convertCoordinates(testValueN, testValueE)), CoreMatchers.allOf(
-                CoreMatchers.containsString("59.30705"),
-                CoreMatchers.containsString("18.02577")
-        ));
+        MatcherAssert.assertThat(Arrays.toString(stockholmData.convertCoordinates(vasaParkenN, vasaParkenE)),
+                CoreMatchers.allOf(
+                        CoreMatchers.containsString("59.33907"),
+                        CoreMatchers.containsString("18.04053")
+                ));
+        MatcherAssert.assertThat(Arrays.toString(stockholmData.convertCoordinates(testValueN, testValueE)),
+                CoreMatchers.allOf(
+                        CoreMatchers.containsString("59.30705"),
+                        CoreMatchers.containsString("18.02577")
+                ));
 
+        // Makes sure all the outdoorgyms are within Stockholm
+        for (OutdoorGym outdoorGym : stockholmData.getOutdoorGyms()) {
+            Assertions.assertTrue(outdoorGym.getLongitude() < 59.5 && outdoorGym.getLongitude() > 59.0);
+            Assertions.assertTrue(outdoorGym.getLatitude() < 19.0 && outdoorGym.getLatitude() > 17.7);
+        }
     }
 
     @Test
