@@ -47,6 +47,9 @@ dependencies:
   # Display map to users
   google_maps_flutter: ^2.0.2
 
+  #Get location dependency
+  location: ^4.3.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
