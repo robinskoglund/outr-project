@@ -46,6 +46,10 @@ public class APIHandler<T> {
      */
     public ArrayList<OutdoorGym> unpackOutdoorGym(String inputURL) throws IOException {
         URL url = getFromURL(inputURL);
+
+        //TODO: Kanske går det att använda något i still med detta? Istället för att type-casta?
+        // String loudScreaming = json.getJSONObject("LabelData").getString("slogan");
+
         HashMap<T, T> result = new ObjectMapper().readValue(url.openStream(), HashMap.class);
 
         ArrayList<OutdoorGym> outdoorGyms = new ArrayList<>();
