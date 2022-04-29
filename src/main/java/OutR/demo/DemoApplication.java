@@ -45,7 +45,7 @@ public class DemoApplication extends SpringBootServletInitializer {
 	//TODO: Vi kan väl ta bort de här sidorna?
 	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name", defaultValue = "World Hehe") String name) {
-		return String.format("Hello %s!", name + " varför jobbar du inte?"+ "hej");
+		return String.format("Hello %s!", name + " varför jobbar du inte?");
 	}
 	@GetMapping("/map")
 	public String map(@RequestParam(value = "names", defaultValue = "World ") String name) {
