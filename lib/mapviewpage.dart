@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
 
 
@@ -12,33 +11,6 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController? _controller;
-  Location currentLocation = Location();
-  Set<Marker> _markers={};
-
-
-  void getLocation() async{
-    var location = await currentLocation.getLocation();
-    currentLocation.onLocationChanged.listen((LocationData loc){
-      _controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(loc.latitude ?? 0.0,loc.longitude?? 0.0),
-        zoom: 12.0,
-      )));
-      setState(() {
-        _markers.add(
-            Marker(markerId: MarkerId('Start'),
-            position: LatLng(loc.latitude ?? 0.0, loc.longitude ?? 0.0)
-        ));
-      });
-    });
-  }
-
-  @override
-  void initState(){
-    super.initState();
-    setState(() {
-      getLocation();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,21 +23,14 @@ class _MapScreenState extends State<MapScreen> {
         width: MediaQuery.of(context).size.width,
         child:GoogleMap(
           zoomControlsEnabled: false,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(48.8561, 2.2930),
+          initialCameraPosition: const CameraPosition(
+            target: LatLng(37.42199833, -122.084),
             zoom: 12.0,
           ),
           onMapCreated: (GoogleMapController controller){
             _controller = controller;
           },
-          markers: _markers,
         ) ,
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.location_searching,color: Colors.white,),
-        onPressed: (){
-          getLocation();
-        },
       ),
     );
   }
