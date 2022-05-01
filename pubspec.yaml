@@ -47,8 +47,11 @@ dependencies:
   # Display map to users
   google_maps_flutter: ^2.0.2
 
-  #Get location dependency
+  # Get location dependency, remove after
   location: ^4.3.0
+
+  # Get location but better package
+  geolocator: ^8.2.0
 
 dev_dependencies:
   flutter_test:

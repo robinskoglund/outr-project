@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:outr/geopositionpage.dart';
 import 'mapviewpage.dart';
 
 void main() => runApp(MaterialApp(
@@ -26,7 +27,7 @@ class Home extends StatelessWidget {
           )
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 250.0, horizontal: 135.0),
+          padding: const EdgeInsets.symmetric(vertical: 200.0, horizontal: 110.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -37,8 +38,8 @@ class Home extends StatelessWidget {
                 backgroundColor: Colors.blue[900]!,
               ),
               SignInButton(
-                Buttons.LinkedIn,
-                text: "login with linkedin",
+                Buttons.Apple,
+                text: "login with apple",
                 onPressed: () {},
               ),
               SignInButtonBuilder(
@@ -51,6 +52,17 @@ class Home extends StatelessWidget {
                   );
                 },
                 backgroundColor: Colors.green,
+              ),
+              SignInButtonBuilder(
+                text: 'get coords',
+                icon: Icons.maps_ugc,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GeoLocationScreen()),
+                  );
+                },
+                backgroundColor: Colors.redAccent,
               ),
             ]
           ),
