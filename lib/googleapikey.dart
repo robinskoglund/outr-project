@@ -1,0 +1,1 @@
+const googleAPIKey =  'your key here';

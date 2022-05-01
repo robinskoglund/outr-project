@@ -18,6 +18,8 @@ class Home extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.green[900],
       ),
+
+      //Container that stretch to the whole screen that consists of backround image asset
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
@@ -28,6 +30,8 @@ class Home extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 200.0, horizontal: 110.0),
+
+          //vertical column that includes all buttons on startpage
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -53,6 +57,8 @@ class Home extends StatelessWidget {
                 },
                 backgroundColor: Colors.green,
               ),
+
+              //onPressed {...} is where we assign what happens when button is clicked.
               SignInButtonBuilder(
                 text: 'get coords',
                 icon: Icons.maps_ugc,

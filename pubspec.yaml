@@ -39,7 +39,9 @@ dependencies:
   flutter_signin_button: ^2.0.0
 
   # http request for google directions API for route information
+  # dont know the difference between these two yet
   dio: ^4.0.0
+  http: ^0.13.4
 
   # Decode polyline strings into lat/long necessary to display route
   flutter_polyline_points: ^0.2.6
