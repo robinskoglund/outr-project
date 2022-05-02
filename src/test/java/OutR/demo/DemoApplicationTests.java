@@ -43,8 +43,8 @@ class DemoApplicationTests {
 
         // Makes sure all the outdoorgyms are within Stockholm
         for (OutdoorGym outdoorGym : stockholmData.getOutdoorGyms()) {
-            Assertions.assertTrue(outdoorGym.getLongitude() < 59.5 && outdoorGym.getLongitude() > 59.0);
-            Assertions.assertTrue(outdoorGym.getLatitude() < 19.0 && outdoorGym.getLatitude() > 17.7);
+            Assertions.assertTrue(outdoorGym.getLatitude() < 59.5  && outdoorGym.getLatitude() > 59.0);
+            Assertions.assertTrue(outdoorGym.getLongitude() < 19.0 && outdoorGym.getLongitude() > 17.7);
         }
     }
 
