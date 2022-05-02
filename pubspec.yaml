@@ -55,6 +55,10 @@ dependencies:
   # Get location but better package
   geolocator: ^8.2.0
 
+  # Get facebook authentication
+  flutter_facebook_auth: ^4.3.0
+  #flutter_facebook_login: ^1.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
