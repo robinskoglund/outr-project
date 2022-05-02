@@ -26,7 +26,7 @@ public class DemoApplication extends SpringBootServletInitializer {
 	 * If database is already populated and the size of the API call isn't the same as
 	 * the size of the database, all entries are in the database is first deleted
 	 * @param repository the outdoor_gym table in the database
-	 * @author Johan & Erik k
+	 * @author Johan & Erik
 	 */
 	@Bean
 	public CommandLineRunner outdoorGymsToDatabase(OutdoorGymRepository repository) {
