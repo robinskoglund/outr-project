@@ -25,7 +25,7 @@ public class DemoApplication extends SpringBootServletInitializer {
 	 * Fetches the outdoor gyms from Dataportalen API and adds them to the database.
 	 * If database is already populated and the size of the API call isn't the same as
 	 * the size of the database, all entries are in the database is first deleted
-	 * @param repository the outdoor_gym table in the database
+	 * @param repository the outdoor_gym table in the databasez
 	 * @author Johan & Erik
 	 */
 	@Bean
