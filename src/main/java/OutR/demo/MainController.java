@@ -14,6 +14,11 @@ public class MainController {
     @Autowired
     private OutdoorGymRepository outdoorGymRepository;
 
+    @GetMapping("/")
+    public String index() {
+        return "OutR gym handler API. Try /all, /add or /coordinates";
+    }
+
     /**
      * POST method for adding OutdoorGyms to the database
      * @param name name of the OutdoorGym
@@ -40,6 +45,7 @@ public class MainController {
         return outdoorGymRepository.findAll();
     }
 
+    //TODO: Behöver vi denna fortfarande?
     @GetMapping(path = "/coordinates")
     public @ResponseBody String getCoordinatesFromClient(@RequestParam String latitude, @RequestParam String longitude) {
         return "lat: " + latitude + " - long: " + longitude;
