@@ -4,6 +4,7 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:outr/geopositionpage.dart';
 import 'mapviewpage.dart';
+import 'geopositionpage.dart';
 
 void main() => runApp(MaterialApp(
   home: Home()
