@@ -41,22 +41,4 @@ public class DemoApplication extends SpringBootServletInitializer {
 			repository.saveAll(outdoorGyms);
 		};
 	}
-
-	//TODO: Vi kan väl ta bort de här sidorna?
-	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "World Hehe") String name) {
-		return String.format("Hello %s!", name + " varför jobbar du inte?");
-	}
-	@GetMapping("/map")
-	public String map(@RequestParam(value = "names", defaultValue = "World ") String name) {
-		return String.format("Hello %s!", name + " varför jobbar du inte?"+ "hej");
-	}
-
-	@GetMapping("/routes")
-	@ResponseBody
-	public String routes(@RequestParam String location1, String location2) {
-		Node node1 = new Node(59.107059, 18.125771);
-		Node node2 = new Node(59.307059, 18.025771);
-		return "https://maps.googleapis.com/maps/api/directions/json?origin=" + node1.getLongitude() + "," + node1.getLatitude() +"&destination=" + node2.getLongitude() + "," + node2.getLatitude() + "&key=AIzaSyAof5d9wSMDRtbrMAn64WD2swKSJ8JEDNY";
-	}
 }
