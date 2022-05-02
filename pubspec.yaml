@@ -38,6 +38,23 @@ dependencies:
   cupertino_icons: 1.0.0
   flutter_signin_button: ^2.0.0
 
+  # http request for google directions API for route information
+  # dont know the difference between these two yet
+  dio: ^4.0.0
+  http: ^0.13.4
+
+  # Decode polyline strings into lat/long necessary to display route
+  flutter_polyline_points: ^0.2.6
+
+  # Display map to users
+  google_maps_flutter: ^2.0.2
+
+  # Get location dependency, remove after
+  location: ^4.3.0
+
+  # Get location but better package
+  geolocator: ^8.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

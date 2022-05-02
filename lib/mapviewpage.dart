@@ -1,43 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 
-class MapViewTest extends StatelessWidget {
+
+
+class MapScreen extends StatefulWidget {
+  @override
+  _MapScreenState createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+  GoogleMapController? _controller;
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Outr Demo'),
-        centerTitle: true,
-        backgroundColor: Colors.green[900],
+        title: Text("Map"),
       ),
       body: Container(
+        height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/greenbackgroundtest.jpg'),
-              fit: BoxFit.cover,
-            )
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 250.0, horizontal: 135.0),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
-                    ),
-                    icon: const Icon(
-                        Icons.arrow_back
-                    ),
-                    label: const Text('Back')
-                ),
-              ]
+        child:GoogleMap(
+          zoomControlsEnabled: false,
+          initialCameraPosition: const CameraPosition(
+            target: LatLng(37.42199833, -122.084),
+            zoom: 12.0,
           ),
-        ),
+          onMapCreated: (GoogleMapController controller){
+            _controller = controller;
+          },
+        ) ,
       ),
     );
   }
