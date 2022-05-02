@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
  * See https://www.dropbox.com/s/1lpupa5ss9j68k4/SpringBoot%20Database%20instructions.pdf?dl=0 for guide
  */
 @Controller
-@RequestMapping(path="/")
+@RequestMapping(path="/outr/gyms")
 public class MainController {
     @Autowired
     private OutdoorGymRepository outdoorGymRepository;
