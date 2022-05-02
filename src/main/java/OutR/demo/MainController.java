@@ -22,8 +22,8 @@ public class MainController {
      * @return A response if it was successfully added
      */
     @PostMapping(path = "/add")
-    public @ResponseBody String addNewOutdoorGym (@RequestParam String name, @RequestParam double longitude,
-                                                  @RequestParam double latitude) {
+    public @ResponseBody String addNewOutdoorGym (@RequestParam String name, @RequestParam double latitude,
+                                                  @RequestParam double longitude) {
         OutdoorGym outdoorGym = new OutdoorGym();
         outdoorGym.setName(name);
         outdoorGym.setLongitude(longitude);
@@ -38,5 +38,10 @@ public class MainController {
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<OutdoorGym> getAllOutdoorGyms() {
         return outdoorGymRepository.findAll();
+    }
+
+    @GetMapping(path = "/coordinates")
+    public @ResponseBody String getCoordinatesFromClient(@RequestParam String latitude, @RequestParam String longitude) {
+        return "lat: " + latitude + " - long: " + longitude;
     }
 }

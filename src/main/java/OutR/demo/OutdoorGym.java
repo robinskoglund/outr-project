@@ -8,12 +8,12 @@ public class OutdoorGym {
 
     @Id
     private String name;
-    private double longitude;
     private double latitude;
+    private double longitude;
 
-    public OutdoorGym(String name, double longitude, double latitude) {
-        this.longitude = longitude;
+    public OutdoorGym(String name, double latitude, double longitude) {
         this.latitude = latitude;
+        this.longitude = longitude;
         this.name = name;
     }
 
