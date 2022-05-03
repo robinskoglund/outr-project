@@ -5,6 +5,7 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:outr/geopositionpage.dart';
 import 'mapviewpage.dart';
 import 'geopositionpage.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 void main() => runApp(MaterialApp(
   home: Home()
@@ -39,7 +40,18 @@ class Home extends StatelessWidget {
               SignInButtonBuilder(
                 text: 'login with facebook',
                 icon: Icons.facebook,
-                onPressed: () {},
+                onPressed: () async {
+                  final result = await FacebookAuth.i.login(
+                    permissions: ["public_profile", "email"]
+                  );
+
+                  if(result.status == LoginStatus.success){
+                    final requestdata = await FacebookAuth.i.getUserData(
+                      fields: "email, name",
+                    );
+
+                  }
+                },
                 backgroundColor: Colors.blue[900]!,
               ),
               SignInButton(
@@ -58,7 +70,6 @@ class Home extends StatelessWidget {
                 },
                 backgroundColor: Colors.green,
               ),
-
               //onPressed {...} is where we assign what happens when button is clicked.
               SignInButtonBuilder(
                 text: 'get coords',
@@ -71,6 +82,13 @@ class Home extends StatelessWidget {
                 },
                 backgroundColor: Colors.redAccent,
               ),
+              //SignInButtonBuilder(
+                //  backgroundColor: Colors.blue[900]!,
+                  //text: 'Log out of Facebook',
+                  //onPressed: () async {
+                    //await FacebookAuth.i.logOut();
+                  //}
+              //),
             ]
           ),
         ),
