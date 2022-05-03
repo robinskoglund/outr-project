@@ -82,13 +82,13 @@ class Home extends StatelessWidget {
                 },
                 backgroundColor: Colors.redAccent,
               ),
-              SignInButtonBuilder(
-                  backgroundColor: Colors.blue[900]!,
-                  text: 'Log out of Facebook',
-                  onPressed: () async {
-                    await FacebookAuth.i.logOut();
-                  }
-              ),
+              //SignInButtonBuilder(
+                //  backgroundColor: Colors.blue[900]!,
+                  //text: 'Log out of Facebook',
+                  //onPressed: () async {
+                    //await FacebookAuth.i.logOut();
+                  //}
+              //),
             ]
           ),
         ),
