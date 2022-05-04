@@ -7,6 +7,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'directions_model.dart';
 
+/*
+TODO: En metod för att ta emot routeRequest String som ska komma från backend efter
+TODO: vi skickat geoLocation.
+ */
+
 class HttpRequestHandler {
   final Dio _dio;
   HttpRequestHandler({required Dio dio}) : _dio = dio;
