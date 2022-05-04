@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
         backgroundColor: Colors.green[900],
       ),
 
-      //Container that stretch to the whole screen that consists of backround image asset -- --hej-hej hemskt mycket hejjd
+      //Container that stretch to the whole screen that consists of backround image asset -- --hej-hej hemskt mycket hejjddd
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
