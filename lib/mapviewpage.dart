@@ -1,8 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'directions_model.dart';
 import 'geopositionpage.dart';
+import 'httprequesthandler.dart';
 
 /*
 TODO: Fixa så _addGeoLocMarker och _addGymMarker används och skapar markers.
@@ -98,4 +100,16 @@ class _MapScreenState extends State<MapScreen> {
       );
     });
   }
+
+
+  /**
+   * TODO: Fixa test för json, DIO verkar inte riktigt lira
+  void _testJsonOnMap() async {
+    Dio dio1 = dio1(options);
+    final directions = HttpRequestHandler(dio: dio1)
+        .getDirections(routeRequest: 'https://maps.googleapis.com/maps/api/directions/json?origin=59.4067225,17.9430338&destination=59.4067225,17.9430338&waypoints=59.29607465252883,17.9750984081329%7C59.34558289037629,17.97720364432939%7C59.39911669159036,17.933548971809554&mode=walking&key=AIzaSyAof5d9wSMDRtbrMAn64WD2swKSJ8JEDNY');
+    setState(() => _info = directions as Directions);
+  }
+      */
+
 }
