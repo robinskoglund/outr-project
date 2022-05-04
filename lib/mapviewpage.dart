@@ -6,6 +6,7 @@ import 'geopositionpage.dart';
 
 /*
 TODO: Fixa så _addGeoLocMarker och _addGymMarker används och skapar markers.
+TODO: Se över markings, göra till en metod? De måste göras async och kalla på getDirections() i den. (Get Directions Info på yt)
  */
 
 class MapScreen extends StatefulWidget {
