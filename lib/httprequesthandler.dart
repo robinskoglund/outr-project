@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:js';
 import 'package:flutter/material.dart';
 import 'googleapikey.dart';
 import 'package:dio/dio.dart';
@@ -13,8 +12,7 @@ TODO: vi skickat geoLocation.
  */
 
 class HttpRequestHandler {
-  final Dio _dio;
-  HttpRequestHandler({required Dio dio}) : _dio = dio;
+  //final Dio _dio;
 
   //Metoden som ska posta geolocation till backend
   Future<http.Response> postGeoLocation(String latitude, String longitude) {
@@ -33,6 +31,7 @@ class HttpRequestHandler {
 
   //Metoden som ska hämta directions från google utifrån String routeRequest som ska skapas i backend
   Future<Directions?> getDirections({required String routeRequest}) async {
+    var _dio = Dio();
     final response = await _dio.get(routeRequest);
 
     if(response.statusCode == 200) {

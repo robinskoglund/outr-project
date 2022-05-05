@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'directions_model.dart';
@@ -24,10 +25,9 @@ class _MapScreenState extends State<MapScreen> {
   );
 
   late GoogleMapController _googleMapController;
-  late Directions _info;
-
+  Directions? _info;
   late Marker _origin;
-  late Marker _destination;
+  late Marker _gym;
 
   @override
   void dispose() {
@@ -49,21 +49,23 @@ class _MapScreenState extends State<MapScreen> {
         zoomControlsEnabled: false,
         initialCameraPosition: _initialCameraPosition,
         onMapCreated: (controller) => _googleMapController = controller,
-        markers: {
-          //Lägga till markers här sen, de vi kan skapa med _addGeoLocMarker() och _addGymMarker()
-        },
-
-        //Lägga till polylines på kartan
+        //markers: {},
         polylines: {
-          Polyline(
-            polylineId: const PolylineId('overview_polyline'),
-            color: Colors.red,
-            width: 5,
-            points: _info.polylinePoints
-              .map((e) => LatLng(e.latitude, e.longitude))
-              .toList(),
+          if (_info != null)
+            Polyline(
+              polylineId: const PolylineId('overview_polyline'),
+              color: Colors.red,
+              width: 5,
+              points: _info!.polylinePoints
+                .map((e) => LatLng(e.latitude, e.longitude))
+                .toList(),
           )
         },
+      ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        _testJsonOnMap();
+      },
+
       ),
     );
   }
@@ -84,32 +86,14 @@ class _MapScreenState extends State<MapScreen> {
       });
   }
 
-  //Metod för att skapa gym marker
-  void _addGymMarker(LatLng pos) {
-    setState(() {
-      _destination = Marker(
-        markerId: const MarkerId('Destination'),
-
-        //Vad som visas när man klickar på marker
-        infoWindow: const InfoWindow(title: 'Destination'),
-
-        //Ikon för gym
-        icon:
-        BitmapDescriptor.defaultMarker,
-        position: pos,
-      );
-    });
-  }
-
-
-  /**
-   * TODO: Fixa test för json, DIO verkar inte riktigt lira
   void _testJsonOnMap() async {
-    Dio dio1 = dio1(options);
-    final directions = HttpRequestHandler(dio: dio1)
-        .getDirections(routeRequest: 'https://maps.googleapis.com/maps/api/directions/json?origin=59.4067225,17.9430338&destination=59.4067225,17.9430338&waypoints=59.29607465252883,17.9750984081329%7C59.34558289037629,17.97720364432939%7C59.39911669159036,17.933548971809554&mode=walking&key=AIzaSyAof5d9wSMDRtbrMAn64WD2swKSJ8JEDNY');
-    setState(() => _info = directions as Directions);
+    final directions = await HttpRequestHandler()
+        .getDirections(routeRequest: 'https://maps.googleapis.com/maps/api/'
+        'directions/json?origin=59.4067225,17.9430338'
+        '&destination=59.4067225,17.9430338'
+        '&waypoints=59.29607465252883,17.9750984081329%7C59.34558289037629,'
+        '17.97720364432939%7C59.39911669159036,17.933548971809554'
+        '&mode=walking&key=AIzaSyAof5d9wSMDRtbrMAn64WD2swKSJ8JEDNY');
+    setState(() => _info = directions);
   }
-      */
-
 }
