@@ -65,7 +65,7 @@ public class APIHandler<T> {
             int east = Integer.parseInt(coords.get("east").toString());
 
             StockholmData stockholmData = new StockholmData();
-            double[] coordinates = stockholmData.convertCoordinates(north, east);
+            double[] coordinates = stockholmData.convertCoordinatesSWEREFtoWGS84(north, east);
 
             // Adds to collection
             OutdoorGym outdoorGym = new OutdoorGym((String) map.get("name"), coordinates[0], coordinates[1]);
