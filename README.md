@@ -1,5 +1,18 @@
 # outr
 
+Directions JSON that we get from Pathfinder:
+apicallstring-gymname|latitude|longitude
+
+apicallstring = the string directions api call string with route on it(String)
+gymname = name of gym(String)
+latitude = latitude of gym(String)
+longitude = longitude of gym(String)
+
+Example:
+https://apicalltodirections-nameofgym|latitude|longitude
+
+-------------------------------------
+
 A new Flutter project.
 
 ## Getting Started
