@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
  * Handles HTTP Requests to the OutR-database
  * See https://www.dropbox.com/s/1lpupa5ss9j68k4/SpringBoot%20Database%20instructions.pdf?dl=0 for guide
  */
-@Controller
+@RestController
 @RequestMapping(path="/")
 public class MainController {
     @Autowired
@@ -27,7 +27,7 @@ public class MainController {
      * @return A response if it was successfully added
      */
     @PostMapping(path = "/add")
-    public @ResponseBody String addNewOutdoorGym (@RequestParam String name, @RequestParam double latitude,
+    public String addNewOutdoorGym (@RequestParam String name, @RequestParam double latitude,
                                                   @RequestParam double longitude) {
         OutdoorGym outdoorGym = new OutdoorGym();
         outdoorGym.setName(name);
@@ -41,13 +41,13 @@ public class MainController {
      * @return JSON or XML with all OutdoorGyms
      */
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<OutdoorGym> getAllOutdoorGyms() {
+    public Iterable<OutdoorGym> getAllOutdoorGyms() {
         return outdoorGymRepository.findAll();
     }
 
     //TODO: Behöver vi denna fortfarande?
     @GetMapping(path = "/coordinates")
-    public @ResponseBody String getCoordinatesFromClient(@RequestParam String latitude, @RequestParam String longitude) {
+    public String getCoordinatesFromClient(@RequestParam String latitude, @RequestParam String longitude) {
         return "lat: " + latitude + " - long: " + longitude;
     }
 }
