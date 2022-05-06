@@ -34,7 +34,7 @@ public class StockholmData {
      * @return double[] where [0] = latitude and [1] = longitude in decimal coordinates
      * @author Johan
      */
-    public double[] convertCoordinates(int north, int east) {
+    public double[] convertCoordinatesSWEREFtoWGS84(int north, int east) {
         SWEREF99Position sweref99Position = new SWEREF99Position(north, east,
                 SWEREF99Position.SWEREFProjection.sweref_99_18_00);
         sweref99Position.toWGS84();
