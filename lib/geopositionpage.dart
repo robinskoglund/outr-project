@@ -22,12 +22,18 @@ class _GeoLocationScreenState extends State<GeoLocationScreen> {
   //get the current coordinates/location of the device. We change the state
   //too these coordinates
   getCurrentLocation() async {
-    var geoposition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    var geoposition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
 
     setState(() {
       latitude = '${geoposition.latitude}';
       longitude = '${geoposition.longitude}';
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   //Here we build the context, what you see on the screen

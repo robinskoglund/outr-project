@@ -19,15 +19,14 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController? _controller;
-  static const _initialCameraPosition = CameraPosition(
-    target: LatLng(37.773972, -122.431297),
+
+  final CameraPosition _initialCameraPosition = const CameraPosition(
+    target: LatLng(59.330668, 18.056498),
     zoom: 11.5,
   );
 
   late GoogleMapController _googleMapController;
   Directions? _info;
-  late Marker _origin;
-  late Marker _gym;
 
   @override
   void dispose() {
@@ -49,7 +48,7 @@ class _MapScreenState extends State<MapScreen> {
         zoomControlsEnabled: false,
         initialCameraPosition: _initialCameraPosition,
         onMapCreated: (controller) => _googleMapController = controller,
-        //markers: {},
+        //markers: {}
         polylines: {
           if (_info != null)
             Polyline(
@@ -63,37 +62,17 @@ class _MapScreenState extends State<MapScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
-        _testJsonOnMap();
+        _populateInfo();
       },
-
       ),
+
     );
   }
 
-  void _addGeoLocMarker(LatLng pos) {
-      setState(() {
-        _origin = Marker(
-          markerId: const MarkerId('Start point'),
 
-          //Vad som visas när man klickar på marker
-          infoWindow: const InfoWindow(title: 'Start point'),
-
-          //Ikon för nuvarande plats
-          icon:
-            BitmapDescriptor.defaultMarker,
-          position: pos,
-        );
-      });
-  }
-
-  void _testJsonOnMap() async {
+  void _populateInfo() async {
     final directions = await HttpRequestHandler()
-        .getDirections(routeRequest: 'https://maps.googleapis.com/maps/api/'
-        'directions/json?origin=59.4067225,17.9430338'
-        '&destination=59.4067225,17.9430338'
-        '&waypoints=59.29607465252883,17.9750984081329%7C59.34558289037629,'
-        '17.97720364432939%7C59.39911669159036,17.933548971809554'
-        '&mode=walking&key=AIzaSyAof5d9wSMDRtbrMAn64WD2swKSJ8JEDNY');
+        .getDirections();
     setState(() => _info = directions);
   }
 }

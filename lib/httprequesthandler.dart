@@ -29,10 +29,29 @@ class HttpRequestHandler {
     );
   }
 
-  //Metoden som ska hämta directions från google utifrån String routeRequest som ska skapas i backend
-  Future<Directions?> getDirections({required String routeRequest}) async {
+  //The method that splits string from Pathfinder and returns either route part or gym part
+  //True for route and false for gym
+
+  Future<String?> getStringFromPathfinder(bool onlyRoute) async {
     var _dio = Dio();
-    final response = await _dio.get(routeRequest);
+    final response = await _dio.get(
+        'https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getstring/');
+    if (response.statusCode == 200) {
+      List<String> routeString = response.data.toString().split('-');
+      if (onlyRoute == true) {
+        return routeString[0];
+      } else {
+        return routeString[1];
+      }
+    }
+    return null;
+  }
+
+  //Metoden som ska hämta directions från google utifrån String routeRequest som ska skapas i backend
+  Future<Directions?> getDirections() async {
+    var _dio = Dio();
+    String route = getStringFromPathfinder(true) as String;
+    final response = await _dio.get(route);
 
     if(response.statusCode == 200) {
       return Directions.fromMap(response.data);
