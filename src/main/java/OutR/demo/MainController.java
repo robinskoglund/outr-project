@@ -152,7 +152,7 @@ public class MainController {
         return routeArrayList;
     }
 
-    @GetMapping(path = "route/getAll")
+    @GetMapping(path = "/route/getAll")
     public Iterable<Route> getAllRoutes(){
         return routeRepository.findAll();
     }
