@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 
 /**
  * Handles HTTP Requests to the OutR-database
@@ -17,6 +19,8 @@ public class MainController {
     private OutdoorGymRepository outdoorGymRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RouteRepository routeRepository;
 
     @GetMapping("/")
     public String index() {
@@ -64,6 +68,7 @@ public class MainController {
         user.setDailyStreak(0);
         user.setCreatedAt(new Date());
         user.setLastLogin(user.getCreatedAt());
+        user.setRoutes(new HashSet<>());
         userRepository.save(user);
         return "Saved";
     }
@@ -118,5 +123,40 @@ public class MainController {
             }
         }
         return "Updated";
+    }
+
+    @PostMapping(path = "/route/add")
+    public String addRoute(@RequestParam String email, @RequestParam String route){
+
+        for(User u : userRepository.findAll()){
+            if(u.getEmail().equals(email)){
+                User user = u;
+                Route r = new Route();
+                r.setUser(user);
+                r.setRoute(route);
+                user.addRoute(r);
+                routeRepository.save(r);
+                userRepository.save(user);
+                return "Saved";
+            }
+        }
+
+        return "User not found";
+    }
+
+    @GetMapping(path = "/route/getAllUserRoutes")
+    public Iterable<Route> getRoutesForUser(@RequestParam String email){
+        ArrayList<Route> routeArrayList = new ArrayList<>();
+        for(Route r : routeRepository.findAll()){
+            if(r.getUser().getEmail().equals(email)){
+                routeArrayList.add(r);
+            }
+        }
+        return routeArrayList;
+    }
+
+    @GetMapping(path = "route/getAll")
+    public Iterable<Route> getAllRoutes(){
+        return routeRepository.findAll();
     }
 }

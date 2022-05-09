@@ -2,7 +2,10 @@ package OutR.demo;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User{
@@ -14,6 +17,9 @@ public class User{
     private int dailyStreak;
     private Date createdAt;
     private Date lastLogin;
+
+    @OneToMany(mappedBy = "route")
+    private Set<Route> routes;
 
     //TODO: create a route class to store the routes (User and String as attribute)
     //TODO should any of the below attributes be included?
@@ -80,6 +86,18 @@ public class User{
 
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public Set<Route> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(Set<Route> routes) {
+        this.routes = routes;
+    }
+
+    public void addRoute(Route r){
+        routes.add(r);
     }
 
     @Override
