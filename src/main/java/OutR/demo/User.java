@@ -18,8 +18,8 @@ public class User{
     private Date createdAt;
     private Date lastLogin;
 
-    @OneToMany(mappedBy = "route")
-    private Set<Route> routes;
+ //   @OneToMany(mappedBy = "route")
+   // private Set<Route> routes;
 
     //TODO: create a route class to store the routes (User and String as attribute)
     //TODO should any of the below attributes be included?
@@ -88,7 +88,7 @@ public class User{
         this.lastLogin = lastLogin;
     }
 
-    public Set<Route> getRoutes() {
+  /*  public Set<Route> getRoutes() {
         return routes;
     }
 
@@ -98,7 +98,7 @@ public class User{
 
     public void addRoute(Route r){
         routes.add(r);
-    }
+    }*/
 
     @Override
     public String toString() {

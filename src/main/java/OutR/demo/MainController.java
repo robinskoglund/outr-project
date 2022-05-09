@@ -68,7 +68,6 @@ public class MainController {
         user.setDailyStreak(0);
         user.setCreatedAt(new Date());
         user.setLastLogin(user.getCreatedAt());
-        user.setRoutes(new HashSet<>());
         userRepository.save(user);
         return "Saved";
     }
@@ -134,9 +133,7 @@ public class MainController {
                 Route r = new Route();
                 r.setUser(user);
                 r.setRoute(route);
-                user.addRoute(r);
                 routeRepository.save(r);
-                userRepository.save(user);
                 return "Saved";
             }
         }

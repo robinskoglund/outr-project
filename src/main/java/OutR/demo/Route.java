@@ -9,8 +9,11 @@ public class Route {
     @JoinColumn(name="email", nullable = false)
     private User user;
 
-    @Id
     private String route;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     public Route(){}
 
