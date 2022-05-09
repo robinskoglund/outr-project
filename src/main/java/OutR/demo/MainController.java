@@ -34,7 +34,7 @@ public class MainController {
      * @param latitude latitude coordinate of the OutdoorGym
      * @return A response if it was successfully added
      */
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/gyms/add")
     public String addNewOutdoorGym (@RequestParam String name, @RequestParam double latitude,
                                                   @RequestParam double longitude) {
         OutdoorGym outdoorGym = new OutdoorGym();
@@ -48,7 +48,7 @@ public class MainController {
     /**
      * @return JSON or XML with all OutdoorGyms
      */
-    @GetMapping(path = "/all")
+    @GetMapping(path = "/gyms/all")
     public Iterable<OutdoorGym> getAllOutdoorGyms() {
         return outdoorGymRepository.findAll();
     }
