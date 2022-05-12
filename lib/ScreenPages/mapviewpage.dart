@@ -1,15 +1,10 @@
 import 'dart:collection';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'directions_model.dart';
-import 'geopositionpage.dart';
-import 'package:geolocator/geolocator.dart';
-import 'httprequesthandler.dart';
+import '../API/directions_model.dart';
+import '../API/httprequesthandler.dart';
 
 /*
 TODO: Fixa så _addGeoLocMarker och _addGymMarker används och skapar markers.
