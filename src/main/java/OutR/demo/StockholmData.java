@@ -49,4 +49,13 @@ public class StockholmData {
 
         return coordinates;
     }
+    public class RdJSONFile{
+        private StringBuffer stringBuffer = new StringBuffer();
+        public void jsontojava() throws Exception{
+            String data = "parker.geojson";
+
+        }
+
+    }
+
 }
