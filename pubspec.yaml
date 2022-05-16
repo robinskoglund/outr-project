@@ -84,9 +84,9 @@ flutter:
   fonts:
     - family: Dongle
       fonts:
-        - asset: Assets/Fonts/Dongle-Bold.ttf
-        - asset: Assets/Fonts/Dongle-Light.ttf
-        - asset: Assets/Fonts/Dongle-Regular.ttf
+        - asset: assets/Dongle-Bold.ttf
+        - asset: assets/Dongle-Light.ttf
+        - asset: assets/Dongle-Regular.ttf
 
 
     - family: OutrIcon

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:flutter_signin_button/button_list.dart';
@@ -25,30 +26,27 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('Outr Demo'),
-        centerTitle: true,
-        backgroundColor: Colors.green[900],
-      ),
-
       //Container that stretch to the whole screen that consists of backround image asset
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/greenbackgroundtest.jpg'),
-              fit: BoxFit.cover,
+              image: AssetImage('assets/backgroundloginpage.png'),
+              fit: BoxFit.fill,
             )
         ),
         child: Stack(
           children: <Widget>[
             Padding(
-                padding: const EdgeInsets.fromLTRB(70, 10, 70, 0),
+                padding: const EdgeInsets.fromLTRB(70, 20, 80, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     TextFormField(
+                      style: TextStyle(
+
+                      ),
                       controller: mailInput,
                       decoration: const InputDecoration(
                           border: UnderlineInputBorder(),
@@ -68,77 +66,65 @@ class _HomeState extends State<Home> {
                   ],)
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(70, 150, 70, 0),
+              padding: const EdgeInsets.fromLTRB(0, 145, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () async {
-
-                      bool check = await checkPassword(mailInput.text.toLowerCase(), passwordInput.text);
-                      if(check == true){
-                        //Ta sig till din sida
-                        updateLogin(mailInput.text);
-                      } else{
-                        //Visa en felmeddelande
-                      }
-                      print(mailInput.text);
-                      print(passwordInput.text);
-                      mailInput.clear();
-                      passwordInput.clear();
-                    },
-                    child: const Text('Login',
-                      style:(
-                          TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
-                          )
+                  Text.rich( //Profil knappen
+                    TextSpan(
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 22,
+                        decoration: TextDecoration.underline,
                       ),
-                    ),
-                    style: ButtonStyle(
-                        elevation: MaterialStateProperty.all<double>(10.0),
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                        side: MaterialStateProperty.all(BorderSide(color: Colors.black26)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            )
-                        )
+                      children: [
+                        TextSpan(
+                          text: 'Login ',
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+
+                              bool check = await checkPassword(mailInput.text.toLowerCase(), passwordInput.text);
+                              if(check == true){
+                                //Ta sig till din sida
+                                updateLogin(mailInput.text);
+                              } else{
+                                //Visa en felmeddelande
+                              }
+                              print(mailInput.text);
+                              print(passwordInput.text);
+                              mailInput.clear();
+                              passwordInput.clear();
+                            },
+                        ),
+                      ],
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterScreen()),
-                      );
-                    },
-                    child: const Text('Register',
-                      style:(
-                          TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
-                          )
+                  Text.rich( //Profil knappen
+                    TextSpan(
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 22,
+                        decoration: TextDecoration.underline,
                       ),
-                    ),
-                    style: ButtonStyle(
-                        elevation: MaterialStateProperty.all<double>(10.0),
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                        side: MaterialStateProperty.all(BorderSide(color: Colors.black26)),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            )
-                        )
-                    ),
-                  )
+                      children: [
+                        TextSpan(
+                          text: 'Register ',
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => RegisterScreen()),
+                              );
+                            },
+                        ),
+                      ],
+                  ),
+                 ),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(90, 350, 90, 40),
+              padding: const EdgeInsets.fromLTRB(90, 435, 90, 25),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -206,3 +192,21 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+/*
+
+                    onPressed: () async {
+
+                      bool check = await checkPassword(mailInput.text.toLowerCase(), passwordInput.text);
+                      if(check == true){
+                        //Ta sig till din sida
+                        updateLogin(mailInput.text);
+                      } else{
+                        //Visa en felmeddelande
+                      }
+                      print(mailInput.text);
+                      print(passwordInput.text);
+                      mailInput.clear();
+                      passwordInput.clear();
+                    },
+ */

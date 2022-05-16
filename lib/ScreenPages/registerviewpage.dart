@@ -17,9 +17,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Outr Demo'),
+        title: const Text('Registration'),
+        titleTextStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 30,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 1,
+        ),
         centerTitle: true,
-        backgroundColor: Colors.green[900],
+        backgroundColor: Colors.green[50],
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
       ),
 
       //Container that stretch to the whole screen that consists of backround image asset
@@ -27,7 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/greenbackgroundtest.jpg'),
+              image: AssetImage('assets/backgroundregisterpage.png'),
               fit: BoxFit.cover,
             )
         ),
@@ -97,9 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       style: ButtonStyle(
-                          elevation: MaterialStateProperty.all<double>(10.0),
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                          side: MaterialStateProperty.all(BorderSide(color: Colors.black26)),
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
