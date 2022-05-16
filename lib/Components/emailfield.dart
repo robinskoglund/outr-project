@@ -13,7 +13,6 @@ class EmailField extends StatelessWidget{
   Widget build(BuildContext context) {
     return const TextContainer(key: null,
       child: TextField(
-        obscureText: true,
         decoration: InputDecoration(
           hintText: 'Email',
           icon: Icon(
