@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../API/dbapihandler.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController mailInput = TextEditingController();
+  TextEditingController nameInput = TextEditingController();
   TextEditingController passwordInput = TextEditingController();
   TextEditingController passwordInput2 = TextEditingController();
 
@@ -45,6 +47,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     TextFormField(
+                      controller: nameInput,
+                      decoration: InputDecoration(
+                        border: const UnderlineInputBorder(),
+                        labelText: 'Enter your name',
+                        errorText: validateName(nameInput.text),
+                        icon: const Icon(Icons.person),
+                      ),
+                    ),
+                    TextFormField(
                       controller: passwordInput,
                       obscureText: true,
                       decoration: InputDecoration(
@@ -65,10 +76,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        //TODO: Vad händer när man registrerar
-                        print(passwordInput.text);
-                        print(passwordInput2.text);
+                      onPressed: () async {
+                        //TODO: Man kan fortfarande klicka på knappen när email inte innehåller @ och när lösen inte stämmer överens
+
+
+                        addUser(nameInput.text, mailInput.text.toLowerCase());
+                        addLogin(mailInput.text.toLowerCase(), passwordInput.text);
+
+                        //Ta sig till din sida eller till logga in sidan på nytt?
+
                       },
                       child: const Text('OK',
                         style:(
@@ -115,6 +131,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
     if(!value.contains('@')){
       return "Email format is wrong!";
+    }
+    return null;
+  }
+
+  String? validateName(String value) {
+    if (value.isEmpty) {
+      return "You need to enter your name!";
     }
     return null;
   }

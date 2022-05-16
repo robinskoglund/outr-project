@@ -8,16 +8,16 @@
       <dict>
       <key>CFBundleURLSchemes</key>
       <array>
-        <string>fb1456015768164654</string>
+        <string>fb982757488923577</string>
       </array>
       </dict>
     </array>
     <key>FacebookAppID</key>
-    <string>1456015768164654</string>
+    <string>982757488923577</string>
     <key>FacebookClientToken</key>
-    <string>1c38333b05a8a6465e6a7cd0e1280156</string>
+    <string>e545ca9479b95a4836ff40d73777e5a2</string>
     <key>FacebookDisplayName</key>
-    <string>Outr_login</string>
+    <string>Outr</string>
 
     <key>LSApplicationQueriesSchemes</key>
     <array>

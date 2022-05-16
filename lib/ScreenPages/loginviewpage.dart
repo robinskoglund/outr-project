@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import '../API/dbapihandler.dart';
 import 'mapviewpage.dart';
 import 'registerviewpage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -70,10 +71,15 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      /*TODO: Erik, här behöver vi kontrollera ifall mail/password stämmer med databasen
-                      if mailInput.text && passwordInput.text stämmer med databasen bla bla
-                      */
+                    onPressed: () async {
+
+                      bool check = await checkPassword(mailInput.text.toLowerCase(), passwordInput.text);
+                      if(check == true){
+                        //Ta sig till din sida
+                        updateLogin(mailInput.text);
+                      } else{
+                        //Visa en felmeddelande
+                      }
                       print(mailInput.text);
                       print(passwordInput.text);
                       mailInput.clear();
@@ -140,14 +146,35 @@ class _HomeState extends State<Home> {
                     icon: Icons.facebook,
                     onPressed: () async {
                       final result = await FacebookAuth.i.login(
-                          permissions: ["public_profile", "email"]
+                          permissions: ["public_profile", "email", "user_friends"]
                       );
 
                       if(result.status == LoginStatus.success){
                         final requestdata = await FacebookAuth.i.getUserData(
-                          fields: "email, name",
+                          fields: "email, name, friends",
                         );
-
+                        print(requestdata);
+                        var userEmail;
+                        var userName;
+                        var friendsArray = [];
+                        for(var k in requestdata.entries){
+                          if(k.key == 'email'){
+                            userEmail = k.value;
+                          } if (k.key == 'name'){
+                            userName = k.value;
+                          } if(k.key == 'friends'){
+                            friendsArray == k.value;
+                          }
+                        }
+                        print(friendsArray);
+                        //GET-call
+                        User user = await getUser(userEmail);
+                        print(user);
+                        if(user.email.isEmpty){
+                          addUser(userName, userEmail);
+                        }else{
+                          updateLogin(userEmail);
+                        }
                       }
                     },
                     backgroundColor: Colors.blue[900]!,
