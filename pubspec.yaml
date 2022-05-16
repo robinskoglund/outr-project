@@ -81,6 +81,18 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  fonts:
+    - family: Dongle
+      fonts:
+        - asset: Assets/Fonts/Dongle-Bold.ttf
+        - asset: Assets/Fonts/Dongle-Light.ttf
+        - asset: Assets/Fonts/Dongle-Regular.ttf
+
+
+    - family: OutrIcon
+      fonts:
+        - asset: assets/OutrIcon.ttf
+
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
