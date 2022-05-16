@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/testtest.png'),
+              image: AssetImage('assets/backgroundloginpage.png'),
               fit: BoxFit.fill,
             )
         ),

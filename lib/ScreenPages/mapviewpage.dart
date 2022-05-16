@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import '../API/directions_model.dart';
 import '../API/httprequesthandler.dart';
+import '../Components/navigationbar.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -50,6 +51,7 @@ class _MapScreenState extends State<MapScreen> {
     );
 
     return Scaffold(
+      endDrawer: OutrNavigationBar(),
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Outr Map'),
