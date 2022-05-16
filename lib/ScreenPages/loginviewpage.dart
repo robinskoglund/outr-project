@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
-import 'package:outr/Components/emailfield.dart';
+import 'package:outr/Components/textfieldcontainer.dart';
 import '../API/dbapihandler.dart';
 import 'mapviewpage.dart';
 import 'registerviewpage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import '../Components/navigationbar.dart';
-import '../Components/passwordfield.dart';
 
 void main() => runApp(MaterialApp(
     home: Home()
@@ -45,8 +44,37 @@ class _HomeState extends State<Home> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    EmailField(mailInput),
-                    PasswordField(passwordInput),
+                    TextContainer(
+                      child: TextField(
+                      decoration: const InputDecoration(
+                        hintText: 'Email',
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                        ),
+                        border: InputBorder.none,
+                      ),
+                      controller: mailInput,
+                    ),
+                    ),
+                    TextContainer(
+                      child: TextField(
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Password',
+                          icon: Icon(
+                            Icons.lock,
+                            color: Colors.black,
+                          ),
+                          suffixIcon: Icon(
+                            Icons.visibility,
+                            color: Colors.black,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        controller: passwordInput,
+                      ),
+                    ),
                   ],
                 ),
             ),
@@ -67,6 +95,7 @@ class _HomeState extends State<Home> {
                           text: 'Login ',
                           recognizer: TapGestureRecognizer()
                             ..onTap = () async {
+                              print(mailInput.text);
 
                               bool check = await checkPassword(mailInput.text.toLowerCase(), passwordInput.text);
                               if(check == true){
@@ -75,7 +104,7 @@ class _HomeState extends State<Home> {
                               } else{
                                 //Visa en felmeddelande
                               }
-                              print(mailInput.text);
+                              print(mailInput);
                               print(passwordInput.text);
                               mailInput.clear();
                               passwordInput.clear();
