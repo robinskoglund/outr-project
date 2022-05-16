@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../API/dbapihandler.dart';
+import '../Components/navigationbar.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: OutrNavigationBar(),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Registration'),

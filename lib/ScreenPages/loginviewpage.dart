@@ -26,20 +26,35 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: OutrNavigationBar(),
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: const Text('OutR'),
+        titleTextStyle: const TextStyle(
+          color: Colors.black,
+          fontSize: 22,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 1,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+      ),
       //Container that stretch to the whole screen that consists of backround image asset
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/backgroundloginpage.png'),
+              image: AssetImage('assets/testtest.png'),
               fit: BoxFit.fill,
             )
         ),
         child: Stack(
           children: <Widget>[
             Padding(
-                padding: const EdgeInsets.fromLTRB(70, 30, 80, 0),
+                padding: const EdgeInsets.fromLTRB(70, 20, 80, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -138,12 +153,15 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(90, 445, 90, 25),
+              padding: const EdgeInsets.fromLTRB(90, 385, 90, 105),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   SignInButtonBuilder(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     text: 'login with facebook',
                     icon: Icons.facebook,
                     onPressed: () async {
@@ -181,12 +199,10 @@ class _HomeState extends State<Home> {
                     },
                     backgroundColor: Colors.blue[900]!,
                   ),
-                  SignInButton(
-                    Buttons.Apple,
-                    text: "login with apple",
-                    onPressed: () {},
-                  ),
                   SignInButtonBuilder(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     text: 'map tester',
                     icon: Icons.map_sharp,
                     onPressed: () {
@@ -199,6 +215,29 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
+            ),
+            Padding(
+                padding: EdgeInsets.fromLTRB(60, 510, 40, 0),
+                child: Container(
+                  height: 90,
+                  width: 290,
+                  child: Stack(
+                    children: const <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: 25),
+                        child: Text('Start your journey',
+                            style: TextStyle(fontFamily: "Dongle", fontSize: 43, fontWeight: FontWeight.bold, color: Colors.black)
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 30),
+                        child: Text('to a healthier lifestyle',
+                            style: TextStyle(fontFamily: "Dongle", fontSize: 43, fontWeight: FontWeight.bold, color: Colors.black)
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ),
           ],
         ),
