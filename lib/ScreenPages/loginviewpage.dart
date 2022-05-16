@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:outr/Components/emailfield.dart';
 import '../API/dbapihandler.dart';
 import 'mapviewpage.dart';
 import 'registerviewpage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import '../Components/navigationbar.dart';
+import '../Components/passwordfield.dart';
 
 void main() => runApp(MaterialApp(
     home: Home()
@@ -38,35 +40,18 @@ class _HomeState extends State<Home> {
         child: Stack(
           children: <Widget>[
             Padding(
-                padding: const EdgeInsets.fromLTRB(70, 20, 80, 0),
+                padding: const EdgeInsets.fromLTRB(70, 30, 80, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    TextFormField(
-                      style: TextStyle(
-
-                      ),
-                      controller: mailInput,
-                      decoration: const InputDecoration(
-                          border: UnderlineInputBorder(),
-                          labelText: 'Enter your email',
-                          icon: Icon(Icons.person)
-                      ),
-                    ),
-                    TextFormField(
-                      controller: passwordInput,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        labelText: 'Enter your password',
-                        icon: Icon(Icons.lock),
-                      ),
-                    ),
-                  ],)
+                    EmailField(mailInput),
+                    PasswordField(passwordInput),
+                  ],
+                ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 145, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 155, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -124,7 +109,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(90, 435, 90, 25),
+              padding: const EdgeInsets.fromLTRB(90, 445, 90, 25),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,

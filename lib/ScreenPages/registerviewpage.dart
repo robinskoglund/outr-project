@@ -25,7 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           letterSpacing: 1,
         ),
         centerTitle: true,
-        backgroundColor: Colors.green[50],
+        backgroundColor: Colors.white,
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
@@ -96,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //Ta sig till din sida eller till logga in sidan på nytt?
 
                       },
-                      child: const Text('OK',
+                      child: const Text('Register',
                         style:(
                             TextStyle(
                               color: Colors.black,
