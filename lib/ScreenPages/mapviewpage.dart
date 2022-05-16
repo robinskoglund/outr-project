@@ -40,41 +40,115 @@ class _MapScreenState extends State<MapScreen> {
     _markerIcon = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/barbell.png');
   }
 
+  bool _isShow = true;
+
   @override
   Widget build(BuildContext context) {
+    BorderRadiusGeometry radius = const BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
+
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Outr Map'),
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
       ),
-      body: GoogleMap(
-        myLocationButtonEnabled: false,
-        zoomControlsEnabled: false,
-        initialCameraPosition: _initialCameraPosition,
-        onMapCreated: (controller) => _googleMapController = controller,
-        markers: _markers,
-        polylines: {
-          if (_info != null)
-            Polyline(
-              polylineId: const PolylineId('overview_polyline'),
-              color: Colors.red,
-              width: 5,
-              points: _info!.polylinePoints
-                .map((e) => LatLng(e.latitude, e.longitude))
-                .toList(),
-          )
-        },
-      ),
+        body: Stack(
+          children: <Widget>[
+
+            GoogleMap(
+              myLocationButtonEnabled: false,
+              zoomControlsEnabled: false,
+              initialCameraPosition: _initialCameraPosition,
+              onMapCreated: (controller) => _googleMapController = controller,
+              markers: _markers,
+              polylines: {
+                if (_info != null)
+                  Polyline(
+                    polylineId: const PolylineId('overview_polyline'),
+                    color: Colors.red,
+                    width: 5,
+                    points: _info!.polylinePoints
+                        .map((e) => LatLng(e.latitude, e.longitude))
+                        .toList(),
+                  )
+              },
+            ),
+            Stack(
+
+              children: <Widget>[
+
+                Visibility(
+                  visible: _isShow,
+                  child: Image.asset('assets/cropedgubbis.png'),
+                ),
+
+
+                Positioned(
+                  top: 190,
+                  right: 160,
+
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.black),
+                      ),
+                    ),
+                    onPressed: (){
+                      setState(
+                              () {
+                            _isShow = !_isShow;
+                          });
+                    },
+                    child: const Text(
+                      'Yes please!',
+                      style: TextStyle(fontFamily: 'Dongle', color: Colors.green, fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+
+                Positioned(
+                  top: 190,
+                  left: 220,
+
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.black),
+                      ),
+                    ),
+                    onPressed: (){
+                      setState(
+                              () {
+                            _isShow = !_isShow;
+
+                          });
+                    },
+                    child: const Text(
+                      'No thanks!',
+                      style: TextStyle(fontFamily: 'Dongle', color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
+
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+          ],
+        ),
       floatingActionButton: FloatingActionButton(onPressed: () {
         //_populateInfo();
         testPopulate();
         _setGymMarkerIcon();
       },
       ),
-
     );
   }
 
@@ -97,14 +171,14 @@ class _MapScreenState extends State<MapScreen> {
       //Gym marker, switch lat and longs for gymLat and gymLong
       _markers.add(
         Marker(
-        markerId: MarkerId("1"),
-        position: LatLng(37.421817, -122.083691),
-        infoWindow: InfoWindow(
-          title: gymName,
-          snippet: 'Gym location of' + gymName,
-        ),
+          markerId: MarkerId("1"),
+          position: LatLng(37.421817, -122.083691),
+          infoWindow: InfoWindow(
+            title: gymName,
+            snippet: 'Gym location of' + gymName,
+          ),
           icon: _markerIcon,
-      ),
+        ),
       );
     });
   }
