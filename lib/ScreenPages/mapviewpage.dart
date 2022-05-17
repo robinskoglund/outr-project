@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../API/directions_model.dart';
 import '../API/httprequesthandler.dart';
 import '../Components/navigationbar.dart';
+import '../Components/slidingupwidget.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -13,7 +15,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-
+  final slidingUpPanelController = PanelController();
   final CameraPosition _initialCameraPosition = const CameraPosition(target: LatLng(59.330668, 18.056498), zoom: 11.5,);
   late GoogleMapController _googleMapController;
   Directions? _info;
@@ -49,6 +51,8 @@ class _MapScreenState extends State<MapScreen> {
       topLeft: Radius.circular(24.0),
       topRight: Radius.circular(24.0),
     );
+    final slidingUpPanelHeightCollapsed = MediaQuery.of(context).size.height * 0.14;
+    final slidingUpPanelHeightOpened = MediaQuery.of(context).size.height * 0.8;
 
     return Scaffold(
       endDrawer: OutrNavigationBar(),
@@ -79,10 +83,6 @@ class _MapScreenState extends State<MapScreen> {
                   )
               },
             ),
-            Stack(
-
-              children: <Widget>[
-
                 Visibility(
                   visible: _isShow,
                   child: Image.asset('assets/cropedgubbis.png'),
@@ -140,11 +140,17 @@ class _MapScreenState extends State<MapScreen> {
                     ),
                   ),
                 ),
-
+      SlidingUpPanel(
+        controller: slidingUpPanelController,
+        minHeight: slidingUpPanelHeightCollapsed,
+        maxHeight: slidingUpPanelHeightOpened,
+        panelBuilder: (controller) => SlidingUpWidget(
+          panelController: slidingUpPanelController,
+        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
               ],
             ),
-          ],
-        ),
       floatingActionButton: FloatingActionButton(onPressed: () {
         //_populateInfo();
         testPopulate();
