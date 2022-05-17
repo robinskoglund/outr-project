@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,6 +16,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  String route = '';
   final slidingUpPanelController = PanelController();
   final CameraPosition _initialCameraPosition = const CameraPosition(target: LatLng(59.330668, 18.056498), zoom: 11.5,);
   late GoogleMapController _googleMapController;
@@ -130,17 +132,15 @@ class _MapScreenState extends State<MapScreen> {
                       setState(
                               () {
                             _isShow = !_isShow;
-
                           });
                     },
                     child: const Text(
                       'No thanks!',
                       style: TextStyle(fontFamily: 'Dongle', color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
-
                     ),
                   ),
                 ),
-      SlidingUpPanel(
+      /*SlidingUpPanel(
         controller: slidingUpPanelController,
         minHeight: slidingUpPanelHeightCollapsed,
         maxHeight: slidingUpPanelHeightOpened,
@@ -148,13 +148,13 @@ class _MapScreenState extends State<MapScreen> {
           panelController: slidingUpPanelController,
         ),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-      ),
+      ),*/
               ],
             ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
+      floatingActionButton: FloatingActionButton(onPressed: () async {
         //_populateInfo();
-        testPopulate();
-        _setGymMarkerIcon();
+        route = await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
+        await testGymPopulate();
       },
       ),
     );
@@ -162,7 +162,7 @@ class _MapScreenState extends State<MapScreen> {
 
   void _populateInfo() async {
     final directions = await HttpRequestHandler()
-        .getDirections();
+        .getDirections('hej');
     setState(() {
       _info = directions;
       _markers.add(
@@ -175,12 +175,11 @@ class _MapScreenState extends State<MapScreen> {
           ),
         ),
       );
-
       //Gym marker, switch lat and longs for gymLat and gymLong
       _markers.add(
         Marker(
           markerId: MarkerId("1"),
-          position: LatLng(37.421817, -122.083691),
+          position: LatLng(gymLat, gymLong),
           infoWindow: InfoWindow(
             title: gymName,
             snippet: 'Gym location of' + gymName,
@@ -203,18 +202,26 @@ class _MapScreenState extends State<MapScreen> {
 
   //update the gym information based on the get request from pathfinder, after the "-"
   void setGymInformation() {
-    String temp = HttpRequestHandler().getStringFromPathfinder(false) as String;
-    temp.split('|');
+    String tempRoute = route;
+    List routeString = tempRoute.split('-');
+    List routeString2 = routeString[1].split('|');
     setState(() {
-      gymName = temp[0];
-      gymLat = double.parse(temp[1]);
-      gymLong = double.parse(temp[2]);
+      gymName = routeString2[0];
+      gymLat = double.parse(routeString2[1]);
+      gymLong = double.parse(routeString2[2]);
     });
   }
 
   //Temporary test marker method, since the get request from pathfinder isnt fully functional yet
-  void testPopulate() {
+  Future<Void> testGymPopulate() async {
+    String tempRoute = route;
+    List routeString = tempRoute.split('-');
+
+    HttpRequestHandler().getRoute();
+    final directions = await HttpRequestHandler()
+        .getDirections(routeString[0]);
     setState(() {
+      _info = directions;
       _markers.add(
         Marker(
           markerId: MarkerId("0"),
@@ -226,19 +233,23 @@ class _MapScreenState extends State<MapScreen> {
         ),
       );
 
-      //Gym marker, switch lat and longs for gymLat and gymLong
+      //Puts the gym into local variables
+      setGymInformation();
+      //Sets the gym marker icon
+      _setGymMarkerIcon();
       _markers.add(
         Marker(
           markerId: MarkerId("1"),
-          position: LatLng(37.421817, -122.083691),
+          position: LatLng(gymLat, gymLong),
           infoWindow: InfoWindow(
             title: gymName,
-            snippet: 'Gym location of' + gymName,
+            snippet: 'Gym location of ' + gymName,
           ),
           icon: _markerIcon,
         ),
       );
     });
+    return Future.delayed(const Duration(seconds: 2));
   }
 
 }

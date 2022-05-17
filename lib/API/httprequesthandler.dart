@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'googleapikey.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -11,50 +12,61 @@ TODO: vi skickat geoLocation.
  */
 
 class HttpRequestHandler {
-  //final Dio _dio;
+  String route = '';
 
   //Metoden som ska posta geolocation till backend
-  Future<http.Response> postGeoLocation(String latitude, String longitude) {
-    return http.post(
-      Uri.parse('http://localhost:8080/outr/coordinates?latitude=' + latitude +
-          '&longitude=' + longitude),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'latitude': latitude,
-        'longitude': longitude,
-      }),
-    );
+  void getMixRoute(double lat, double long, int duration) async {
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getmixedroute?originLatitude=' +
+        lat.toString() + '&originLongitude=' +
+        long.toString() + '&distanceOrDuration=' +
+        duration.toString()));
+    if(response.statusCode == 200){
+      route = response.body;
+    } else {
+      throw Exception('Failed to get route');
+    }
   }
 
-  //The method that splits string from Pathfinder and returns either route part or gym part
-  //True for route and false for gym
+  Future<String> getStrengthRoute(double lat, double long) async {
+    /*final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getpathtoclosestgym?originLatitude=' +
+        lat.toString() + '&originLongitude=' +
+        long.toString()));*/
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getpathtoclosestgym'));
 
-  Future<String?> getStringFromPathfinder(bool onlyRoute) async {
-    var _dio = Dio();
-    final response = await _dio.get(
-        'https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getstring/');
-    if (response.statusCode == 200) {
-      List<String> routeString = response.data.toString().split('-');
-      if (onlyRoute == true) {
-        return routeString[0];
-      } else {
-        return routeString[1];
-      }
+    if(response.statusCode == 200){
+      route = response.body;
+    } else {
+      throw Exception('Failed to get route');
     }
-    return null;
+    return route;
+  }
+
+  void getCardioRoute(double lat, double long, int duration) async {
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getrandomroute?originLatitude=' +
+        lat.toString() + '&originLongitude=' +
+        long.toString() + '&distanceOrDuration=' +
+        duration.toString()));
+    if(response.statusCode == 200){
+      route = response.body;
+    } else {
+      throw Exception('Failed to get route');
+    }
   }
 
   //Metoden som ska hämta directions från google utifrån String routeRequest som ska skapas i backend
-  Future<Directions?> getDirections() async {
+  Future<Directions?> getDirections(String route) async {
     var _dio = Dio();
-    String route = getStringFromPathfinder(true) as String;
-    final response = await _dio.get(route);
 
+    //final response = await _dio.get('https://maps.googleapis.com/maps/api/directions/json?origin=59.4067225,17.9430338&destination=59.39911669159036,17.933548971809554&mode=walking&key=' + googleAPIKey);
+    final response = await _dio.get(route + googleAPIKey);
     if(response.statusCode == 200) {
+      print(response);
       return Directions.fromMap(response.data);
     }
     return null;
+  }
+
+  String getRoute() {
+    return route;
   }
 }
