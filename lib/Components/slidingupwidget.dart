@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../ScreenPages/mapviewpage.dart';
+
 class SlidingUpWidget extends StatelessWidget{
   final PanelController panelController;
 
@@ -111,7 +113,8 @@ class SlidingUpWidget extends StatelessWidget{
               ),
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
-              onPressed: (){},
+              onPressed: (){
+              },
               icon: Image.asset('assets/mixDude.png'),
               label: Text('Mix'),
               extendedTextStyle: TextStyle(fontFamily: 'Dongle', fontSize: 50),

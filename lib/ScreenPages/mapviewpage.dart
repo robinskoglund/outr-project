@@ -11,6 +11,8 @@ import '../Components/navigationbar.dart';
 import '../Components/slidingupwidget.dart';
 
 class MapScreen extends StatefulWidget {
+  const MapScreen({Key? key}) : super(key: key);
+
   @override
   _MapScreenState createState() => _MapScreenState();
 }
@@ -85,135 +87,91 @@ class _MapScreenState extends State<MapScreen> {
                   )
               },
             ),
-                Visibility(
-                  visible: _isShow,
-                  child: Image.asset('assets/cropedgubbis.png'),
-                ),
-
-
-                Positioned(
-                  top: 190,
-                  right: 160,
-
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.black),
-                      ),
-                    ),
-                    onPressed: (){
-                      setState(
-                              () {
-                            _isShow = !_isShow;
-                          });
-                    },
-                    child: const Text(
-                      'Yes please!',
-                      style: TextStyle(fontFamily: 'Dongle', color: Colors.green, fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-
-                Positioned(
-                  top: 190,
-                  left: 220,
-
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.black),
-                      ),
-                    ),
-                    onPressed: (){
-                      setState(
-                              () {
-                            _isShow = !_isShow;
-                          });
-                    },
-                    child: const Text(
-                      'No thanks!',
-                      style: TextStyle(fontFamily: 'Dongle', color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-      /*SlidingUpPanel(
-        controller: slidingUpPanelController,
-        minHeight: slidingUpPanelHeightCollapsed,
-        maxHeight: slidingUpPanelHeightOpened,
-        panelBuilder: (controller) => SlidingUpWidget(
-          panelController: slidingUpPanelController,
-        ),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-      ),*/
-              ],
+            SlidingUpPanel(
+              controller: slidingUpPanelController,
+              minHeight: slidingUpPanelHeightCollapsed,
+              maxHeight: slidingUpPanelHeightOpened,
+              panelBuilder: (controller) => SlidingUpWidget(
+                panelController: slidingUpPanelController,
+              ),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
             ),
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-        //_populateInfo();
-        route = await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
-        await testGymPopulate();
-      },
-      ),
+
+            Stack(
+                children: <Widget>[
+                    Visibility(
+                      visible: _isShow,
+                      child: Image.asset('assets/cropedgubbis.png'),
+                    ),
+                    Positioned(
+                      top: 190,
+                      right: 160,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.black),
+                          ),
+                        ),
+                        onPressed: (){
+                          setState(
+                                  () {
+                                _isShow = !_isShow;
+                              });
+                        },
+                        child: const Text(
+                          'Yes please!',
+                          style: TextStyle(fontFamily: 'Dongle', color: Colors.green, fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 190,
+                      left: 220,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.black),
+                          ),
+                        ),
+                        onPressed: (){
+                          setState(
+                                  () {
+                                _isShow = !_isShow;
+                              });
+                        },
+                        child: const Text(
+                          'No thanks!',
+                          style: TextStyle(fontFamily: 'Dongle', color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ],
+             ),
     );
   }
 
-  void _populateInfo() async {
-    final directions = await HttpRequestHandler()
-        .getDirections('hej');
-    setState(() {
-      _info = directions;
-      _markers.add(
-        Marker(
-          markerId: MarkerId("0"),
-          position: LatLng(geoPosition.latitude, geoPosition.longitude),
-          infoWindow: InfoWindow(
-            title: 'My Position',
-            snippet: 'My current position',
-          ),
-        ),
-      );
-      //Gym marker, switch lat and longs for gymLat and gymLong
-      _markers.add(
-        Marker(
-          markerId: MarkerId("1"),
-          position: LatLng(gymLat, gymLong),
-          infoWindow: InfoWindow(
-            title: gymName,
-            snippet: 'Gym location of' + gymName,
-          ),
-          icon: _markerIcon,
-        ),
-      );
-    });
+  void mixButton() async{
+      route = await HttpRequestHandler().getMixRoute(59.331739, 18.060259, 20, 8);
+      await populateInfo();
   }
 
-  //Get location for showing geo location marker on map
-  getCurrentLocation() async {
-    var locatePosition = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    setState(() {
-      geoPosition = locatePosition;
-    });
+  void gymButton() async{
+    route = await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+    await populateInfo();
   }
 
-  //update the gym information based on the get request from pathfinder, after the "-"
-  void setGymInformation() {
-    String tempRoute = route;
-    List routeString = tempRoute.split('-');
-    List routeString2 = routeString[1].split('|');
-    setState(() {
-      gymName = routeString2[0];
-      gymLat = double.parse(routeString2[1]);
-      gymLong = double.parse(routeString2[2]);
-    });
+  void cardioButton() async{
+    route = await HttpRequestHandler().getCardioRoute(59.331739, 18.060259, 20, 8);
+    await populateInfo();
   }
 
-  //Temporary test marker method, since the get request from pathfinder isnt fully functional yet
-  Future<Void> testGymPopulate() async {
+  Future<Void> populateInfo() async {
     String tempRoute = route;
     List routeString = tempRoute.split('-');
 
@@ -252,4 +210,25 @@ class _MapScreenState extends State<MapScreen> {
     return Future.delayed(const Duration(seconds: 2));
   }
 
+  //Get location for showing geo location marker on map
+  getCurrentLocation() async {
+    var locatePosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    setState(() {
+      geoPosition = locatePosition;
+    });
+  }
+
+  //update the gym information based on the get request from pathfinder, after the "-"
+  void setGymInformation() {
+    String tempRoute = route;
+    List routeString = tempRoute.split('-');
+    List routeString2 = routeString[1].split('|');
+    setState(() {
+      gymName = routeString2[0];
+      gymLat = double.parse(routeString2[1]);
+      gymLong = double.parse(routeString2[2]);
+    });
+  }
 }
