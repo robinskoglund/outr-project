@@ -66,73 +66,107 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        FloatingActionButton.extended(
-                          heroTag: 'beginnerbutton',
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
+                        ElevatedButton.icon(
+                          style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                Colors.black,
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.white,
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              )),
+                          icon: Image.asset('assets/plainDude.png'),
+                          label: Text('Beginner',
+                              style: TextStyle(
+                                  fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
                             togglePanelUpDown();
                             // widget.chooseButton(1);
                             changeState();
                           },
-                          icon: Image.asset('assets/plainDude.png'),
-                          label: Text('Beginner Program'),
-                          extendedTextStyle:
-                              TextStyle(fontFamily: 'Dongle', fontSize: 50),
                         ),
-                        FloatingActionButton.extended(
-                          heroTag: 'cardiobutton',
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
-                          onPressed: () {
-                            togglePanelUpDown();
-                            // widget.chooseButton(2);
-                            changeState();
-                          },
+
+                        ElevatedButton.icon(
+                          style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                Colors.black,
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.white,
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              )),
                           icon: Image.asset('assets/cardioDude.png'),
-                          label: Text('Cardio'),
-                          extendedTextStyle:
-                              TextStyle(fontFamily: 'Dongle', fontSize: 50),
-                        ),
-                        FloatingActionButton.extended(
-                          heroTag: 'strengthbutton',
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
+                          label: Text('Cardio',
+                              style: TextStyle(
+                                  fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
                             togglePanelUpDown();
-                            // widget.chooseButton(3);
+                            // widget.chooseButton(1);
                             changeState();
                           },
+                        ),
+
+
+
+                        ElevatedButton.icon(
+                          style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                Colors.black,
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.white,
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              )),
                           icon: Image.asset('assets/strengthDude.png'),
-                          label: Text('Strength'),
-                          extendedTextStyle:
-                              TextStyle(fontFamily: 'Dongle', fontSize: 50),
-                        ),
-                        FloatingActionButton.extended(
-                          heroTag: 'mixbutton',
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
+                          label: Text('Strength',
+                              style: TextStyle(
+                                  fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
                             togglePanelUpDown();
-                            // widget.chooseButton(4);
+                            // widget.chooseButton(1);
                             changeState();
                           },
+                        ),
+
+
+                        ElevatedButton.icon(
+                          style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                Colors.black,
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.white,
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              )),
                           icon: Image.asset('assets/mixDude.png'),
-                          label: Text('Mix'),
-                          extendedTextStyle:
-                              TextStyle(fontFamily: 'Dongle', fontSize: 50),
+                          label: Text('Mix',
+                              style: TextStyle(
+                                  fontFamily: 'Dongle', fontSize: 50)),
+                          onPressed: () {
+                            togglePanelUpDown();
+                            // widget.chooseButton(1);
+                            changeState();
+                          },
                         ),
                       ],
                     ),
@@ -198,12 +232,28 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                                 ]),
                           ],
                         ),
-                        FloatingActionButton.extended(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
+                        ElevatedButton.icon(
+                          style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                Colors.black,
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.white,
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              )),
+                          icon: Icon(
+                              (_isPaused == false)
+                                  ? Icons.pause_circle
+                                  : Icons.play_arrow,
+                              size: 40),
+                          label: Text(_playPause,
+                              style: TextStyle(
+                                  fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
                             togglePanelUpDown();
                             setState(() {
@@ -215,26 +265,30 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                               _isPaused = !_isPaused;
                             });
                           },
-                          icon: Icon((_isPaused == false) ? Icons.pause_circle : Icons.play_arrow, size: 40),
-                          label: Text(_playPause),
-                          extendedTextStyle:
-                              TextStyle(fontFamily: 'Dongle', fontSize: 50),
                         ),
-                        FloatingActionButton.extended(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.black,
+
+
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                Colors.white,
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.red,
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              )),
+                          child: Text('End',
+                              style: TextStyle(
+                                  fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
                             changeState();
                             togglePanelUpDown();
                           },
-                          label: Text('End'),
-                          extendedTextStyle: TextStyle(
-                              fontFamily: 'Dongle',
-                              fontSize: 50,
-                              color: Colors.white),
                         ),
                       ],
                     ),
