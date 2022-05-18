@@ -19,6 +19,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   String route = '';
+  int buttonSelection = 0;
   final slidingUpPanelController = PanelController();
   final CameraPosition _initialCameraPosition = const CameraPosition(target: LatLng(59.330668, 18.056498), zoom: 11.5,);
   late GoogleMapController _googleMapController;
@@ -93,8 +94,14 @@ class _MapScreenState extends State<MapScreen> {
               maxHeight: slidingUpPanelHeightOpened,
               panelBuilder: (controller) => SlidingUpWidget(
                 panelController: slidingUpPanelController,
+                chooseButton: (int buttonNumber) {
+                  setState(() {
+                    buttonSelection = buttonNumber;
+                    chooseButton(buttonSelection);
+                  });
+                },
               ),
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
             ),
 
             Stack(
@@ -156,19 +163,33 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  void mixButton() async{
-      route = await HttpRequestHandler().getMixRoute(59.331739, 18.060259, 20, 8);
-      await populateInfo();
-  }
-
-  void gymButton() async{
-    route = await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
-    await populateInfo();
-  }
-
-  void cardioButton() async{
-    route = await HttpRequestHandler().getCardioRoute(59.331739, 18.060259, 20, 8);
-    await populateInfo();
+  void chooseButton(int selection) async{
+    if (buttonSelection != 0) {
+      if (buttonSelection == 1) {
+        _markers.clear();
+        route =
+        await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+        await populateInfo();
+      }
+      if (buttonSelection == 2) {
+        _markers.clear();
+        route =
+        await HttpRequestHandler().getCardioRoute(59.331739, 18.060259, 20, 8);
+        await populateInfo();
+      }
+      if (buttonSelection == 3) {
+        _markers.clear();
+        route =
+        await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+        await populateInfo();
+      }
+      if (buttonSelection == 4) {
+        _markers.clear();
+        route =
+        await HttpRequestHandler().getMixRoute(59.331739, 18.060259, 20, 8);
+        await populateInfo();
+      }
+    }
   }
 
   Future<Void> populateInfo() async {
@@ -191,24 +212,27 @@ class _MapScreenState extends State<MapScreen> {
         ),
       );
 
-      //Puts the gym into local variables
-      setGymInformation();
-      //Sets the gym marker icon
-      _setGymMarkerIcon();
-      _markers.add(
-        Marker(
-          markerId: MarkerId("1"),
-          position: LatLng(gymLat, gymLong),
-          infoWindow: InfoWindow(
-            title: gymName,
-            snippet: 'Gym location of ' + gymName,
+      if(buttonSelection == 1 || buttonSelection == 3 || buttonSelection == 4) {
+        //Puts the gym into local variables
+        setGymInformation();
+        //Sets the gym marker icon
+        _setGymMarkerIcon();
+        _markers.add(
+          Marker(
+            markerId: MarkerId("1"),
+            position: LatLng(gymLat, gymLong),
+            infoWindow: InfoWindow(
+              title: gymName,
+              snippet: 'Gym location of ' + gymName,
+            ),
+            icon: _markerIcon,
           ),
-          icon: _markerIcon,
-        ),
-      );
+        );
+      }
     });
     return Future.delayed(const Duration(seconds: 2));
   }
+
 
   //Get location for showing geo location marker on map
   getCurrentLocation() async {

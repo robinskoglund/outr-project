@@ -1,22 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import '../ScreenPages/mapviewpage.dart';
 
 class SlidingUpWidget extends StatelessWidget{
   final PanelController panelController;
+  final ButtonChoiceCallback chooseButton;
 
-  const SlidingUpWidget({
-    Key? key,
-    required this.panelController,
+
+  const SlidingUpWidget(
+  {Key? key,
+    required this.panelController, required this.chooseButton,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => ListView(
     padding: EdgeInsets.zero,
     children: <Widget>[
-      SizedBox(height: 15),
+      const SizedBox(height: 15),
       openUpPanelDragHandle(),
 
       Center(
@@ -50,7 +51,9 @@ class SlidingUpWidget extends StatelessWidget{
               ),
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
-              onPressed: (){},
+              onPressed: (){
+                chooseButton(1);
+              },
               icon: Image.asset('assets/plainDude.png'),
               label: Text('Beginner Program'),
               extendedTextStyle: TextStyle(fontFamily: 'Dongle', fontSize: 50),
@@ -71,7 +74,9 @@ class SlidingUpWidget extends StatelessWidget{
               ),
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
-              onPressed: (){},
+              onPressed: (){
+                chooseButton(2);
+              },
               icon: Image.asset('assets/cardioDude.png'),
               label: Text('Cardio'),
               extendedTextStyle: TextStyle(fontFamily: 'Dongle', fontSize: 50),
@@ -92,7 +97,9 @@ class SlidingUpWidget extends StatelessWidget{
               ),
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
-              onPressed: (){},
+              onPressed: (){
+                chooseButton(3);
+              },
               icon: Image.asset('assets/strengthDude.png'),
               label: Text('Strength'),
               extendedTextStyle: TextStyle(fontFamily: 'Dongle', fontSize: 50),
@@ -114,6 +121,7 @@ class SlidingUpWidget extends StatelessWidget{
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
               onPressed: (){
+                chooseButton(4);
               },
               icon: Image.asset('assets/mixDude.png'),
               label: Text('Mix'),
@@ -144,3 +152,5 @@ class SlidingUpWidget extends StatelessWidget{
   void togglePanelUpDown() => panelController.isPanelOpen ? panelController.close() : panelController.open();
 
 }
+
+typedef ButtonChoiceCallback = void Function(int buttonNumber);

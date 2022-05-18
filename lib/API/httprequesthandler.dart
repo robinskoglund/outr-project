@@ -11,7 +11,7 @@ TODO: En metod för att ta emot routeRequest String som ska komma från backend 
 TODO: vi skickat geoLocation.
  */
 
-class HttpRequestHandler {
+class HttpRequestHandler{
   String route = '';
 
   //Metoden som ska posta geolocation till backend
