@@ -46,6 +46,7 @@ class SlidingUpWidget extends StatelessWidget{
           child: Directionality(
             textDirection: TextDirection.ltr,
             child: FloatingActionButton.extended(
+              heroTag: 'beginnerbutton',
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20.0))
               ),
@@ -69,6 +70,7 @@ class SlidingUpWidget extends StatelessWidget{
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: FloatingActionButton.extended(
+              heroTag: 'cardiobutton',
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20.0))
               ),
@@ -92,6 +94,7 @@ class SlidingUpWidget extends StatelessWidget{
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: FloatingActionButton.extended(
+              heroTag: 'strengthbutton',
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20.0))
               ),
@@ -115,6 +118,7 @@ class SlidingUpWidget extends StatelessWidget{
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: FloatingActionButton.extended(
+              heroTag: 'mixbutton',
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20.0))
               ),

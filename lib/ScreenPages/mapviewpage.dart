@@ -67,99 +67,101 @@ class _MapScreenState extends State<MapScreen> {
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
       ),
-        body: Stack(
-          children: <Widget>[
+      body: Stack(
+        children: <Widget>[
 
-            GoogleMap(
-              myLocationButtonEnabled: false,
-              zoomControlsEnabled: false,
-              initialCameraPosition: _initialCameraPosition,
-              onMapCreated: (controller) => _googleMapController = controller,
-              markers: _markers,
-              polylines: {
-                if (_info != null)
-                  Polyline(
-                    polylineId: const PolylineId('overview_polyline'),
-                    color: Colors.red,
-                    width: 5,
-                    points: _info!.polylinePoints
-                        .map((e) => LatLng(e.latitude, e.longitude))
-                        .toList(),
-                  )
+          GoogleMap(
+            myLocationButtonEnabled: false,
+            zoomControlsEnabled: false,
+            initialCameraPosition: _initialCameraPosition,
+            onMapCreated: (controller) => _googleMapController = controller,
+            markers: _markers,
+            polylines: {
+              if (_info != null)
+                Polyline(
+                  polylineId: const PolylineId('overview_polyline'),
+                  color: Colors.red,
+                  width: 5,
+                  points: _info!.polylinePoints
+                      .map((e) => LatLng(e.latitude, e.longitude))
+                      .toList(),
+                )
+            },
+          ),
+          SlidingUpPanel(
+            controller: slidingUpPanelController,
+            minHeight: slidingUpPanelHeightCollapsed,
+            maxHeight: slidingUpPanelHeightOpened,
+            panelBuilder: (controller) => SlidingUpWidget(
+              panelController: slidingUpPanelController,
+              chooseButton: (int buttonNumber) {
+                setState(() {
+                  buttonSelection = buttonNumber;
+                  chooseButton(buttonSelection);
+                });
               },
             ),
-            SlidingUpPanel(
-              controller: slidingUpPanelController,
-              minHeight: slidingUpPanelHeightCollapsed,
-              maxHeight: slidingUpPanelHeightOpened,
-              panelBuilder: (controller) => SlidingUpWidget(
-                panelController: slidingUpPanelController,
-                chooseButton: (int buttonNumber) {
-                  setState(() {
-                    buttonSelection = buttonNumber;
-                    chooseButton(buttonSelection);
-                  });
-                },
-              ),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
-            ),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
+          ),
 
-            Stack(
-                children: <Widget>[
-                    Visibility(
-                      visible: _isShow,
-                      child: Image.asset('assets/cropedgubbis.png'),
+          Stack(
+            children: <Widget>[
+              Visibility(
+                visible: _isShow,
+                child: Image.asset('assets/cropedgubbis.png'),
+              ),
+              Positioned(
+                top: 190,
+                right: 160,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.black),
                     ),
-                    Positioned(
-                      top: 190,
-                      right: 160,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.black),
-                          ),
-                        ),
-                        onPressed: (){
-                          setState(
-                                  () {
-                                _isShow = !_isShow;
-                              });
-                        },
-                        child: const Text(
-                          'Yes please!',
-                          style: TextStyle(fontFamily: 'Dongle', color: Colors.green, fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 190,
-                      left: 220,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: Colors.black),
-                          ),
-                        ),
-                        onPressed: (){
-                          setState(
-                                  () {
-                                _isShow = !_isShow;
-                              });
-                        },
-                        child: const Text(
-                          'No thanks!',
-                          style: TextStyle(fontFamily: 'Dongle', color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
+                  onPressed: (){
+                    setState(
+                            () {
+                              buttonSelection = 1;
+                              chooseButton(1);
+                              _isShow = !_isShow;
+                        });
+                  },
+                  child: const Text(
+                    'Yes please!',
+                    style: TextStyle(fontFamily: 'Dongle', color: Colors.green, fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                ],
-             ),
+              ),
+              Positioned(
+                top: 190,
+                left: 220,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                  onPressed: (){
+                    setState(
+                            () {
+                              _isShow = !_isShow;
+                        });
+                  },
+                  child: const Text(
+                    'No thanks!',
+                    style: TextStyle(fontFamily: 'Dongle', color: Colors.red, fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
