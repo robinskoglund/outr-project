@@ -15,7 +15,6 @@ class DemoApplicationTests {
     @Test
     void contextLoads() {
     }
-
     @Test
     void coordinates() throws IOException {
         // Two pairs of outdoor gym coordinates from Stockholms Utegym-API
@@ -52,5 +51,10 @@ class DemoApplicationTests {
         StockholmData stockholmData = new StockholmData();
         stockholmData.populateOutdoorGyms();
     }
-
+    @Test
+    void testSociotop() throws IOException{
+        Sociotop s = new Sociotop();
+        s.run();
+        System.out.println(s.parkmap);
+    }
 }

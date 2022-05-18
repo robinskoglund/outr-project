@@ -2,18 +2,21 @@ package OutR.demo;
 
 import java.io.*;
 import java.util.*;
+
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
 public class Sociotop {
+    public Park park = new Park();
+    public HashMap<Long, Park> parkmap = new HashMap<Long, Park>();
     public static Properties properties = null;
     public static JSONObject jsonObject = null;
+
     static {
         properties = new Properties();
     }
 
-    public static void main(String[] args) {
-
+    public void run() {
         try {
             JSONParser jparser = new JSONParser();
             File file = new File("C:\\Users\\arman\\IdeaProjects\\pvt4\\src\\main\\java\\OutR\\demo\\SociotopKarta.geojson");
@@ -25,18 +28,19 @@ public class Sociotop {
         }
     }
 
-    public static void getData(Object object2) throws ParseException {
+    public void getData(Object object2) throws ParseException {
         JSONArray jsonArr = (JSONArray) object2;
         for (int k = 0; k < jsonArr.size(); k++) {
             if (jsonArr.get(k) instanceof JSONObject) {
                 parser((JSONObject) jsonArr.get(k));
             } else {
-                System.out.println(jsonArr.get(k));
+                park = new Park();
+                park.setParkCoordinates((ArrayList<ArrayList<Double>>) jsonArr.get(k));
             }
         }
     }
 
-    public static void parser(JSONObject jsonObject) throws ParseException {
+    public void parser(JSONObject jsonObject) throws ParseException {
         Set<Object> set = jsonObject.keySet();
         Iterator<Object> iterator = set.iterator();
         while (iterator.hasNext()) {
@@ -47,38 +51,45 @@ public class Sociotop {
                 if (jsonObject.get(obj) instanceof JSONObject) {
                     parser((JSONObject) jsonObject.get(obj));
                 } else if ((obj.toString().equals("id"))) {
-                    System.out.println(obj + "\t"
-                            + jsonObject.get(obj));
-
+                    park.setId((Long) jsonObject.get(obj));
                 } else if ((obj.toString().equals("promenader"))) {
-                    System.out.println(obj + "\t"
-                            + jsonObject.get(obj));
+                    if ((Long) jsonObject.get(obj) == 1) {
+                        park.setWalk(true);
+                    } else {
+                        park.setWalk(false);
+                    }
                 } else if ((obj.toString().equals("vattenkont"))) {
-                    System.out.println(obj + "\t"
-                            + jsonObject.get(obj));
-                }
-                else if ((obj.toString().equals("löpträning"))) {
-                    System.out.println(obj + "\t"
-                            + jsonObject.get(obj));
-                }
-                if(obj.toString().contains("löpträning")){
-                    Coordinate Coord = new Coordinate();
+                    if ((Long) jsonObject.get(obj) == 1) {
+                        park.setWaterContact(true);
+                    } else {
+                        park.setWaterContact(false);
+                    }
+                } else if ((obj.toString().equals("löpträning"))) {
+                    park.setRunning(true);
+                } else {
+                    park.setRunning(false);
                 }
             }
+            parkmap.put(park.getId(), park);
         }
     }
-    public class Park{
-        private int id;
+
+    public class Park {
+        private long id;
         private boolean walk;
         private boolean waterContact;
         private boolean running;
         private ArrayList<ArrayList<Double>> parkCoordinates;
 
-        public Park(ArrayList<ArrayList<Double>> parkCoordinates) {
+        public Park() {
+
+        }
+
+        public void setParkCoordinates(ArrayList<ArrayList<Double>> parkCoordinates) {
             this.parkCoordinates = parkCoordinates;
         }
 
-        public void setId(int id) {
+        public void setId(long id) {
             this.id = id;
         }
 
@@ -92,6 +103,21 @@ public class Sociotop {
 
         public void setRunning(boolean running) {
             this.running = running;
+        }
+
+        public long getId() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            return "Park{" +
+                    "id=" + id +
+                    ", walk=" + walk +
+                    ", waterContact=" + waterContact +
+                    ", running=" + running +
+                    ", parkCoordinates=" + parkCoordinates +
+                    '}';
         }
     }
 }
