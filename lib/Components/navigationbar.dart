@@ -4,6 +4,7 @@ import 'package:outr/Components/outr_icon_icons.dart';
 import '../ScreenPages/achievementspage.dart';
 import '../ScreenPages/loginviewpage.dart';
 import '../ScreenPages/mapviewpage.dart';
+import '../ScreenPages/profilepageview.dart';
 import '../ScreenPages/savedroutespage.dart';
 import 'outr_icon_icons.dart';
 
@@ -99,7 +100,7 @@ class OutrNavigationBar extends StatelessWidget {
 
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AchievementsPage(),
+          builder: (context) => ProfileScreen(),
         ));
         break;
 
