@@ -19,6 +19,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       endDrawer: OutrNavigationBar(),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: const Text('Registration'),
         titleTextStyle: const TextStyle(
           color: Colors.black,
