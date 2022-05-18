@@ -310,8 +310,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                               )),
                           icon: Icon(
                               (_isPaused == false)
-                                  ? Icons.pause_circle
-                                  : Icons.play_arrow,
+                                  ? Icons.play_arrow
+                                  : Icons.pause_circle,
                               size: 40),
                           label: Text(_playPause,
                               style: const TextStyle(
@@ -348,7 +348,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                             stopWatch();
                             resetTimer();
                             _isPaused = true;
-                            _playPause = "Play";
+                            _playPause = "Pause";
                           },
                         ),
                       ],
@@ -392,9 +392,10 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   void setPlayPause () {
     if (_isPaused) {
-      _playPause = 'Pause';
-    } else {
       _playPause = 'Play';
+
+    } else {
+      _playPause = 'Pause';
     }
     _isPaused = !_isPaused;
   }
