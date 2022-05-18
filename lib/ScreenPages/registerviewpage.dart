@@ -14,6 +14,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordInput2 = TextEditingController();
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: OutrNavigationBar(),
