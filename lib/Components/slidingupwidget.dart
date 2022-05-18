@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -20,11 +22,15 @@ class SlidingUpWidget extends StatefulWidget {
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   bool _isActive = false;
   bool _isPaused = false;
-  String _playPause = "Pause";
+  String _playPause = 'Pause';
   String _sliderHeader = 'Start';
 
-  //TODO: Testa att lägga Center utanför som en stateful?
-  //TODO: Testa att
+  Stopwatch _watch = Stopwatch();
+  late Timer _timer;
+  bool _startStop = true;
+  bool _click = false;
+
+  String _elapsedTime = '00:00';
 
   @override
   Widget build(BuildContext context) => ListView(
@@ -34,24 +40,86 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
           openUpPanelDragHandle(),
           Center(
             child: ElevatedButton(
-              onPressed: () {
-                togglePanelUpDown();
-              },
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(Size(390, 30)),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                elevation: MaterialStateProperty.all<double>(0),
-              ),
-              child: Text(
-                _sliderHeader,
-                style: TextStyle(
-                  fontSize: 60.0,
-                  letterSpacing: 1.5,
-                  color: Colors.blueGrey,
-                  fontFamily: 'Dongle',
+                onPressed: () {
+                  togglePanelUpDown();
+                },
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(Size(390, 30)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  elevation: MaterialStateProperty.all<double>(0),
                 ),
-              ),
-            ),
+                child: Stack(
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        Visibility(
+                          visible: !_isActive,
+                          child: Text(
+                            _sliderHeader,
+                            style: const TextStyle(
+                              fontSize: 60.0,
+                              letterSpacing: 1.5,
+                              color: Colors.blueGrey,
+                              fontFamily: 'Dongle',
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                            visible: _isActive,
+                            child: Stack(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(_elapsedTime,
+                                        style: const TextStyle(
+                                            fontFamily: 'Dongle',
+                                            fontSize: 50,
+                                            color: Colors.black)),
+                                    const Text("2:02",
+                                        style: TextStyle(
+                                            fontFamily: 'Dongle',
+                                            fontSize: 50,
+                                            color: Colors.black)),
+                                    const Text("7:00",
+                                        style: TextStyle(
+                                            fontFamily: 'Dongle',
+                                            fontSize: 50,
+                                            color: Colors.black)),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 40),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: const <Widget>[
+                                      Text("Min",
+                                          style: TextStyle(
+                                              fontFamily: 'Dongle',
+                                              fontSize: 30,
+                                              color: Colors.black)),
+                                      Text("      KM",
+                                          style: TextStyle(
+                                              fontFamily: 'Dongle',
+                                              fontSize: 30,
+                                              color: Colors.black)),
+                                      Text("Arrival",
+                                          style: TextStyle(
+                                              fontFamily: 'Dongle',
+                                              fontSize: 30,
+                                              color: Colors.black)),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )),
+                      ],
+                    )
+                  ],
+                )),
           ),
           Visibility(
             visible: !_isActive,
@@ -81,7 +149,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                                 ),
                               )),
                           icon: Image.asset('assets/plainDude.png'),
-                          label: Text('Beginner',
+                          label: const Text('Beginner',
                               style: TextStyle(
                                   fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
@@ -90,7 +158,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                             changeState();
                           },
                         ),
-
                         ElevatedButton.icon(
                           style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
@@ -106,7 +173,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                                 ),
                               )),
                           icon: Image.asset('assets/cardioDude.png'),
-                          label: Text('Cardio',
+                          label: const Text('Cardio',
                               style: TextStyle(
                                   fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
@@ -115,9 +182,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                             changeState();
                           },
                         ),
-
-
-
                         ElevatedButton.icon(
                           style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
@@ -133,7 +197,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                                 ),
                               )),
                           icon: Image.asset('assets/strengthDude.png'),
-                          label: Text('Strength',
+                          label: const Text('Strength',
                               style: TextStyle(
                                   fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
@@ -142,8 +206,6 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                             changeState();
                           },
                         ),
-
-
                         ElevatedButton.icon(
                           style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
@@ -159,7 +221,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                                 ),
                               )),
                           icon: Image.asset('assets/mixDude.png'),
-                          label: Text('Mix',
+                          label: const Text('Mix',
                               style: TextStyle(
                                   fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
@@ -193,7 +255,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                             Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
+                                children: const <Widget>[
                                   Text(
                                     "0,60",
                                     style: TextStyle(
@@ -214,7 +276,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                             Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
+                                children: const <Widget>[
                                   Text("KM left",
                                       style: TextStyle(
                                         fontSize: 40.0,
@@ -252,22 +314,17 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                                   : Icons.play_arrow,
                               size: 40),
                           label: Text(_playPause,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
                             togglePanelUpDown();
                             setState(() {
-                              if (_playPause == 'Pause') {
-                                _playPause = 'Play';
-                              } else {
-                                _playPause = "Pause";
-                              }
-                              _isPaused = !_isPaused;
+                              setPlayPause();
+
+                              startOrStop();
                             });
                           },
                         ),
-
-
                         ElevatedButton(
                           style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
@@ -282,12 +339,16 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                                   borderRadius: BorderRadius.circular(18.0),
                                 ),
                               )),
-                          child: Text('End',
+                          child: const Text('End',
                               style: TextStyle(
                                   fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
                             changeState();
                             togglePanelUpDown();
+                            stopWatch();
+                            resetTimer();
+                            _isPaused = true;
+                            _playPause = "Play";
                           },
                         ),
                       ],
@@ -318,10 +379,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     setState(() {
       if (!_isActive) {
         _isActive = true;
-        _sliderHeader = '31:00' + '   ' + '2,02' + '    ' + '7:00';
       } else {
         _isActive = false;
-        _sliderHeader = 'Start';
       }
     });
   }
@@ -330,6 +389,74 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   void togglePanelUpDown() => widget.panelController.isPanelOpen
       ? widget.panelController.close()
       : widget.panelController.open();
+
+  void setPlayPause () {
+    if (_isPaused) {
+      _playPause = 'Pause';
+    } else {
+      _playPause = 'Play';
+    }
+    _isPaused = !_isPaused;
+  }
+
+  startOrStop() {
+    if (_startStop) {
+      _click = true;
+      startWatch();
+    } else {
+      stopWatch();
+    }
+  }
+
+  resetTimer() {
+    _watch.reset();
+    _elapsedTime = "00:00";
+  }
+
+  startWatch() {
+    setState(() {
+      _startStop = false;
+      _watch.start();
+      _timer = Timer.periodic(Duration(milliseconds: 100), updateTime);
+    });
+  }
+
+  stopWatch() {
+    setState(() {
+      _click = false;
+      _startStop = true;
+      _watch.stop();
+      setTime();
+    });
+  }
+
+  setTime() {
+    var timeSoFar = _watch.elapsedMilliseconds;
+    setState(() {
+      _elapsedTime = transformMilliSeconds(timeSoFar);
+    });
+  }
+
+  transformMilliSeconds(int milliseconds) {
+    int hundreds = (milliseconds / 10).truncate();
+    int seconds = (hundreds / 100).truncate();
+    int minutes = (seconds / 60).truncate();
+    // int hours = (minutes / 60).truncate();
+
+    // String hoursStr = (hours % 60).toString().padLeft(2, '0');
+    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
+    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
+
+    return "$minutesStr:$secondsStr";
+  }
+
+  updateTime(Timer timer) {
+    if (_watch.isRunning) {
+      setState(() {
+        _elapsedTime = transformMilliSeconds(_watch.elapsedMilliseconds);
+      });
+    }
+  }
 }
 
 typedef ButtonChoiceCallback = void Function(int buttonNumber);
