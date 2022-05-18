@@ -10,18 +10,17 @@ class TimerPage extends StatefulWidget {
 
 class _TimerPage extends State<TimerPage> {
 
-  Stopwatch watch = Stopwatch();
-  late Timer timer;
-  bool startStop = true;
-  bool click = false;
+  Stopwatch _watch = Stopwatch();
+  late Timer _timer;
+  bool _startStop = true;
+  bool _click = false;
 
-
-  String elapsedTime = '';
+  String _elapsedTime = '';
 
   updateTime(Timer timer) {
-    if (watch.isRunning) {
+    if (_watch.isRunning) {
       setState(() {
-        elapsedTime = transformMilliSeconds(watch.elapsedMilliseconds);
+        _elapsedTime = transformMilliSeconds(_watch.elapsedMilliseconds);
       });
     }
   }
@@ -32,7 +31,7 @@ class _TimerPage extends State<TimerPage> {
       padding: EdgeInsets.all(20.0),
       child: Column(
         children: <Widget>[
-          Text(elapsedTime, style: TextStyle(fontSize: 30.0,
+          Text(_elapsedTime, style: TextStyle(fontSize: 30.0,
               fontFamily: "Dongle", color: Colors.black)),
           SizedBox(height: 20.0),
           Row(
@@ -42,7 +41,7 @@ class _TimerPage extends State<TimerPage> {
                   heroTag: "pause/play",
                   backgroundColor: Colors.black,
                   onPressed: () => startOrStop(),
-                  child: Icon((click == false) ? Icons.play_arrow_rounded
+                  child: Icon((_click == false) ? Icons.play_arrow_rounded
                       : Icons.pause)),
               SizedBox(width: 20.0),
               FloatingActionButton(
@@ -59,8 +58,8 @@ class _TimerPage extends State<TimerPage> {
   }
 
   startOrStop() {
-    if(startStop) {
-      click = true;
+    if(_startStop) {
+      _click = true;
       startWatch();
     } else {
       stopWatch();
@@ -68,31 +67,31 @@ class _TimerPage extends State<TimerPage> {
   }
 
   resetTimer(){
-    watch.reset();
-    elapsedTime = "";
+    _watch.reset();
+    _elapsedTime = "";
   }
 
   startWatch() {
     setState(() {
-      startStop = false;
-      watch.start();
-      timer = Timer.periodic(Duration(milliseconds: 100), updateTime);
+      _startStop = false;
+      _watch.start();
+      _timer = Timer.periodic(Duration(milliseconds: 100), updateTime);
     });
   }
 
   stopWatch() {
     setState(() {
-      click = false;
-      startStop = true;
-      watch.stop();
+      _click = false;
+      _startStop = true;
+      _watch.stop();
       setTime();
     });
   }
 
   setTime() {
-    var timeSoFar = watch.elapsedMilliseconds;
+    var timeSoFar = _watch.elapsedMilliseconds;
     setState(() {
-      elapsedTime = transformMilliSeconds(timeSoFar);
+      _elapsedTime = transformMilliSeconds(timeSoFar);
     });
   }
 

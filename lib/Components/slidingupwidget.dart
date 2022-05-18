@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -20,11 +22,15 @@ class SlidingUpWidget extends StatefulWidget {
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   bool _isActive = false;
   bool _isPaused = false;
-  String _playPause = "Pause";
+  String _playPause = 'Pause';
   String _sliderHeader = 'Start';
 
-  //TODO: Testa att lägga Center utanför som en stateful?
-  //TODO: Testa att
+  Stopwatch _watch = Stopwatch();
+  late Timer _timer;
+  bool _startStop = true;
+  bool _click = false;
+
+  String _elapsedTime = '';
 
   @override
   Widget build(BuildContext context) => ListView(
@@ -215,7 +221,11 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                               _isPaused = !_isPaused;
                             });
                           },
-                          icon: Icon((_isPaused == false) ? Icons.pause_circle : Icons.play_arrow, size: 40),
+                          icon: Icon(
+                              (_isPaused == false)
+                                  ? Icons.pause_circle
+                                  : Icons.play_arrow,
+                              size: 40),
                           label: Text(_playPause),
                           extendedTextStyle:
                               TextStyle(fontFamily: 'Dongle', fontSize: 50),
@@ -276,6 +286,65 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   void togglePanelUpDown() => widget.panelController.isPanelOpen
       ? widget.panelController.close()
       : widget.panelController.open();
+
+  startOrStop() {
+    if (_startStop) {
+      _click = true;
+      startWatch();
+    } else {
+      stopWatch();
+    }
+  }
+
+  resetTimer() {
+    _watch.reset();
+    _elapsedTime = "";
+  }
+
+  startWatch() {
+    setState(() {
+      _startStop = false;
+      _watch.start();
+      _timer = Timer.periodic(Duration(milliseconds: 100), updateTime);
+    });
+  }
+
+  stopWatch() {
+    setState(() {
+      _click = false;
+      _startStop = true;
+      _watch.stop();
+      setTime();
+    });
+  }
+
+  setTime() {
+    var timeSoFar = _watch.elapsedMilliseconds;
+    setState(() {
+      _elapsedTime = transformMilliSeconds(timeSoFar);
+    });
+  }
+
+  transformMilliSeconds(int milliseconds) {
+    int hundreds = (milliseconds / 10).truncate();
+    int seconds = (hundreds / 100).truncate();
+    int minutes = (seconds / 60).truncate();
+    int hours = (minutes / 60).truncate();
+
+    String hoursStr = (hours % 60).toString().padLeft(2, '0');
+    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
+    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
+
+    return "$hoursStr:$minutesStr:$secondsStr";
+  }
+
+  updateTime(Timer timer) {
+    if (_watch.isRunning) {
+      setState(() {
+        _elapsedTime = transformMilliSeconds(_watch.elapsedMilliseconds);
+      });
+    }
+  }
 }
 
 typedef ButtonChoiceCallback = void Function(int buttonNumber);
