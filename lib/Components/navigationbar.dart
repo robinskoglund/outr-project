@@ -1,6 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:outr/Components/outr_icon_icons.dart';
+import '../ScreenPages/achievementspage.dart';
+import '../ScreenPages/loginviewpage.dart';
+import '../ScreenPages/mapviewpage.dart';
+import '../ScreenPages/savedroutespage.dart';
 import 'outr_icon_icons.dart';
 
 final Color backgroundColor = Color(0xFF353535);
@@ -8,7 +12,6 @@ late double screenWidth, screenHeight;
 
 class OutrNavigationBar extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
-
 
   @override
   Widget build(BuildContext context) {
@@ -87,20 +90,30 @@ class OutrNavigationBar extends StatelessWidget {
   void selectedItem(BuildContext context, int index) {
     Navigator.of(context).pop();
 
-    /* här görs själva switchen till sidorna
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => PeoplePage(),
+          builder: (context) => MapScreen(),
         ));
         break;
+
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => FavouritesPage(),
+          builder: (context) => AchievementsPage(),
+        ));
+        break;
+
+      case 2:
+        /*Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => AchievementsPage(),
+        ));*/
+        break;
+
+      case 3:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => SavedRoutesPage(),
         ));
         break;
     }
-  */
   }
-
 }

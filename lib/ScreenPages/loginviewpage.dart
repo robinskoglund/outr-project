@@ -9,6 +9,9 @@ import 'mapviewpage.dart';
 import 'registerviewpage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import '../Components/navigationbar.dart';
+import 'achievementspage.dart';
+import 'savedroutespage.dart';
+import '../Components/timer.dart';
 
 void main() => runApp(MaterialApp(
     home: Home()
