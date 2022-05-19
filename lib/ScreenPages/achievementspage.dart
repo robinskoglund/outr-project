@@ -8,6 +8,50 @@ import '../Components/timer.dart';
 
 class AchievementsPage extends StatelessWidget {
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        foregroundColor: Colors.black, //ändrar färgen på burgarmeny
+        centerTitle: true,
+        title: const Text('Achievements'),
+        backgroundColor: Colors.white,
+      ),
+      endDrawer: OutrNavigationBar(),
+      body: Container(
+        color: Colors.grey[200],
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(40, 25, 25, 0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(40.0),
+                      bottomRight: Radius.circular(40.0),
+                      topLeft: Radius.circular(40.0),
+                      bottomLeft: Radius.circular(40.0)),
+                ),
+                height: 370.0,
+                width: 330.0,
+                child: buildBasicListView(context),
+              ),
+            ),
+          ],
+        ),
+      ),
+
+    );
+  }
+
+  //buildBasicListView(context)
+
   Widget buildBasicListView(BuildContext context) => ListView(
 
     children: [
@@ -76,34 +120,6 @@ class AchievementsPage extends StatelessWidget {
                 },
               ),
             ),
-            Flexible(
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)))),
-                child: const Text("Share on Instagram", style: TextStyle(fontFamily: "Dongle",
-                    fontSize: 16, fontWeight: FontWeight.normal)),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-
-            Flexible(
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.redAccent),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)))
-                  ),
-                  child: const Text("Share on Pinterest", style: TextStyle(fontFamily: "Dongle",
-                      fontSize: 16, fontWeight: FontWeight.normal)),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }
-              ),
-            ),
           ],
         ),
       ],
@@ -144,34 +160,6 @@ class AchievementsPage extends StatelessWidget {
                 },
               ),
             ),
-            Flexible(
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)))),
-                child: const Text("Share on Instagram", style: TextStyle(fontFamily: "Dongle",
-                    fontSize: 16, fontWeight: FontWeight.normal)),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-
-            Flexible(
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.redAccent),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)))
-                  ),
-                  child: const Text("Share on Pinterest", style: TextStyle(fontFamily: "Dongle",
-                      fontSize: 16, fontWeight: FontWeight.normal)),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }
-              ),
-            ),
           ],
         ),
       ],
@@ -179,27 +167,4 @@ class AchievementsPage extends StatelessWidget {
     );
     showDialog(context: context, builder: (BuildContext context) => alert);
   }
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        foregroundColor: Colors.black, //ändrar färgen på burgarmeny
-        title: const Text('Achievements'),
-        titleTextStyle: TextStyle(
-            fontFamily: "Dongle",
-            fontSize: 44,
-            color: Colors.black),
-        backgroundColor: Colors.white,
-      ),
-      endDrawer: OutrNavigationBar(),
-      body: buildBasicListView(context),
-
-    );
-  }
-
 }
