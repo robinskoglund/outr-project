@@ -63,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                       topLeft: Radius.circular(40.0),
                       bottomLeft: Radius.circular(40.0)),
                 ),
-                height: 550.0,
+                height: 530.0,
                 width: 400.0,
               ),
             ),
@@ -117,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
             ),
             const Padding(
-              padding: EdgeInsets.fromLTRB(235, 300, 0, 0),
+              padding: EdgeInsets.fromLTRB(235, 290, 0, 0),
               child: Text(
                 'level up',
                 style: TextStyle(
@@ -128,11 +128,11 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(120, 400, 80, 0),
+              padding: const EdgeInsets.fromLTRB(120, 370, 80, 0),
               child: Row(
                 children: <Widget>[
                   Text(
-                    '$currentStreak workouts \n   streak',
+                    '$currentStreak workouts',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 40,
@@ -152,8 +152,19 @@ class _ProfileScreenState extends State<ProfileScreen>{
                 ],
               )
             ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(150, 390, 80, 0),
+              child: Text(
+                'streak',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 40,
+                  fontFamily: 'Dongle',
+                ),
+              ),
+            ),
             Padding(
-                padding: const EdgeInsets.fromLTRB(85, 530, 80, 10),
+                padding: const EdgeInsets.fromLTRB(85, 470, 80, 10),
                 child: SizedBox(
                   width: 350,
                   height: 60,
@@ -163,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
-                            )
+                            ),
                         )
                     ),
                     onPressed: () {
