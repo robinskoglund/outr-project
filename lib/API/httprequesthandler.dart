@@ -56,8 +56,8 @@ class HttpRequestHandler{
     return route;
   }
 
-  Future<String> getUserLevel(String user) async {
-    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/getuserlevel?user=' + user.toLowerCase().toString()));
+  Future<String> getUserLevel(String email) async {
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/get/level?email=' + email.toLowerCase()));
     if(response.statusCode == 200){
       userLevel = response.body;
     } else {
@@ -66,8 +66,8 @@ class HttpRequestHandler{
     return userLevel;
   }
 
-  Future<String> getUserStreak(String user) async {
-    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/getuserstreak?user=' + user.toLowerCase().toString()));
+  Future<String> getUserStreak(String email) async {
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/get/dailyStreak?email=' + email.toLowerCase()));
     if(response.statusCode == 200){
       userStreak = response.body;
     } else {
@@ -76,8 +76,8 @@ class HttpRequestHandler{
     return userStreak;
   }
 
-  Future<String> getUserRank(String user) async {
-    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/getuserrank?user=' + user.toLowerCase().toString()));
+  Future<String> getUserRank(String email) async {
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/get?email=' + email.toLowerCase()));
     if(response.statusCode == 200){
       userRank = response.body;
     } else {
@@ -86,8 +86,8 @@ class HttpRequestHandler{
     return userRank;
   }
 
-  Future<String> getUserExp(String user) async {
-    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/getuserexp?user=' + user.toLowerCase().toString()));
+  Future<String> getUserExp(String email) async {
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/get/xp?email=' + email.toLowerCase()));
     if(response.statusCode == 200){
       userExperience = response.body;
     } else {
