@@ -30,7 +30,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-
+  #Toggle switch for cardi/mix page
+  toggle_switch: ^2.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -95,6 +96,11 @@ flutter:
     - family: OutrIcon
       fonts:
         - asset: assets/OutrIcon.ttf
+        - asset: assets/Outr_icons.ttf
+
+    - family: Outr_icons
+      fonts:
+        - asset: assets/Outr_icons.ttf
 
   # To add assets to your application, add an assets section, like this:
   assets:
