@@ -107,10 +107,11 @@ Future<http.Response> addLogin(String email, String password){
   );
 }
 
+//TODO: Får statusCode == 200 som true oavsett rätt login eller ej. Måste fixas så alertsen fungerar!
 Future<bool> checkPassword(String email, String password) async {
   //För att testa på sin localhost ska använd din ip-adress istället för "localhost" i adressen
   final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/login/checkLogin?email=' + email + '&password=' + password));
 
-  return (response.statusCode == 200);
+  return response.statusCode == 200;
 
 }

@@ -5,6 +5,7 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:outr/Components/textfieldcontainer.dart';
 import '../API/dbapihandler.dart';
+import '../Components/alertnoicon.dart';
 import 'mapviewpage.dart';
 import 'registerviewpage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -113,19 +114,26 @@ class _HomeState extends State<Home> {
                           text: 'Login ',
                           recognizer: TapGestureRecognizer()
                             ..onTap = () async {
-                              print(mailInput.text);
-
                               bool check = await checkPassword(mailInput.text.toLowerCase(), passwordInput.text);
-                              if(check == true){
-                                //Ta sig till din sida
-                                updateLogin(mailInput.text);
-                              } else{
-                                //Visa en felmeddelande
-                              }
-                              print(mailInput);
+
+                              print(mailInput.text);
                               print(passwordInput.text);
-                              mailInput.clear();
-                              passwordInput.clear();
+
+                              if(check == true){
+                                updateLogin(mailInput.text);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MapScreen()),
+                                );
+                              } else{
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return AlertNoIcon('Alert', 'Wrong email or password!', 'Cancel', 'Abort');
+                                    });
+                                mailInput.clear();
+                                passwordInput.clear();
+                              }
                             },
                         ),
                       ],
