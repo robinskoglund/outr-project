@@ -120,7 +120,7 @@ class _HomeState extends State<Home> {
                               print(passwordInput.text);
 
                               if(check == true){
-                                updateLogin(mailInput.text);
+                                updateLogin(mailInput.text.toLowerCase());
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) => MapScreen()),
