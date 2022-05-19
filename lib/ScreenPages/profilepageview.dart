@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:outr/API/httprequesthandler.dart';
 import '../Components/navigationbar.dart';
 import 'achievementspage.dart';
 
@@ -9,11 +10,28 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen>{
-  int currentLevel = 1;
-  int currentStreak = 0;
-  int currentExperience = 0;
+  String currentLevel = '1';
+  String currentStreak = '0';
+  String currentExperience = '0';
   String currentRank = 'Rookie';
   String accountLoggedIn = 'testoutr@gmail.se';
+
+
+  @override
+  void initState() {
+    /*
+    currentLevel = HttpRequestHandler().getUserLevel('test@gmail.se') as String;
+    currentStreak = HttpRequestHandler().getUserStreak('test@gmail.se') as String;
+    currentExperience = HttpRequestHandler().getUserExp('test@gmail.se') as String;
+    currentRank = HttpRequestHandler().getUserRank('test@gmail.se') as String;
+     */
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
             Padding(
               padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(40.0),
@@ -53,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               padding: const EdgeInsets.fromLTRB(145, 20, 80, 0),
               child: Text(
                 'Level: $currentLevel',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 50,
                   fontWeight: FontWeight.bold,
@@ -66,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               padding: const EdgeInsets.fromLTRB(165, 50, 80, 0),
               child: Text(
                 '$currentRank',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 40,
                   fontFamily: 'Dongle',
@@ -79,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               child: Container(
                 height: 150.0,
                 width: 160.0,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/profileavatar.png'),
                     fit: BoxFit.fill,
@@ -87,8 +105,8 @@ class _ProfileScreenState extends State<ProfileScreen>{
                   ),
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(225, 270, 0, 0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(225, 270, 0, 0),
               child: Text(
                 '480 xp to',
                 style: TextStyle(
@@ -98,8 +116,8 @@ class _ProfileScreenState extends State<ProfileScreen>{
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(235, 300, 0, 0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(235, 300, 0, 0),
               child: Text(
                 'level up',
                 style: TextStyle(
@@ -115,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                 children: <Widget>[
                   Text(
                     '$currentStreak workouts \n   streak',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 40,
                       fontFamily: 'Dongle',
@@ -124,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                   Container(
                     height: 60.0,
                     width: 60.0,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/hotstreak.png'),
                         fit: BoxFit.fill,
@@ -154,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                         MaterialPageRoute(builder: (context) => AchievementsPage()),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                         'Achievements',
                         style: TextStyle(
                             fontFamily: "Dongle",

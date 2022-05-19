@@ -6,13 +6,12 @@ import 'package:http/http.dart' as http;
 import 'directions_model.dart';
 import '../ScreenPages/mapviewpage.dart';
 
-/*
-TODO: En metod för att ta emot routeRequest String som ska komma från backend efter
-TODO: vi skickat geoLocation.
- */
-
 class HttpRequestHandler{
   String route = '';
+  String userLevel = '';
+  String userStreak = '';
+  String userRank = '';
+  String userExperience = '';
 
   //Metoden som ska posta geolocation till backend
   Future<String> getMixRoute(double lat, double long, int duration, int speed) async {
@@ -55,6 +54,46 @@ class HttpRequestHandler{
       throw Exception('Failed to get route');
     }
     return route;
+  }
+
+  Future<String> getUserLevel(String user) async {
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/getuserlevel?user=' + user.toLowerCase().toString()));
+    if(response.statusCode == 200){
+      userLevel = response.body;
+    } else {
+      throw Exception('Failed to get user level');
+    }
+    return userLevel;
+  }
+
+  Future<String> getUserStreak(String user) async {
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/getuserstreak?user=' + user.toLowerCase().toString()));
+    if(response.statusCode == 200){
+      userStreak = response.body;
+    } else {
+      throw Exception('Failed to get user level');
+    }
+    return userStreak;
+  }
+
+  Future<String> getUserRank(String user) async {
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/getuserrank?user=' + user.toLowerCase().toString()));
+    if(response.statusCode == 200){
+      userRank = response.body;
+    } else {
+      throw Exception('Failed to get user rank');
+    }
+    return userRank;
+  }
+
+  Future<String> getUserExp(String user) async {
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/getuserexp?user=' + user.toLowerCase().toString()));
+    if(response.statusCode == 200){
+      userExperience = response.body;
+    } else {
+      throw Exception('Failed to get user rank');
+    }
+    return userExperience;
   }
 
   //Metoden som ska hämta directions från google utifrån String routeRequest som ska skapas i backend
