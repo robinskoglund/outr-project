@@ -18,6 +18,8 @@ class OutrNavigationBar extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
   final User user;
 
+  OutrNavigationBar(this.user, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //mediaquery, screenHeight
@@ -98,25 +100,25 @@ class OutrNavigationBar extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MapScreen(user: user,),
+          builder: (context) => MapScreen(user: user),
         ));
         break;
 
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProfileScreen(),
+          builder: (context) => ProfileScreen(user),
         ));
         break;
 
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MixStartPage(),
+          builder: (context) => MixStartPage(user),
         ));
         break;
 
       case 3:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => SavedRoutesPage(),
+          builder: (context) => SavedRoutesPage(user),
         ));
         break;
     }

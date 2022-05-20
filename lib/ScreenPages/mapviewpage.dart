@@ -63,13 +63,13 @@ class _MapScreenState extends State<MapScreen> {
     final slidingUpPanelHeightOpened = MediaQuery.of(context).size.height * 0.8;
 
     return Scaffold(
-      endDrawer: OutrNavigationBar(),
+      endDrawer: OutrNavigationBar(widget.user),
       appBar: AppBar(
         leading: IconButton(icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: const Text('Outr Map'),
+        title: Text(widget.user.email),
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
       ),

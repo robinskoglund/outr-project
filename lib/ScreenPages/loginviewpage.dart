@@ -10,13 +10,11 @@ import '../DataClasses/userdata.dart';
 import 'mapviewpage.dart';
 import 'registerviewpage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import '../Components/navigationbar.dart';
-import 'achievementspage.dart';
-import 'savedroutespage.dart';
 
 void main() => runApp(MaterialApp(home: Home()));
 
 class Home extends StatefulWidget {
+
   @override
   State<Home> createState() => _HomeState();
 }
@@ -24,12 +22,10 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   TextEditingController mailInput = TextEditingController();
   TextEditingController passwordInput = TextEditingController();
-  late User user;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: OutrNavigationBar(),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('OutR'),
@@ -214,7 +210,7 @@ class _HomeState extends State<Home> {
                         }
                         print(friendsArray);
                         //GET-call
-                        user = await getUser(userEmail);
+                        User user = await getUser(userEmail);
                         print(user);
                         if (user.email.isEmpty) {
                           addUser(userName, userEmail);
