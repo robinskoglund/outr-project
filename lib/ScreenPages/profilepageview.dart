@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../API/httprequesthandler.dart';
 import '../Components/navigationbar.dart';
 import '../DataClasses/userdata.dart';
 import 'achievementspage.dart';
@@ -14,21 +15,19 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen>{
-  String currentLevel = '1';
-  String currentStreak = '0';
-  String currentExperience = '0';
-  String currentRank = 'Rookie';
-  String accountLoggedIn = 'testoutr@gmail.se';
+  String currentLevel = '';
+  String currentStreak = '';
+  String currentExperience = '';
+  String currentRank = '';
+  String accountLoggedIn = '';
 
 
   @override
   void initState() {
-    /*
-    currentLevel = HttpRequestHandler().getUserLevel('test@gmail.se') as String;
-    currentStreak = HttpRequestHandler().getUserStreak('test@gmail.se') as String;
-    currentExperience = HttpRequestHandler().getUserExp('test@gmail.se') as String;
-    currentRank = HttpRequestHandler().getUserRank('test@gmail.se') as String;
-     */
+    currentLevel = widget.user.level.toString();
+    currentStreak = widget.user.dailyStreak.toString();
+    currentExperience = widget.user.xp.toString();
+    currentRank = widget.user.rank.toString();
     super.initState();
   }
 
