@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:outr/Components/outr_icon_icons.dart';
 import 'package:outr/ScreenPages/cardiostartpage.dart';
 import 'package:outr/ScreenPages/mixstartpage.dart';
+import 'package:outr/ScreenPages/settingspage.dart';
 import '../DataClasses/userdata.dart';
 import '../ScreenPages/achievementspage.dart';
 import '../ScreenPages/loginviewpage.dart';
@@ -125,6 +126,11 @@ class OutrNavigationBar extends StatelessWidget {
       case 3:
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => SavedRoutesPage(user),
+        ));
+        break;
+      case 4:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => SettingsPage(user),
         ));
         break;
       case 5:
