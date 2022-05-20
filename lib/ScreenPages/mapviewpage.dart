@@ -69,9 +69,6 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       endDrawer: OutrNavigationBar(widget.user),
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
         centerTitle: true,
         title: const Text('OutR Map'),
         foregroundColor: Colors.black,

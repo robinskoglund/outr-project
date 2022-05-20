@@ -35,11 +35,9 @@ class _HomeState extends State<Home> {
           fontWeight: FontWeight.w500,
           letterSpacing: 1,
         ),
+        automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
       ),
       //Container that stretch to the whole screen that consists of backround image asset
       body: Container(
