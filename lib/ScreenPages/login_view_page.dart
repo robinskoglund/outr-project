@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
-import 'package:outr/Components/textfieldcontainer.dart';
+import 'package:outr/Components/text_field_container.dart';
 import '../API/dbapihandler.dart';
-import '../Components/alertnoicon.dart';
+import '../Components/alert_no_icon.dart';
 import '../DataClasses/userdata.dart';
-import 'mapviewpage.dart';
-import 'registerviewpage.dart';
+import 'mapview_page.dart';
+import 'register_view_page.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 void main() => runApp(MaterialApp(home: Home()));

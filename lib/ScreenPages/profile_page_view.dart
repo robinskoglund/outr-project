@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../API/httprequesthandler.dart';
-import '../Components/navigationbar.dart';
+import '../Components/navigation_bar.dart';
 import '../DataClasses/userdata.dart';
-import 'achievementspage.dart';
+import 'achievements_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   final User user;

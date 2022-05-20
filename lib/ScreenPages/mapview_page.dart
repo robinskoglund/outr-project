@@ -7,8 +7,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../API/directions_model.dart';
 import '../API/httprequesthandler.dart';
-import '../Components/navigationbar.dart';
-import '../Components/slidingupwidget.dart';
+import '../Components/navigation_bar.dart';
+import '../Components/sliding_up_widget.dart';
 import '../DataClasses/userdata.dart';
 
 class MapScreen extends StatefulWidget {

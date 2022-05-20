@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:outr/Components/outr_icon_icons.dart';
 import 'package:outr/Components/outr_icons_icons.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../Components/navigationbar.dart';
+import '../Components/navigation_bar.dart';
 import '../DataClasses/userdata.dart';
 
-class CardioStartPage extends StatefulWidget {
+
+class MixStartPage extends StatefulWidget {
   final User user;
 
-  CardioStartPage(this.user, {Key? key}) : super(key: key);
+  MixStartPage(this.user);
 
   @override
-  State<CardioStartPage> createState() => _CardioStartPageState();
+  State<MixStartPage> createState() => _MixStartPageState();
 }
-//hej
-class _CardioStartPageState extends State<CardioStartPage> {
+
+class _MixStartPageState extends State<MixStartPage> {
   String durationValue = '15:00';
   int walkOrJogIndex = 0;
 
@@ -30,7 +30,7 @@ class _CardioStartPageState extends State<CardioStartPage> {
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: const Text('Cardio'),
+        title: const Text('Mix'),
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
       ),

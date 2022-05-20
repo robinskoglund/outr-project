@@ -1,15 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:outr/Components/outr_icon_icons.dart';
-import 'package:outr/ScreenPages/cardiostartpage.dart';
-import 'package:outr/ScreenPages/mixstartpage.dart';
-import 'package:outr/ScreenPages/settingspage.dart';
+import 'package:outr/ScreenPages/cardio_start_page.dart';
+import 'package:outr/ScreenPages/mix_start_page.dart';
+import 'package:outr/ScreenPages/settings_page.dart';
 import '../DataClasses/userdata.dart';
-import '../ScreenPages/achievementspage.dart';
-import '../ScreenPages/loginviewpage.dart';
-import '../ScreenPages/mapviewpage.dart';
-import '../ScreenPages/profilepageview.dart';
-import '../ScreenPages/savedroutespage.dart';
+import '../ScreenPages/achievements_page.dart';
+import '../ScreenPages/login_view_page.dart';
+import '../ScreenPages/mapview_page.dart';
+import '../ScreenPages/profile_page_view.dart';
+import '../ScreenPages/saved_routes_page.dart';
 import 'outr_icon_icons.dart';
 
 final Color backgroundColor = Color(0xFF353535);

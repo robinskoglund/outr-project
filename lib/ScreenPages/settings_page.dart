@@ -1,10 +1,9 @@
-import '../Components/navigationbar.dart';
+import '../Components/navigation_bar.dart';
 import '../DataClasses/userdata.dart';
-import '../ScreenPages/savedroutespage.dart';
-import '../ScreenPages/mapviewpage.dart';
-import '../ScreenPages/loginviewpage.dart';
+import '../ScreenPages/saved_routes_page.dart';
+import '../ScreenPages/mapview_page.dart';
+import '../ScreenPages/login_view_page.dart';
 import 'package:flutter/material.dart';
-import '../Components/navigationbar.dart';
 
 
 class SettingsPage extends StatelessWidget {

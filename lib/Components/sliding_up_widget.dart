@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:outr/ScreenPages/cardiostartpage.dart';
-import 'package:outr/ScreenPages/mixstartpage.dart';
+import 'package:outr/ScreenPages/cardio_start_page.dart';
+import 'package:outr/ScreenPages/mix_start_page.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../DataClasses/userdata.dart';
-import '../ScreenPages/mapviewpage.dart';
+import '../ScreenPages/mapview_page.dart';
 
 class SlidingUpWidget extends StatefulWidget {
   final PanelController panelController;

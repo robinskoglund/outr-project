@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../API/dbapihandler.dart';
-import '../Components/navigationbar.dart';
+import '../Components/navigation_bar.dart';
 import '../DataClasses/userdata.dart';
 
 class RegisterScreen extends StatefulWidget {
