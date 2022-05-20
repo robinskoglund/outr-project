@@ -207,22 +207,12 @@ class _HomeState extends State<Home> {
                           updateLogin(userEmail);
                         }
                       }
-                    },
-                    backgroundColor: Colors.blue[900]!,
-                  ),
-                  SignInButtonBuilder(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    text: 'map tester',
-                    icon: Icons.map_sharp,
-                    onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => MapScreen()),
                       );
                     },
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.blue[900]!,
                   ),
                 ],
               ),
@@ -256,21 +246,3 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
-/*
-
-                    onPressed: () async {
-
-                      bool check = await checkPassword(mailInput.text.toLowerCase(), passwordInput.text);
-                      if(check == true){
-                        //Ta sig till din sida
-                        updateLogin(mailInput.text);
-                      } else{
-                        //Visa en felmeddelande
-                      }
-                      print(mailInput.text);
-                      print(passwordInput.text);
-                      mailInput.clear();
-                      passwordInput.clear();
-                    },
- */
