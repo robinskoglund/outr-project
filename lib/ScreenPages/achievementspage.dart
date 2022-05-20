@@ -1,12 +1,15 @@
 import 'dart:math';
 import '../Components/navigationbar.dart';
+import '../DataClasses/userdata.dart';
 import '../ScreenPages/savedroutespage.dart';
 import '../ScreenPages/mapviewpage.dart';
 import '../ScreenPages/loginviewpage.dart';
 import 'package:flutter/material.dart';
-import '../Components/timer.dart';
 
 class AchievementsPage extends StatelessWidget {
+  final User user;
+
+  AchievementsPage(this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class AchievementsPage extends StatelessWidget {
         title: const Text('Achievements'),
         backgroundColor: Colors.white,
       ),
-      endDrawer: OutrNavigationBar(),
+      endDrawer: OutrNavigationBar(user),
       body: Container(
         color: Colors.grey[200],
         width: MediaQuery.of(context).size.width,

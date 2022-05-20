@@ -1,14 +1,11 @@
-import 'dart:math';
-import '../ScreenPages/savedroutespage.dart';
-import '../ScreenPages/mapviewpage.dart';
-import '../ScreenPages/loginviewpage.dart';
+import '../DataClasses/userdata.dart';
 import 'package:flutter/material.dart';
 import '../Components/navigationbar.dart';
-import '../Components/timer.dart';
 
 class SavedRoutesPage extends StatelessWidget {
+  final User user;
 
-
+  SavedRoutesPage(this.user);
 
   Widget buildBasicListView(BuildContext context) => ListView(
 
@@ -150,11 +147,6 @@ class SavedRoutesPage extends StatelessWidget {
                   }
               ),
             ),
-
-
-            ClipRect( //ska inte vara här egentligen, bara för test
-              child: TimerPage(),
-            ),
           ],
         ),
       ],
@@ -181,7 +173,7 @@ class SavedRoutesPage extends StatelessWidget {
             color: Colors.black),
         backgroundColor: Colors.white,
       ),
-      endDrawer: OutrNavigationBar(),
+      endDrawer: OutrNavigationBar(user),
       body: buildBasicListView(context),
 
     );

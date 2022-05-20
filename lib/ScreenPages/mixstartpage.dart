@@ -5,10 +5,14 @@ import 'package:outr/Components/outr_icons_icons.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../Components/navigationbar.dart';
-
+import '../DataClasses/userdata.dart';
 
 
 class MixStartPage extends StatefulWidget {
+  final User user;
+
+  MixStartPage(this.user);
+
   @override
   State<MixStartPage> createState() => _MixStartPageState();
 }
@@ -20,7 +24,7 @@ class _MixStartPageState extends State<MixStartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: OutrNavigationBar(),
+      endDrawer: OutrNavigationBar(widget.user),
       appBar: AppBar(
         leading: IconButton(icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),

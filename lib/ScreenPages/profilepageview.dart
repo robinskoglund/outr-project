@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:outr/API/httprequesthandler.dart';
 import '../Components/navigationbar.dart';
+import '../DataClasses/userdata.dart';
 import 'achievementspage.dart';
 
 class ProfileScreen extends StatefulWidget {
+  final User user;
+
+  ProfileScreen(this.user);
+
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -36,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: OutrNavigationBar(),
+      endDrawer: OutrNavigationBar(widget.user),
       appBar: AppBar(
         leading: IconButton(icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -180,7 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AchievementsPage()),
+                        MaterialPageRoute(builder: (context) => AchievementsPage(widget.user)),
                       );
                     },
                     child: const Text(

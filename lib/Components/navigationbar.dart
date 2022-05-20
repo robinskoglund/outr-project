@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:outr/Components/outr_icon_icons.dart';
 import 'package:outr/ScreenPages/cardiostartpage.dart';
 import 'package:outr/ScreenPages/mixstartpage.dart';
+import '../DataClasses/userdata.dart';
 import '../ScreenPages/achievementspage.dart';
 import '../ScreenPages/loginviewpage.dart';
 import '../ScreenPages/mapviewpage.dart';
@@ -15,6 +16,9 @@ late double screenWidth, screenHeight;
 
 class OutrNavigationBar extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
+  final User user;
+
+  OutrNavigationBar(this.user, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -96,25 +100,25 @@ class OutrNavigationBar extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MapScreen(),
+          builder: (context) => MapScreen(user: user),
         ));
         break;
 
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProfileScreen(),
+          builder: (context) => ProfileScreen(user),
         ));
         break;
 
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MixStartPage(),
+          builder: (context) => MixStartPage(user),
         ));
         break;
 
       case 3:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => SavedRoutesPage(),
+          builder: (context) => SavedRoutesPage(user),
         ));
         break;
     }

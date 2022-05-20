@@ -9,9 +9,12 @@ import '../API/directions_model.dart';
 import '../API/httprequesthandler.dart';
 import '../Components/navigationbar.dart';
 import '../Components/slidingupwidget.dart';
+import '../DataClasses/userdata.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
+  final User user;
+
+  const MapScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   _MapScreenState createState() => _MapScreenState();
@@ -60,13 +63,13 @@ class _MapScreenState extends State<MapScreen> {
     final slidingUpPanelHeightOpened = MediaQuery.of(context).size.height * 0.8;
 
     return Scaffold(
-      endDrawer: OutrNavigationBar(),
+      endDrawer: OutrNavigationBar(widget.user),
       appBar: AppBar(
         leading: IconButton(icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: const Text('Outr Map'),
+        title: const Text('OutR Map'),
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
       ),
@@ -96,6 +99,7 @@ class _MapScreenState extends State<MapScreen> {
             minHeight: slidingUpPanelHeightCollapsed,
             maxHeight: slidingUpPanelHeightOpened,
             panelBuilder: (controller) => SlidingUpWidget(
+              user: widget.user,
               panelController: slidingUpPanelController,
               chooseButton: (int buttonNumber) {
                 setState(() {
