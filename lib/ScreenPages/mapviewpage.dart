@@ -69,7 +69,7 @@ class _MapScreenState extends State<MapScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: Text(widget.user.email),
+        title: const Text('OutR Map'),
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
       ),
