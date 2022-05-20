@@ -13,6 +13,9 @@ class User{
   final int dailyStreak;
   final String createdAt;
   final String lastLogin;
+  final int level;
+  final int xp;
+  final String rank;
 
   const User({
     required this.name,
@@ -21,6 +24,9 @@ class User{
     required this.dailyStreak,
     required this.createdAt,
     required this.lastLogin,
+    required this.level,
+    required this.xp,
+    required this.rank
   });
 
   factory User.fromJson(Map<String, dynamic> json){
@@ -31,6 +37,9 @@ class User{
       dailyStreak: json['dailyStreak'],
       createdAt: json['createdAt'],
       lastLogin: json['lastLogin'],
+      level: json['level'],
+      xp: json['xp'],
+      rank: json['rank']
     );
   }
 
@@ -61,7 +70,7 @@ Future<User> getUser(String email) async {
 
   if(response.statusCode == 200){
     if(response.body.isEmpty){
-      return const User(name: "", email: "", noOfCompletedRoutes: 0, dailyStreak: 0, createdAt: "", lastLogin: "");
+      return const User(name: "", email: "", noOfCompletedRoutes: 0, dailyStreak: 0, createdAt: "", lastLogin: "", level: 1, xp: 0, rank: "");
     }
     return User.fromJson(jsonDecode(response.body));
   } else {
