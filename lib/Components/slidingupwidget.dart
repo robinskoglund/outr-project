@@ -7,6 +7,7 @@ import 'package:outr/ScreenPages/mixstartpage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../DataClasses/userdata.dart';
 import '../ScreenPages/mapviewpage.dart';
+import '../ScreenPages/strengthfinpage.dart';
 
 class SlidingUpWidget extends StatefulWidget {
   final PanelController panelController;

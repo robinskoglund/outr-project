@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:outr/Components/outr_icon_icons.dart';
 import 'package:outr/ScreenPages/cardiostartpage.dart';
+import 'package:outr/ScreenPages/finishedgymworkoutpage.dart';
 import 'package:outr/ScreenPages/mixstartpage.dart';
 import 'package:outr/ScreenPages/settingspage.dart';
 import '../DataClasses/userdata.dart';
@@ -10,7 +11,9 @@ import '../ScreenPages/loginviewpage.dart';
 import '../ScreenPages/mapviewpage.dart';
 import '../ScreenPages/profilepageview.dart';
 import '../ScreenPages/savedroutespage.dart';
+import '../ScreenPages/strengthfinpage.dart';
 import 'outr_icon_icons.dart';
+import '../ScreenPages/finishedgymworkoutpage.dart';
 
 final Color backgroundColor = Color(0xFF353535);
 late double screenWidth, screenHeight;
@@ -119,7 +122,7 @@ class OutrNavigationBar extends StatelessWidget {
 
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MixStartPage(user),
+          builder: (context) => FinishedGymWorkoutPage(user),
         ));
         break;
 

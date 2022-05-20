@@ -113,7 +113,7 @@ class SavedRoutesPage extends StatelessWidget {
                     )
                 ),
                 child: const Text("Share on Facebook", style: TextStyle(fontFamily: "Dongle",
-                    fontSize: 16, fontWeight: FontWeight.normal)),
+                    fontSize: 12, fontWeight: FontWeight.normal)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -126,7 +126,7 @@ class SavedRoutesPage extends StatelessWidget {
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0)))),
                 child: const Text("Share on Instagram", style: TextStyle(fontFamily: "Dongle",
-                    fontSize: 16, fontWeight: FontWeight.normal)),
+                    fontSize: 12, fontWeight: FontWeight.normal)),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -141,7 +141,7 @@ class SavedRoutesPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30.0)))
                   ),
                   child: const Text("Share on Pinterest", style: TextStyle(fontFamily: "Dongle",
-                      fontSize: 16, fontWeight: FontWeight.normal)),
+                      fontSize: 12, fontWeight: FontWeight.normal)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   }
@@ -165,6 +165,7 @@ class SavedRoutesPage extends StatelessWidget {
         leading: IconButton(icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
+        centerTitle: true,
         foregroundColor: Colors.black, //ändrar färgen på burgarmeny
         title: const Text('Saved Routes'),
         titleTextStyle: TextStyle(
