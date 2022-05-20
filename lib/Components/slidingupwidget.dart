@@ -3,16 +3,18 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import '../DataClasses/userdata.dart';
 import '../ScreenPages/mapviewpage.dart';
 
 class SlidingUpWidget extends StatefulWidget {
   final PanelController panelController;
   final ButtonChoiceCallback chooseButton;
+  final User user;
 
   const SlidingUpWidget({
     Key? key,
     required this.panelController,
-    required this.chooseButton,
+    required this.chooseButton, required this.user,
   }) : super(key: key);
 
   @override

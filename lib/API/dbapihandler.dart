@@ -4,65 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../DataClasses/userdata.dart';
+
 //'https://group-4-15.pvt.dsv.su.se/outr_gyms/all'
-
-class User{
-  final String name;
-  final String email;
-  final int noOfCompletedRoutes;
-  final int dailyStreak;
-  final String createdAt;
-  final String lastLogin;
-  final int level;
-  final int xp;
-  final String rank;
-
-  const User({
-    required this.name,
-    required this.email,
-    required this.noOfCompletedRoutes,
-    required this.dailyStreak,
-    required this.createdAt,
-    required this.lastLogin,
-    required this.level,
-    required this.xp,
-    required this.rank
-  });
-
-  factory User.fromJson(Map<String, dynamic> json){
-    return User(
-      name: json['name'],
-      email: json['email'],
-      noOfCompletedRoutes: json['noOfCompletedRoutes'],
-      dailyStreak: json['dailyStreak'],
-      createdAt: json['createdAt'],
-      lastLogin: json['lastLogin'],
-      level: json['level'],
-      xp: json['xp'],
-      rank: json['rank']
-    );
-  }
-
-  String toString(){
-    return name + ' ' + email + ' ' + createdAt + ' ' + lastLogin;
-  }
-
-}
-
-class Route{
-  final User user;
-  final String route;
-
-  const Route({
-    required this.user,
-    required this.route
-  });
-  factory Route.fromJson(Map<String, dynamic> json){
-    return Route(
-        user: json['user'],
-        route: json['route']);
-  }
-}
 
 Future<User> getUser(String email) async {
   //För att testa på sin localhost ska använd din ip-adress istället för "localhost" i adressen

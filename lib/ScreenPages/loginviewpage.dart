@@ -6,6 +6,7 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:outr/Components/textfieldcontainer.dart';
 import '../API/dbapihandler.dart';
 import '../Components/alertnoicon.dart';
+import '../DataClasses/userdata.dart';
 import 'mapviewpage.dart';
 import 'registerviewpage.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -14,9 +15,7 @@ import 'achievementspage.dart';
 import 'savedroutespage.dart';
 import '../Components/timer.dart';
 
-void main() => runApp(MaterialApp(
-    home: Home()
-));
+void main() => runApp(MaterialApp(home: Home()));
 
 class Home extends StatefulWidget {
   @override
@@ -26,6 +25,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   TextEditingController mailInput = TextEditingController();
   TextEditingController passwordInput = TextEditingController();
+  late User user;
 
   @override
   Widget build(BuildContext context) {
@@ -51,20 +51,19 @@ class _HomeState extends State<Home> {
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/backgroundloginpage.png'),
-              fit: BoxFit.fill,
-            )
-        ),
+          image: AssetImage('assets/backgroundloginpage.png'),
+          fit: BoxFit.fill,
+        )),
         child: Stack(
           children: <Widget>[
             Padding(
-                padding: const EdgeInsets.fromLTRB(70, 20, 80, 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    TextContainer(
-                      child: TextField(
+              padding: const EdgeInsets.fromLTRB(70, 20, 80, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  TextContainer(
+                    child: TextField(
                       decoration: const InputDecoration(
                         hintText: 'Email',
                         icon: Icon(
@@ -75,34 +74,35 @@ class _HomeState extends State<Home> {
                       ),
                       controller: mailInput,
                     ),
-                    ),
-                    TextContainer(
-                      child: TextField(
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          hintText: 'Password',
-                          icon: Icon(
-                            Icons.lock,
-                            color: Colors.black,
-                          ),
-                          suffixIcon: Icon(
-                            Icons.visibility,
-                            color: Colors.black,
-                          ),
-                          border: InputBorder.none,
+                  ),
+                  TextContainer(
+                    child: TextField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        hintText: 'Password',
+                        icon: Icon(
+                          Icons.lock,
+                          color: Colors.black,
                         ),
-                        controller: passwordInput,
+                        suffixIcon: Icon(
+                          Icons.visibility,
+                          color: Colors.black,
+                        ),
+                        border: InputBorder.none,
                       ),
+                      controller: passwordInput,
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 155, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text.rich( //Profil knappen
+                  Text.rich(
+                    //Profil knappen
                     TextSpan(
                       style: const TextStyle(
                         color: Colors.black,
@@ -114,22 +114,32 @@ class _HomeState extends State<Home> {
                           text: 'Login ',
                           recognizer: TapGestureRecognizer()
                             ..onTap = () async {
-                              bool check = await checkPassword(mailInput.text.toLowerCase(), passwordInput.text);
+                              bool check = await checkPassword(
+                                  mailInput.text.toLowerCase(),
+                                  passwordInput.text);
 
                               print(mailInput.text);
                               print(passwordInput.text);
 
-                              if(check == true){
+                              if (check == true) {
                                 updateLogin(mailInput.text.toLowerCase());
+                                User user = await getUser(mailInput.text);
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MapScreen()),
+                                  MaterialPageRoute(
+                                      builder: (context) => MapScreen(
+                                            user: user,
+                                          )),
                                 );
-                              } else{
+                              } else {
                                 showDialog(
                                     context: context,
-                                    builder: (BuildContext context){
-                                      return AlertNoIcon('Alert', 'Wrong email or password!', 'Cancel', 'Abort');
+                                    builder: (BuildContext context) {
+                                      return AlertNoIcon(
+                                          'Alert',
+                                          'Wrong email or password!',
+                                          'Cancel',
+                                          'Abort');
                                     });
                                 mailInput.clear();
                                 passwordInput.clear();
@@ -139,7 +149,8 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
-                  Text.rich( //Profil knappen
+                  Text.rich(
+                    //Profil knappen
                     TextSpan(
                       style: const TextStyle(
                         color: Colors.black,
@@ -153,13 +164,14 @@ class _HomeState extends State<Home> {
                             ..onTap = () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => RegisterScreen()),
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterScreen()),
                               );
                             },
                         ),
                       ],
+                    ),
                   ),
-                 ),
                 ],
               ),
             ),
@@ -176,11 +188,13 @@ class _HomeState extends State<Home> {
                     text: 'login with facebook',
                     icon: Icons.facebook,
                     onPressed: () async {
-                      final result = await FacebookAuth.i.login(
-                          permissions: ["public_profile", "email", "user_friends"]
-                      );
+                      final result = await FacebookAuth.i.login(permissions: [
+                        "public_profile",
+                        "email",
+                        "user_friends"
+                      ]);
 
-                      if(result.status == LoginStatus.success){
+                      if (result.status == LoginStatus.success) {
                         final requestdata = await FacebookAuth.i.getUserData(
                           fields: "email, name, friends",
                         );
@@ -188,29 +202,33 @@ class _HomeState extends State<Home> {
                         var userEmail;
                         var userName;
                         var friendsArray = [];
-                        for(var k in requestdata.entries){
-                          if(k.key == 'email'){
+                        for (var k in requestdata.entries) {
+                          if (k.key == 'email') {
                             userEmail = k.value;
-                          } if (k.key == 'name'){
+                          }
+                          if (k.key == 'name') {
                             userName = k.value;
-                          } if(k.key == 'friends'){
+                          }
+                          if (k.key == 'friends') {
                             friendsArray == k.value;
                           }
                         }
                         print(friendsArray);
                         //GET-call
-                        User user = await getUser(userEmail);
+                        user = await getUser(userEmail);
                         print(user);
-                        if(user.email.isEmpty){
+                        if (user.email.isEmpty) {
                           addUser(userName, userEmail);
-                        }else{
+                          user = await getUser(userEmail);
+                        } else {
                           updateLogin(userEmail);
                         }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MapScreen(user: user)),
+                        );
                       }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MapScreen()),
-                      );
                     },
                     backgroundColor: Colors.blue[900]!,
                   ),
@@ -218,27 +236,33 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.fromLTRB(60, 510, 40, 0),
-                child: Container(
-                  height: 90,
-                  width: 290,
-                  child: Stack(
-                    children: const <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(left: 25),
-                        child: Text('Start your journey',
-                            style: TextStyle(fontFamily: "Dongle", fontSize: 43, fontWeight: FontWeight.bold, color: Colors.black)
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: Text('to a healthier lifestyle',
-                            style: TextStyle(fontFamily: "Dongle", fontSize: 43, fontWeight: FontWeight.bold, color: Colors.black)
-                        ),
-                      ),
-                    ],
-                  ),
+              padding: EdgeInsets.fromLTRB(60, 510, 40, 0),
+              child: Container(
+                height: 90,
+                width: 290,
+                child: Stack(
+                  children: const <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 25),
+                      child: Text('Start your journey',
+                          style: TextStyle(
+                              fontFamily: "Dongle",
+                              fontSize: 43,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 30),
+                      child: Text('to a healthier lifestyle',
+                          style: TextStyle(
+                              fontFamily: "Dongle",
+                              fontSize: 43,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                    ),
+                  ],
                 ),
+              ),
             ),
           ],
         ),

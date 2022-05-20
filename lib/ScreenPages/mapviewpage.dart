@@ -9,9 +9,12 @@ import '../API/directions_model.dart';
 import '../API/httprequesthandler.dart';
 import '../Components/navigationbar.dart';
 import '../Components/slidingupwidget.dart';
+import '../DataClasses/userdata.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
+  final User user;
+
+  const MapScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   _MapScreenState createState() => _MapScreenState();
@@ -96,6 +99,7 @@ class _MapScreenState extends State<MapScreen> {
             minHeight: slidingUpPanelHeightCollapsed,
             maxHeight: slidingUpPanelHeightOpened,
             panelBuilder: (controller) => SlidingUpWidget(
+              user: widget.user,
               panelController: slidingUpPanelController,
               chooseButton: (int buttonNumber) {
                 setState(() {
