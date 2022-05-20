@@ -70,6 +70,12 @@ class OutrNavigationBar extends StatelessWidget {
                     icon: Icons.settings,
                     onClicked: () => selectedItem(context, 4),
                   ),
+                  const SizedBox(height: 24),
+                  buildMenuItem(
+                    text: 'Logout',
+                    icon: Icons.logout,
+                    onClicked: () => selectedItem(context, 5),
+                  ),
                 ],
               ),
             ),
@@ -119,6 +125,11 @@ class OutrNavigationBar extends StatelessWidget {
       case 3:
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => SavedRoutesPage(user),
+        ));
+        break;
+      case 5:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Home(),
         ));
         break;
     }
