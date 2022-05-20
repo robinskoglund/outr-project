@@ -4,7 +4,6 @@ import '../ScreenPages/savedroutespage.dart';
 import '../ScreenPages/mapviewpage.dart';
 import '../ScreenPages/loginviewpage.dart';
 import 'package:flutter/material.dart';
-import '../Components/timer.dart';
 
 class AchievementsPage extends StatelessWidget {
 

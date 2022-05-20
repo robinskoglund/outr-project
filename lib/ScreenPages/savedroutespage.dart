@@ -4,11 +4,8 @@ import '../ScreenPages/mapviewpage.dart';
 import '../ScreenPages/loginviewpage.dart';
 import 'package:flutter/material.dart';
 import '../Components/navigationbar.dart';
-import '../Components/timer.dart';
 
 class SavedRoutesPage extends StatelessWidget {
-
-
 
   Widget buildBasicListView(BuildContext context) => ListView(
 
@@ -149,11 +146,6 @@ class SavedRoutesPage extends StatelessWidget {
                     Navigator.of(context).pop();
                   }
               ),
-            ),
-
-
-            ClipRect( //ska inte vara här egentligen, bara för test
-              child: TimerPage(),
             ),
           ],
         ),
