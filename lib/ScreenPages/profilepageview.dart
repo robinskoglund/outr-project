@@ -20,6 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
   String currentExperience = '';
   String currentRank = '';
   String accountLoggedIn = '';
+  String xpToNextLevel = '';
 
 
   @override
@@ -28,6 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
     currentStreak = widget.user.dailyStreak.toString();
     currentExperience = widget.user.xp.toString();
     currentRank = widget.user.rank.toString();
+    xpToNextLevel = widget.user.xpToNextLevel.toString();
     super.initState();
   }
 
@@ -108,10 +110,10 @@ class _ProfileScreenState extends State<ProfileScreen>{
                   ),
                 ),
               ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(225, 270, 0, 0),
+             Padding(
+              padding: const EdgeInsets.fromLTRB(225, 270, 0, 0),
               child: Text(
-                '480 xp to',
+                '$xpToNextLevel xp to',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 40,

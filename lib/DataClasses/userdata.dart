@@ -8,6 +8,7 @@ class User{
   final int level;
   final int xp;
   final String rank;
+  final int xpToNextLevel;
 
   const User({
     required this.name,
@@ -18,7 +19,8 @@ class User{
     required this.lastLogin,
     required this.level,
     required this.xp,
-    required this.rank
+    required this.rank,
+    required this.xpToNextLevel
   });
 
   factory User.fromJson(Map<String, dynamic> json){
@@ -31,7 +33,8 @@ class User{
         lastLogin: json['lastLogin'],
         level: json['level'],
         xp: json['xp'],
-        rank: json['rank']
+        rank: json['rank'],
+        xpToNextLevel: json['xpToNextLevel']
     );
   }
 

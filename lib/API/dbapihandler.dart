@@ -14,7 +14,7 @@ Future<User> getUser(String email) async {
 
   if(response.statusCode == 200){
     if(response.body.isEmpty){
-      return const User(name: "", email: "", noOfCompletedRoutes: 0, dailyStreak: 0, createdAt: "", lastLogin: "", level: 1, xp: 0, rank: "");
+      return const User(name: "", email: "", noOfCompletedRoutes: 0, dailyStreak: 0, createdAt: "", lastLogin: "", level: 1, xp: 0, rank: "", xpToNextLevel: 5000);
     }
     return User.fromJson(jsonDecode(response.body));
   } else {
