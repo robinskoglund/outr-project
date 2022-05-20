@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:outr/ScreenPages/cardiostartpage.dart';
+import 'package:outr/ScreenPages/mixstartpage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../DataClasses/userdata.dart';
 import '../ScreenPages/mapviewpage.dart';
@@ -179,9 +181,11 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                               style: TextStyle(
                                   fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
-                            togglePanelUpDown();
-                            // widget.chooseButton(1);
-                            changeState();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CardioStartPage(widget.user)),
+                            );
                           },
                         ),
                         ElevatedButton.icon(
@@ -227,9 +231,11 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                               style: TextStyle(
                                   fontFamily: 'Dongle', fontSize: 50)),
                           onPressed: () {
-                            togglePanelUpDown();
-                            // widget.chooseButton(1);
-                            changeState();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MixStartPage(widget.user)),
+                            );
                           },
                         ),
                       ],

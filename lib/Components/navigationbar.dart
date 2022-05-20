@@ -106,7 +106,7 @@ class OutrNavigationBar extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MapScreen(user: user),
+          builder: (context) => MapScreen(user: user, showPopUp: false),
         ));
         break;
 

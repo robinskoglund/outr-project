@@ -13,8 +13,8 @@ import '../DataClasses/userdata.dart';
 
 class MapScreen extends StatefulWidget {
   final User user;
-
-  const MapScreen({Key? key, required this.user}) : super(key: key);
+  final bool showPopUp;
+  const MapScreen({Key? key, required this.user, required this.showPopUp}) : super(key: key);
 
   @override
   _MapScreenState createState() => _MapScreenState();
@@ -33,12 +33,18 @@ class _MapScreenState extends State<MapScreen> {
   String gymName = '';
   double gymLat = 0;
   double gymLong = 0;
+  bool avatarPopUp = true;
 
   @override
   void initState() {
     super.initState();
     getCurrentLocation();
     _setGymMarkerIcon();
+    if(widget.showPopUp == true){
+      avatarPopUp = true;
+    }else{
+      avatarPopUp = false;
+    }
   }
 
   @override
@@ -50,8 +56,6 @@ class _MapScreenState extends State<MapScreen> {
   void _setGymMarkerIcon() async {
     _markerIcon = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/barbell.png');
   }
-
-  bool _isShow = true;
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +118,7 @@ class _MapScreenState extends State<MapScreen> {
           Stack(
             children: <Widget>[
               Visibility(
-                visible: _isShow,
+                visible: avatarPopUp,
                 child: Image.asset('assets/cropedgubbis.png'),
               ),
               Positioned(
@@ -133,7 +137,7 @@ class _MapScreenState extends State<MapScreen> {
                             () {
                               buttonSelection = 1;
                               chooseButton(1);
-                              _isShow = !_isShow;
+                              avatarPopUp = !avatarPopUp;
                         });
                   },
                   child: const Text(
@@ -156,7 +160,7 @@ class _MapScreenState extends State<MapScreen> {
                   onPressed: (){
                     setState(
                             () {
-                              _isShow = !_isShow;
+                              avatarPopUp = !avatarPopUp;
                         });
                   },
                   child: const Text(

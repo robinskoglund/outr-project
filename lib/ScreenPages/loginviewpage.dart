@@ -122,9 +122,8 @@ class _HomeState extends State<Home> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => MapScreen(
-                                            user: user,
-                                          )),
+                                      builder: (context) => MapScreen(user: user, showPopUp: true)
+                                  ),
                                 );
                               } else {
                                 showDialog(
@@ -221,7 +220,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MapScreen(user: user)),
+                              builder: (context) => MapScreen(user: user, showPopUp: true)),
                         );
                       }
                     },
