@@ -54,7 +54,7 @@ class FinishedGymWorkoutPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Min',
+                    'Minutes',
                     style: TextStyle(
                       fontFamily: 'Dongle',
                       fontSize: 30,
@@ -73,20 +73,22 @@ class FinishedGymWorkoutPage extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white,
-                  padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
+                  padding: EdgeInsets.fromLTRB(35.0, 0, 35.0, 0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-                onPressed: () {},
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                      color: Colors.black,
-
-                      ), onPressed: () {  }, //lägg till så man kommer tbx
-                    ),
+                onPressed: () {Navigator.of(context).pop();
+                  },
+                child: Text(
+                  'Delete',
+                  style: TextStyle(
+                    fontFamily: 'Dongle',
+                    fontSize: 34,
+                    color: Colors.red,
                   ),
+                ),
+              ),
 
 
 

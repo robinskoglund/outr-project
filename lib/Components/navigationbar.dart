@@ -7,11 +7,11 @@ import 'package:outr/ScreenPages/mixstartpage.dart';
 import 'package:outr/ScreenPages/settingspage.dart';
 import '../DataClasses/userdata.dart';
 import '../ScreenPages/achievementspage.dart';
+import '../ScreenPages/finishedmixworkout.dart';
 import '../ScreenPages/loginviewpage.dart';
 import '../ScreenPages/mapviewpage.dart';
 import '../ScreenPages/profilepageview.dart';
 import '../ScreenPages/savedroutespage.dart';
-import '../ScreenPages/strengthfinpage.dart';
 import 'outr_icon_icons.dart';
 import '../ScreenPages/finishedgymworkoutpage.dart';
 
@@ -98,7 +98,8 @@ class OutrNavigationBar extends StatelessWidget {
 
     return ListTile(
       leading: Icon(icon, color: Colors.white),
-      title: Text(text, style: TextStyle(fontFamily: "Dongle", fontSize: 24, color: Colors.white)),
+      title: Text(text, style: TextStyle(fontFamily: "Dongle",
+          fontSize: 24, color: Colors.white)),
       hoverColor: hoverColor,
       onTap: onClicked,
     );
@@ -122,7 +123,7 @@ class OutrNavigationBar extends StatelessWidget {
 
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => FinishedGymWorkoutPage(user),
+          builder: (context) => FinishedMixWorkoutPage(user),
         ));
         break;
 

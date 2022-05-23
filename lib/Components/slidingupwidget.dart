@@ -2,17 +2,20 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:outr/Components/alertnoicon.dart';
 import 'package:outr/ScreenPages/cardiostartpage.dart';
 import 'package:outr/ScreenPages/mixstartpage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../DataClasses/userdata.dart';
 import '../ScreenPages/mapviewpage.dart';
-import '../ScreenPages/strengthfinpage.dart';
+import '../ScreenPages/finishedmixworkout.dart';
+import '../ScreenPages/finishedgymworkoutpage.dart';
 
 class SlidingUpWidget extends StatefulWidget {
   final PanelController panelController;
   final ButtonChoiceCallback chooseButton;
   final User user;
+
 
   const SlidingUpWidget({
     Key? key,
@@ -29,6 +32,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   bool _isPaused = false;
   String _playPause = 'Pause';
   String _sliderHeader = 'Start';
+  bool _endWorkout = false;
 
   Stopwatch _watch = Stopwatch();
   late Timer _timer;
@@ -334,7 +338,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                             });
                           },
                         ),
-                        ElevatedButton(
+                       ElevatedButton(
                           style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(
                                 Colors.white,
@@ -351,14 +355,10 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                           child: const Text('End',
                               style: TextStyle(
                                   fontFamily: 'Dongle', fontSize: 50)),
-                          onPressed: () {
-                            changeState();
-                            togglePanelUpDown();
-                            stopWatch();
-                            resetTimer();
-                            _isPaused = true;
-                            _playPause = "Pause";
-                          },
+                         onPressed: () {
+                           endWorkoutDialog(context); //anropar avsluta workout
+                         },
+
                         ),
                       ],
                     ),
@@ -370,7 +370,59 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
         ],
       );
 
-  Widget openUpPanelDragHandle() => GestureDetector(
+  void endWorkout(bool endWorkout) { //om man vill avsluta så körs denna metod
+
+    if(endWorkout == true)
+      changeState();
+      togglePanelUpDown();
+      stopWatch();
+      resetTimer();
+      _isPaused = true;
+      _playPause = "Pause";
+
+
+  }
+
+
+  void endWorkoutDialog(BuildContext context) {
+    var alert = AlertDialog(
+      title: Text("End workout",
+          style: TextStyle(fontFamily: "Dongle", fontSize: 40)),
+      content: Text("Do you wish to end your current workout?",
+          style: TextStyle(fontFamily: "Dongle", fontSize: 25)),
+      actions: <Widget>[
+        TextButton(onPressed: () {
+          Navigator.of(context).pop();
+          _endWorkout = false; //sätter att man vill avsluta till false
+        },
+          child: Text("Cancel", style: TextStyle(color: Colors.black,
+              fontFamily: 'Dongle', fontSize: 30),),
+        ),
+        SizedBox(width: 5.0),
+
+
+        TextButton(onPressed: () {
+          _endWorkout = true;  //sätter att man vill avsluta till ja
+          endWorkout(_endWorkout);
+          Navigator.pop(context);
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => //skickar användaren
+          //till FinishedGymWorkout sidan
+              FinishedGymWorkoutPage(widget.user)));
+        },
+          child: Text("End", style: TextStyle(color: Colors.red,
+              fontFamily: 'Dongle', fontSize: 30),),
+        ),
+        SizedBox(width: 5.0),
+      ],
+    );
+    showDialog(context: context, builder: (BuildContext context) => alert);
+    //visar alerten
+
+  }
+
+
+        Widget openUpPanelDragHandle() => GestureDetector(
         child: Center(
           child: Container(
             width: 50,

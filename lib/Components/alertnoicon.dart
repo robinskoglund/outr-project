@@ -15,7 +15,7 @@ class AlertNoIcon extends StatelessWidget{
   @override
   Widget build(BuildContext context){
 
-    return AlertDialog(
+    var alert = AlertDialog(
       title: Text(title, style: TextStyle(fontFamily: 'Dongle', fontSize: 30),),
       content: Text(content, style: TextStyle(fontFamily: 'Dongle', fontSize: 25),),
       actions: <Widget>[
@@ -34,5 +34,8 @@ class AlertNoIcon extends StatelessWidget{
         ),
       ],
     );
+
+        showDialog(context: context, builder: (BuildContext context) => alert);
+    return alert;
   }
 }
