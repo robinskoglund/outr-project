@@ -6,7 +6,6 @@ import '../DataClasses/userdata.dart';
 import 'login_view_page.dart';
 
 class RegisterScreen extends StatefulWidget {
-
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -27,7 +26,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text('Registration'),
@@ -48,10 +48,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/backgroundregisterpage.png'),
-              fit: BoxFit.cover,
-            )
+          gradient: LinearGradient(
+              colors: [const Color(0xffa4eec1), const Color(0xffd9f3e3)],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 0.0),
+              stops: [0.0, 1.0],
+              tileMode: TileMode.clamp),
         ),
         child: Stack(
           children: <Widget>[
@@ -101,9 +103,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ElevatedButton(
                       onPressed: () async {
                         //TODO: Man kan fortfarande klicka på knappen när email inte innehåller @ och när lösen inte stämmer överens
-                        if(await validateRegistration(mailInput.text)){
+                        if (await validateRegistration(mailInput.text)) {
                           addUser(nameInput.text, mailInput.text.toLowerCase());
-                          addLogin(mailInput.text.toLowerCase(), passwordInput.text);
+                          addLogin(
+                              mailInput.text.toLowerCase(), passwordInput.text);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -112,26 +115,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           );
                         }
                       },
-                      child: const Text('Register',
-                        style:(
-                            TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
-                            )
-                        ),
+                      child: const Text(
+                        'Register',
+                        style: (TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        )),
                       ),
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              )
-                          )
-                      ),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ))),
                     ),
                   ],
-                )
+                )),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(90, 425, 90, 50),
+              child: Align(
+                alignment: Alignment.center,
+                child: Image.asset("assets/logo.png"),
+                widthFactor: 128,
+                heightFactor: 128,
+              ),
             ),
           ],
         ),
@@ -139,8 +149,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Future<bool> validateRegistration(String email) async{
-    if(passwordInput.text != passwordInput2.text){
+  Future<bool> validateRegistration(String email) async {
+    if (passwordInput.text != passwordInput2.text) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -153,7 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       clearInputs();
       return false;
     }
-    if(!email.contains('@')){
+    if (!email.contains('@')) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -166,15 +176,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       clearInputs();
       return false;
     }
-    if(await userExists(email) == true){
+    if (await userExists(email) == true) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AlertNoIcon(
-                'Alert',
-                'Registration failed! User exists already!',
-                'Cancel',
-                'Abort');
+            return AlertNoIcon('Alert',
+                'Registration failed! User exists already!', 'Cancel', 'Abort');
           });
       clearInputs();
       return false;
@@ -182,7 +189,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return true;
   }
 
-  void clearInputs(){
+  void clearInputs() {
     mailInput.clear();
     nameInput.clear();
     passwordInput.clear();
@@ -193,7 +200,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (value.isEmpty) {
       return "You need to enter a password!";
     }
-    if(passwordInput.text != passwordInput2.text){
+    if (passwordInput.text != passwordInput2.text) {
       return "Passwords do not match!";
     }
     return null;
@@ -203,7 +210,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (value.isEmpty) {
       return "You need to enter a Email!";
     }
-    if(!value.contains('@')){
+    if (!value.contains('@')) {
       return "Email format is wrong!";
     }
     return null;

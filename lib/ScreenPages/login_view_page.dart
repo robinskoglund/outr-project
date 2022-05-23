@@ -14,7 +14,6 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 void main() => runApp(MaterialApp(home: Home()));
 
 class Home extends StatefulWidget {
-
   @override
   State<Home> createState() => _HomeState();
 }
@@ -35,18 +34,23 @@ class _HomeState extends State<Home> {
           fontWeight: FontWeight.w500,
           letterSpacing: 1,
         ),
-        automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: Colors.white,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
       ),
       //Container that stretch to the whole screen that consists of backround image asset
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage('assets/backgroundloginpage.png'),
-          fit: BoxFit.fill,
-        )),
+          gradient: LinearGradient(
+              colors: [const Color(0xffa4eec1), const Color(0xffd9f3e3)],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 0.0),
+              stops: [0.0, 1.0],
+              tileMode: TileMode.clamp),
+        ),
         child: Stack(
           children: <Widget>[
             Padding(
@@ -120,8 +124,8 @@ class _HomeState extends State<Home> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => MapScreen(user: user, showPopUp: true)
-                                  ),
+                                      builder: (context) => MapScreen(
+                                          user: user, showPopUp: true)),
                                 );
                               } else {
                                 showDialog(
@@ -165,6 +169,15 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(90, 75, 90, 105),
+              child: Align(
+                alignment: Alignment.center,
+                child: Image.asset("assets/logo.png"),
+                widthFactor: 128,
+                heightFactor: 128,
               ),
             ),
             Padding(
@@ -218,7 +231,8 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MapScreen(user: user, showPopUp: true)),
+                              builder: (context) =>
+                                  MapScreen(user: user, showPopUp: true)),
                         );
                       }
                     },

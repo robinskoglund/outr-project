@@ -109,6 +109,7 @@ flutter:
     - assets/bronzerunner.png
     - assets/silvermedal.png
     - assets/goldmedal.png
+    - assets/logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
