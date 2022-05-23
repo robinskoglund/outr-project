@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:outr/Components/start_cardio_route_alert.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../API/directions_model.dart';
@@ -45,6 +46,8 @@ class _MapScreenState extends State<MapScreen> {
   int walkOrJogIndex = 0;
   bool cardioPopup = false;
   bool mixPopup = false;
+  bool _isShow = false;
+  String walkOrRunString = '';
 
   @override
   void initState() {
@@ -141,6 +144,117 @@ class _MapScreenState extends State<MapScreen> {
             borderRadius:
             const BorderRadius.vertical(top: Radius.circular(20.0)),
           ),
+          Visibility(
+            visible: _isShow,
+              child: Stack(children: <Widget>[
+                ElevatedButton.icon(
+                  style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all<Size>(
+                          Size.fromHeight(50)),
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                        Colors.deepOrangeAccent,
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.transparent,
+                      )),
+                  icon: Icon(Icons.refresh_rounded,
+                      size: 40, color: Colors.black),
+                  label: Text(
+                      'Not happy with the route? \n'
+                          'Press to generate a new route',
+                      style: TextStyle(
+                          fontFamily: 'Dongle',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2)),
+                  onPressed: () {
+                    generateNewRoute(buttonSelection);
+                  },
+                ),
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 180),
+                  child: Container(
+                    height: 200,
+                    width: 250,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            '$walkOrRunString',
+                            style: TextStyle(
+                              fontFamily: 'Dongle',
+                              fontSize: 30.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.timer_outlined,
+                                color: Colors.black,
+                                size: 20.0,
+                              ),
+                              SizedBox(width: 2.0),
+                              Text(
+                                '$durationValue minutes*',
+                                style: TextStyle(
+                                  fontFamily: 'Dongle',
+                                  fontSize: 25.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            '*This is only an estimate, take it at your own pace',
+                            style: TextStyle(
+                              fontFamily: 'Dongle',
+                              fontSize: 16.0,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue,
+                              padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
+                            //TODO: implement direction to start route
+                            onPressed: () {
+                              setState(() {
+                                _isShow = false;
+                              });
+                            },
+                            child: Text(
+                              'Start route',
+                              style: TextStyle(
+                                fontSize: 40.0,
+                                fontFamily: 'Dongle',
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ),
+                ),
+              ]
+              ),
+          ),
           beginnerPopUpStack(),
           cardioChoicesContainer(),
           mixChoicesContainer(),
@@ -196,6 +310,10 @@ class _MapScreenState extends State<MapScreen> {
                       onToggle: (index) {
                         setState(() {
                           walkOrJogIndex = index!;
+                          if (walkOrJogIndex == 1)
+                            walkOrRunString = 'Run:';
+                          else
+                            walkOrRunString = 'Walk:';
                         });
                         print(walkOrJogIndex);
                       },
@@ -278,6 +396,7 @@ class _MapScreenState extends State<MapScreen> {
                             ))),
                     onPressed: () async {
                       setState(() {
+                        _isShow = true;
                         cardioPopup = false;
                       });
                       int speed = 0;
@@ -313,7 +432,7 @@ class _MapScreenState extends State<MapScreen> {
                     padding: EdgeInsets.all(12),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -368,6 +487,11 @@ class _MapScreenState extends State<MapScreen> {
                       onToggle: (index) {
                         setState(() {
                           walkOrJogIndex = index!;
+                          if (walkOrJogIndex == 1)
+                            walkOrRunString = 'Run:';
+                          else
+                            walkOrRunString = 'Walk:';
+                          walkOrJogIndex = index;
                           print(walkOrJogIndex);
                         });
                       },
@@ -451,6 +575,7 @@ class _MapScreenState extends State<MapScreen> {
                     onPressed: () async {
                       setState(() {
                         mixPopup = false;
+                        _isShow = true;
                       });
                       int speed = 0;
                       if(walkOrJogIndex == 0){
@@ -472,10 +597,21 @@ class _MapScreenState extends State<MapScreen> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(310, 40, 40, 0),
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async{
                     setState(() {
+                      _isShow = true;
                       mixPopup = false;
                     });
+                    int speed = 0;
+                    if(walkOrJogIndex == 0){
+                      speed = 5;
+                    }else{
+                      speed = 8;
+                    }
+                    _markers.clear();
+                    route =
+                        await HttpRequestHandler().getMixRoute(59.331739, 18.060259, int.parse(durationValue), speed);
+                    await populateInfo();
                   },
                   child: Icon(Icons.clear),
                   style: ElevatedButton.styleFrom(
@@ -558,9 +694,36 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  void generateNewRoute (int selection) async{
+    switch(selection){
+      case 1:
+        route =
+        await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+        await populateInfo();
+        break;
+
+      case 2:
+        route =
+        await HttpRequestHandler().getCardioRoute(59.331739, 18.060259, int.parse(durationValue), 5);
+        await populateInfo();
+        break;
+
+      case 3:
+        route =
+        await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+        await populateInfo();
+        break;
+
+      case 4:
+        route =
+        await HttpRequestHandler().getMixRoute(59.331739, 18.060259, 5, 5);
+        await populateInfo();
+        break;
+    }
+  }
+
   void chooseButton(int selection) async {
     if (buttonSelection != 0) {
-
       //Executes when clicking Beginner button
       if (buttonSelection == 1) {
         _markers.clear();
@@ -568,12 +731,10 @@ class _MapScreenState extends State<MapScreen> {
         await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
         await populateInfo();
       }
-
       //Executes when clicking Cardio button
       if (buttonSelection == 2) {
         cardioPopup = true;
       }
-
       //Executes when clicking Strength button
       if (buttonSelection == 3) {
         _markers.clear();
@@ -581,15 +742,16 @@ class _MapScreenState extends State<MapScreen> {
         await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
         await populateInfo();
       }
-
       //Mix choices popup
       if (buttonSelection == 4) {
         mixPopup = true;
       }
-
       if (buttonSelection == 5) {
         _markers.clear();
         _info = null;
+      }
+      if (buttonSelection == 6) {
+        _isShow = false;
       }
     }
   }
@@ -655,6 +817,12 @@ class _MapScreenState extends State<MapScreen> {
       gymName = routeString2[0];
       gymLat = double.parse(routeString2[1]);
       gymLong = double.parse(routeString2[2]);
+    });
+  }
+
+  void changeIsShow(bool show){
+    setState(() {
+      _isShow = show;
     });
   }
 }
