@@ -396,8 +396,8 @@ class _MapScreenState extends State<MapScreen> {
                             ))),
                     onPressed: () async {
                       setState(() {
-                        _isShow = true;
                         cardioPopup = false;
+                        _isShow = true;
                       });
                       int speed = 0;
                       if(walkOrJogIndex == 0){
@@ -817,12 +817,6 @@ class _MapScreenState extends State<MapScreen> {
       gymName = routeString2[0];
       gymLat = double.parse(routeString2[1]);
       gymLong = double.parse(routeString2[2]);
-    });
-  }
-
-  void changeIsShow(bool show){
-    setState(() {
-      _isShow = show;
     });
   }
 }
