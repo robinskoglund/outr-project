@@ -83,9 +83,26 @@ class _MapScreenState extends State<MapScreen> {
       endDrawer: OutrNavigationBar(widget.user),
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('OutR Map'),
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget> [
+            Icon(Icons.local_fire_department, color: Colors.orange,
+              size: 30,),
+
+            Text(widget.user.dailyStreak.toString(), style: TextStyle(color: Colors.black54, fontFamily: "Dongle",
+              fontSize: 28,)),
+
+            SizedBox(width: 20),
+
+            Text('XP', style: TextStyle(color: Colors.lightBlue, fontFamily: "Dongle",
+                fontSize: 40)),
+
+            Text(widget.user.xp.toString(), style: TextStyle(color: Colors.black54, fontFamily: "Dongle",
+                fontSize: 28)),
+          ],
+        ),
       ),
       body: Stack(
         children: <Widget>[
