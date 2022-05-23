@@ -22,6 +22,18 @@ Future<User> getUser(String email) async {
   }
 }
 
+Future<bool> userExists(String email) async {
+  final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/get?email=' + email));
+  if(response.statusCode == 200){
+    if(response.body.isEmpty){
+      return false;
+    }
+    return true;
+  }else{
+    throw Exception('Failed to get user');
+  }
+}
+
 Future<http.Response> addUser(String name, String email){
   //För att testa på sin localhost ska använd din ip-adress istället för "localhost" i adressen
   return http.post(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/add?name=' + name + '&email=' + email),

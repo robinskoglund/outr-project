@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import '../API/dbapihandler.dart';
+import '../Components/alert_no_icon.dart';
 import '../Components/navigation_bar.dart';
 import '../DataClasses/userdata.dart';
+import 'login_view_page.dart';
 
 class RegisterScreen extends StatefulWidget {
 
@@ -99,13 +101,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ElevatedButton(
                       onPressed: () async {
                         //TODO: Man kan fortfarande klicka på knappen när email inte innehåller @ och när lösen inte stämmer överens
-
-
-                        addUser(nameInput.text, mailInput.text.toLowerCase());
-                        addLogin(mailInput.text.toLowerCase(), passwordInput.text);
-
-                        //Ta sig till din sida eller till logga in sidan på nytt?
-
+                        if(await validateRegistration(mailInput.text)){
+                          addUser(nameInput.text, mailInput.text.toLowerCase());
+                          addLogin(mailInput.text.toLowerCase(), passwordInput.text);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Home(),
+                            ),
+                          );
+                        }
                       },
                       child: const Text('Register',
                         style:(
@@ -132,6 +137,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> validateRegistration(String email) async{
+    if(passwordInput.text != passwordInput2.text){
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertNoIcon(
+                'Alert',
+                'Registration failed! Passwords do not match!',
+                'Cancel',
+                'Abort');
+          });
+      clearInputs();
+      return false;
+    }
+    if(!email.contains('@')){
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertNoIcon(
+                'Alert',
+                'Registration failed! Email has wrong format!',
+                'Cancel',
+                'Abort');
+          });
+      clearInputs();
+      return false;
+    }
+    if(await userExists(email) == true){
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertNoIcon(
+                'Alert',
+                'Registration failed! User exists already!',
+                'Cancel',
+                'Abort');
+          });
+      clearInputs();
+      return false;
+    }
+    return true;
+  }
+
+  void clearInputs(){
+    mailInput.clear();
+    nameInput.clear();
+    passwordInput.clear();
+    passwordInput2.clear();
   }
 
   String? validatePassword(String value) {
