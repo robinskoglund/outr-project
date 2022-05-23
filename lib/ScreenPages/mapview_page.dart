@@ -47,7 +47,7 @@ class _MapScreenState extends State<MapScreen> {
   bool cardioPopup = false;
   bool mixPopup = false;
   bool _isShow = false;
-  String walkOrRunString = '';
+  String walkOrRunString = 'Walk';
 
   @override
   void initState() {
@@ -416,23 +416,6 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(310, 40, 40, 0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      cardioPopup = false;
-                    });
-                  },
-                  child: Icon(Icons.clear),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.grey[400],
-                    onPrimary: Colors.black,
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(12),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
@@ -594,34 +577,6 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(310, 40, 40, 0),
-                child: ElevatedButton(
-                  onPressed: () async{
-                    setState(() {
-                      _isShow = true;
-                      mixPopup = false;
-                    });
-                    int speed = 0;
-                    if(walkOrJogIndex == 0){
-                      speed = 5;
-                    }else{
-                      speed = 8;
-                    }
-                    _markers.clear();
-                    route =
-                        await HttpRequestHandler().getMixRoute(59.331739, 18.060259, int.parse(durationValue), speed);
-                    await populateInfo();
-                  },
-                  child: Icon(Icons.clear),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.grey[400],
-                    onPrimary: Colors.black,
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(12),
-                  ),
-                ),
-              )
             ],
           ),
         ),

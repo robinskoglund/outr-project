@@ -26,26 +26,12 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('OutR'),
-        titleTextStyle: const TextStyle(
-          color: Colors.black,
-          fontSize: 22,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 1,
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-      ),
       //Container that stretch to the whole screen that consists of backround image asset
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-              colors: [const Color(0xffa4eec1), const Color(0xffd9f3e3)],
+              colors: [const Color(0xff61A4FF), const Color(0xffD8EEFF)],
               begin: const FractionalOffset(0.0, 0.0),
               end: const FractionalOffset(1.0, 0.0),
               stops: [0.0, 1.0],
@@ -54,7 +40,7 @@ class _HomeState extends State<Home> {
         child: Stack(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(70, 20, 80, 0),
+              padding: const EdgeInsets.fromLTRB(70, 270, 80, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -94,7 +80,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 155, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 405, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -172,16 +158,16 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(90, 75, 90, 105),
+              padding: const EdgeInsets.fromLTRB(90, 30, 90, 0),
               child: Align(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: Image.asset("assets/logo.png"),
-                widthFactor: 128,
-                heightFactor: 128,
+                widthFactor: 118,
+                heightFactor: 118,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(90, 385, 90, 105),
+              padding: const EdgeInsets.fromLTRB(110, 430, 110, 155),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -242,7 +228,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(60, 510, 40, 0),
+              padding: EdgeInsets.fromLTRB(60, 540, 40, 0),
               child: Container(
                 height: 90,
                 width: 290,

@@ -49,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-              colors: [const Color(0xffa4eec1), const Color(0xffd9f3e3)],
+              colors: [const Color(0xff61A4FF), const Color(0xffD8EEFF)],
               begin: const FractionalOffset(0.0, 0.0),
               end: const FractionalOffset(1.0, 0.0),
               stops: [0.0, 1.0],
