@@ -701,7 +701,7 @@ class _MapScreenState extends State<MapScreen> {
       if (buttonSelection == 1) {
         _markers.clear();
         route =
-            await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+        await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
         await populateInfo();
       }
       //Executes when clicking Cardio button
