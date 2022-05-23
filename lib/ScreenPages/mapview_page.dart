@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:outr/Components/aler_before_beginner_program.dart';
 import 'package:outr/Components/start_cardio_route_alert.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -47,7 +48,9 @@ class _MapScreenState extends State<MapScreen> {
   bool cardioPopup = false;
   bool mixPopup = false;
   bool _isShow = false;
+  bool _refreshRouteShow = false;
   String walkOrRunString = 'Walk';
+  String distance = '';
 
   @override
   void initState() {
@@ -90,20 +93,27 @@ class _MapScreenState extends State<MapScreen> {
         backgroundColor: Colors.white,
         title: Row(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget> [
-            Icon(Icons.local_fire_department, color: Colors.orange,
-              size: 30,),
-
-            Text(widget.user.dailyStreak.toString(), style: TextStyle(color: Colors.black54, fontFamily: "Dongle",
-              fontSize: 28,)),
-
+          children: <Widget>[
+            Icon(
+              Icons.local_fire_department,
+              color: Colors.orange,
+              size: 30,
+            ),
+            Text(widget.user.dailyStreak.toString(),
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontFamily: "Dongle",
+                  fontSize: 28,
+                )),
             SizedBox(width: 20),
-
-            Text('XP', style: TextStyle(color: Colors.lightBlue, fontFamily: "Dongle",
-                fontSize: 40)),
-
-            Text(widget.user.xp.toString(), style: TextStyle(color: Colors.black54, fontFamily: "Dongle",
-                fontSize: 28)),
+            Text('XP',
+                style: TextStyle(
+                    color: Colors.lightBlue,
+                    fontFamily: "Dongle",
+                    fontSize: 40)),
+            Text(widget.user.xp.toString(),
+                style: TextStyle(
+                    color: Colors.black54, fontFamily: "Dongle", fontSize: 28)),
           ],
         ),
       ),
@@ -142,15 +152,17 @@ class _MapScreenState extends State<MapScreen> {
               },
             ),
             borderRadius:
-            const BorderRadius.vertical(top: Radius.circular(20.0)),
+                const BorderRadius.vertical(top: Radius.circular(20.0)),
           ),
           Visibility(
             visible: _isShow,
-              child: Stack(children: <Widget>[
-                ElevatedButton.icon(
+            child: Stack(children: <Widget>[
+              Visibility(
+                visible: _refreshRouteShow,
+                child: ElevatedButton.icon(
                   style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all<Size>(
-                          Size.fromHeight(50)),
+                      minimumSize:
+                          MaterialStateProperty.all<Size>(Size.fromHeight(50)),
                       foregroundColor: MaterialStateProperty.all<Color>(
                         Colors.deepOrangeAccent,
                       ),
@@ -161,7 +173,7 @@ class _MapScreenState extends State<MapScreen> {
                       size: 40, color: Colors.black),
                   label: Text(
                       'Not happy with the route? \n'
-                          'Press to generate a new route',
+                      'Press to generate a new route',
                       style: TextStyle(
                           fontFamily: 'Dongle',
                           fontSize: 20,
@@ -171,9 +183,10 @@ class _MapScreenState extends State<MapScreen> {
                     generateNewRoute(buttonSelection);
                   },
                 ),
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 180),
+              ),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 180),
                   child: Container(
                     height: 200,
                     width: 250,
@@ -195,20 +208,24 @@ class _MapScreenState extends State<MapScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Icon(
-                                Icons.timer_outlined,
+                              Icon((buttonSelection == 3) ?
+                                Icons.directions_walk : Icons.timer_outlined,
                                 color: Colors.black,
                                 size: 20.0,
                               ),
                               SizedBox(width: 2.0),
-                              Text(
-                                '$durationValue minutes*',
+                              Text(() {
+                                if (buttonSelection == 3) {
+                                  return '$distance away.';
+                                }
+                                return '$durationValue minutes*';
+                              }(),
                                 style: TextStyle(
-                                  fontFamily: 'Dongle',
-                                  fontSize: 25.0,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                fontFamily: 'Dongle',
+                                fontSize: 25.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
                               ),
                             ],
                           ),
@@ -226,7 +243,8 @@ class _MapScreenState extends State<MapScreen> {
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               primary: Colors.blue,
-                              padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                              padding:
+                                  EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
@@ -250,10 +268,9 @@ class _MapScreenState extends State<MapScreen> {
                       ),
                     ),
                   ),
-                  ),
                 ),
-              ]
               ),
+            ]),
           ),
           beginnerPopUpStack(),
           cardioChoicesContainer(),
@@ -263,7 +280,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Widget cardioChoicesContainer(){
+  Widget cardioChoicesContainer() {
     return Visibility(
       visible: cardioPopup,
       child: Padding(
@@ -310,12 +327,7 @@ class _MapScreenState extends State<MapScreen> {
                       onToggle: (index) {
                         setState(() {
                           walkOrJogIndex = index!;
-                          if (walkOrJogIndex == 1)
-                            walkOrRunString = 'Run:';
-                          else
-                            walkOrRunString = 'Walk:';
                         });
-                        print(walkOrJogIndex);
                       },
                     ),
                     //Icon or text here ----------------------------
@@ -340,7 +352,7 @@ class _MapScreenState extends State<MapScreen> {
                                     style: BorderStyle.solid,
                                     color: Colors.black),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(0)),
+                                    BorderRadius.all(Radius.circular(0)),
                               )),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -372,13 +384,14 @@ class _MapScreenState extends State<MapScreen> {
                               }).toList(),
                             ),
                           )),
-                      Text('  min',
+                      Text(
+                        '  min',
                         style: TextStyle(
                           fontSize: 20,
-                        ),),
+                        ),
+                      ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
                 padding: const EdgeInsets.fromLTRB(90, 280, 80, 0),
                 child: SizedBox(
@@ -386,33 +399,39 @@ class _MapScreenState extends State<MapScreen> {
                   height: 60,
                   child: ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all<Color>(
+                        backgroundColor: MaterialStateProperty.all<Color>(
                             Color.fromARGB(255, 43, 121, 255)),
-                        shape: MaterialStateProperty.all<
-                            RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ))),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ))),
                     onPressed: () async {
                       setState(() {
+                        if (walkOrJogIndex == 1) {
+                          walkOrRunString = 'Run:';
+                        } else {
+                          walkOrRunString = 'Walk:';
+                        }
                         cardioPopup = false;
                         _isShow = true;
                       });
                       int speed = 0;
-                      if(walkOrJogIndex == 0){
+                      if (walkOrJogIndex == 0) {
                         speed = 5;
-                      }else{
+                      } else {
                         speed = 8;
                       }
                       _markers.clear();
-                      route =
-                      await HttpRequestHandler().getCardioRoute(59.331739, 18.060259, int.parse(durationValue), speed);
+                      route = await HttpRequestHandler().getCardioRoute(
+                          59.331739,
+                          18.060259,
+                          int.parse(durationValue),
+                          speed);
                       await populateInfo();
                     },
                     child: Text('Select',
-                        style: TextStyle(
-                            fontFamily: "Dongle", fontSize: 50)),
+                        style: TextStyle(fontFamily: "Dongle", fontSize: 50)),
                   ),
                 ),
               ),
@@ -423,7 +442,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Widget mixChoicesContainer(){
+  Widget mixChoicesContainer() {
     return Visibility(
       visible: mixPopup,
       child: Padding(
@@ -470,12 +489,6 @@ class _MapScreenState extends State<MapScreen> {
                       onToggle: (index) {
                         setState(() {
                           walkOrJogIndex = index!;
-                          if (walkOrJogIndex == 1)
-                            walkOrRunString = 'Run:';
-                          else
-                            walkOrRunString = 'Walk:';
-                          walkOrJogIndex = index;
-                          print(walkOrJogIndex);
                         });
                       },
                     ),
@@ -501,7 +514,7 @@ class _MapScreenState extends State<MapScreen> {
                                     style: BorderStyle.solid,
                                     color: Colors.black),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(0)),
+                                    BorderRadius.all(Radius.circular(0)),
                               )),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -533,13 +546,14 @@ class _MapScreenState extends State<MapScreen> {
                               }).toList(),
                             ),
                           )),
-                      Text('  min',
+                      Text(
+                        '  min',
                         style: TextStyle(
                           fontSize: 20,
-                        ),),
+                        ),
+                      ),
                     ],
-                  )
-              ),
+                  )),
               Padding(
                 padding: const EdgeInsets.fromLTRB(90, 280, 80, 0),
                 child: SizedBox(
@@ -547,33 +561,36 @@ class _MapScreenState extends State<MapScreen> {
                   height: 60,
                   child: ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all<Color>(
+                        backgroundColor: MaterialStateProperty.all<Color>(
                             Color.fromARGB(255, 43, 121, 255)),
-                        shape: MaterialStateProperty.all<
-                            RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ))),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ))),
                     onPressed: () async {
                       setState(() {
+                        if (walkOrJogIndex == 1) {
+                          walkOrRunString = 'Run:';
+                        } else {
+                          walkOrRunString = 'Walk:';
+                        }
                         mixPopup = false;
                         _isShow = true;
                       });
                       int speed = 0;
-                      if(walkOrJogIndex == 0){
+                      if (walkOrJogIndex == 0) {
                         speed = 5;
-                      }else{
+                      } else {
                         speed = 8;
                       }
                       _markers.clear();
-                      route =
-                      await HttpRequestHandler().getMixRoute(59.331739, 18.060259, int.parse(durationValue), speed);
+                      route = await HttpRequestHandler().getMixRoute(59.331739,
+                          18.060259, int.parse(durationValue), speed);
                       await populateInfo();
                     },
                     child: Text('Select',
-                        style: TextStyle(
-                            fontFamily: "Dongle", fontSize: 50)),
+                        style: TextStyle(fontFamily: "Dongle", fontSize: 50)),
                   ),
                 ),
               ),
@@ -608,6 +625,7 @@ class _MapScreenState extends State<MapScreen> {
                 chooseButton(1);
                 avatarPopUp = !avatarPopUp;
               });
+              AlertBeforeBeginnerProgram;
             },
             child: const Text(
               'Yes please!',
@@ -649,29 +667,29 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  void generateNewRoute (int selection) async{
-    switch(selection){
+  void generateNewRoute(int selection) async {
+    switch (selection) {
       case 1:
         route =
-        await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+            await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
         await populateInfo();
         break;
 
       case 2:
-        route =
-        await HttpRequestHandler().getCardioRoute(59.331739, 18.060259, int.parse(durationValue), 5);
+        route = await HttpRequestHandler()
+            .getCardioRoute(59.331739, 18.060259, int.parse(durationValue), 5);
         await populateInfo();
         break;
 
       case 3:
         route =
-        await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+            await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
         await populateInfo();
         break;
 
       case 4:
         route =
-        await HttpRequestHandler().getMixRoute(59.331739, 18.060259, 5, 5);
+            await HttpRequestHandler().getMixRoute(59.331739, 18.060259, 5, 5);
         await populateInfo();
         break;
     }
@@ -683,7 +701,7 @@ class _MapScreenState extends State<MapScreen> {
       if (buttonSelection == 1) {
         _markers.clear();
         route =
-        await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+            await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
         await populateInfo();
       }
       //Executes when clicking Cardio button
@@ -692,10 +710,14 @@ class _MapScreenState extends State<MapScreen> {
       }
       //Executes when clicking Strength button
       if (buttonSelection == 3) {
-        _markers.clear();
         route =
         await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
         await populateInfo();
+        setState(() {
+          walkOrRunString = 'Nearest gym is';
+        });
+        _isShow = true;
+        _refreshRouteShow = false;
       }
       //Mix choices popup
       if (buttonSelection == 4) {
@@ -735,6 +757,8 @@ class _MapScreenState extends State<MapScreen> {
           buttonSelection == 4) {
         //Puts the gym into local variables
         setGymInformation();
+        //Sets up meters as distance
+        distance = _info!.totalDistance;
         //Sets the gym marker icon
         _setGymMarkerIcon();
         _markers.add(

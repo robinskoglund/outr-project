@@ -33,9 +33,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: const Text('Registration'),
         titleTextStyle: const TextStyle(
           color: Colors.black,
-          fontSize: 30,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 1,
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -102,7 +99,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        //TODO: Man kan fortfarande klicka på knappen när email inte innehåller @ och när lösen inte stämmer överens
                         if (await validateRegistration(mailInput.text)) {
                           addUser(nameInput.text, mailInput.text.toLowerCase());
                           addLogin(

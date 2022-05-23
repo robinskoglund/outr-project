@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
         child: Stack(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(70, 270, 80, 0),
+              padding: const EdgeInsets.fromLTRB(70, 365, 80, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -80,7 +80,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 405, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 495, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -167,7 +167,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(110, 430, 110, 155),
+              padding: const EdgeInsets.fromLTRB(110, 530, 110, 80),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -217,8 +217,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  MapScreen(user: user, showPopUp: true)),
+                              builder: (context) => MapScreen(user: user, showPopUp: true)),
                         );
                       }
                     },
@@ -228,7 +227,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(60, 540, 40, 0),
+              padding: EdgeInsets.fromLTRB(60, 250, 40, 0),
               child: Container(
                 height: 90,
                 width: 290,
