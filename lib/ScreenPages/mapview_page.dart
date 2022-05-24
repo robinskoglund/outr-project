@@ -11,6 +11,8 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../API/directions_model.dart';
 import '../API/httprequesthandler.dart';
+import '../Components/cardio_choices_popup.dart';
+import '../Components/mix_choices_popup.dart';
 import '../Components/navigation_bar.dart';
 import '../Components/outr_icons_icons.dart';
 import '../Components/sliding_up_widget.dart';
@@ -54,6 +56,7 @@ class _MapScreenState extends State<MapScreen> {
   bool _refreshRouteShow = false;
   String walkOrRunString = 'Walk';
   String distance = '';
+  int speed = 0;
 
   @override
   void initState() {
@@ -294,333 +297,60 @@ class _MapScreenState extends State<MapScreen> {
               ),
           ),
 
-          cardioChoicesContainer(),
-          mixChoicesContainer(),
+          Visibility(
+            visible: cardioPopup,
+            child: CardioChoices(
+              dataCallback: (duration, walkOrRun, popUp, isShow, kmPerHour) {
+                setState(() {
+                  durationValue = duration;
+                  walkOrRunString = walkOrRun;
+                  cardioPopup = popUp;
+                  _isShow = isShow;
+                  speed = kmPerHour;
+                });
+              },
+              functionCallback: (isCardio) {
+                getAndShowCardioOrMixRoute(isCardio);
+              },
+            ),
+          ),
+          Visibility(
+            visible: mixPopup,
+            child: MixChoices(
+              dataCallback: (duration, walkOrRun, popUp, isShow, kmPerHour) {
+                setState(() {
+                  durationValue = duration;
+                  walkOrRunString = walkOrRun;
+                  mixPopup = popUp;
+                  _isShow = isShow;
+                  speed = kmPerHour;
+                });
+              },
+              functionCallback: (isCardio) {
+                getAndShowCardioOrMixRoute(isCardio);
+              },
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget cardioChoicesContainer() {
-    return Visibility(
-      visible: cardioPopup,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
-        child: Container(
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30, 25, 0, 0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(40.0),
-                        bottomRight: Radius.circular(40.0),
-                        topLeft: Radius.circular(40.0),
-                        bottomLeft: Radius.circular(40.0)),
-                  ),
-                  height: 380.0,
-                  width: 350.0,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(110, 80, 110, 0),
-                child: Row(
-                  children: <Widget>[
-                    //Icon or text here -------------------------
-                    ToggleSwitch(
-                      minWidth: 90.0,
-                      cornerRadius: 15.0,
-                      activeBgColors: [
-                        [Color.fromARGB(255, 43, 121, 255)],
-                        [Color.fromARGB(255, 43, 121, 255)]
-                      ],
-                      activeFgColor: Colors.white,
-                      inactiveBgColor: Colors.white,
-                      inactiveFgColor: Colors.black,
-                      initialLabelIndex: walkOrJogIndex,
-                      totalSwitches: 2,
-                      labels: ['Walk', 'Run'],
-                      icons: [Outr_icons.walking, Outr_icons.exercise],
-                      iconSize: 30,
-                      radiusStyle: true,
-                      onToggle: (index) {
-                        setState(() {
-                          walkOrJogIndex = index!;
-                        });
-                      },
-                    ),
-                    //Icon or text here ----------------------------
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(135, 130, 135, 0),
-                child: Text('Duration:',
-                    style: TextStyle(fontFamily: "Dongle", fontSize: 50)),
-              ),
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(170, 185, 100, 0),
-                  child: Row(
-                    children: <Widget>[
-                      DecoratedBox(
-                          decoration: const ShapeDecoration(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: 1,
-                                    style: BorderStyle.solid,
-                                    color: Colors.black),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(0)),
-                              )),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 0.0),
-                            child: DropdownButton<String>(
-                              value: durationValue,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  durationValue = newValue!;
-                                });
-                              },
-                              underline: SizedBox(),
-                              items: <String>[
-                                '15',
-                                '20',
-                                '25',
-                                '30',
-                                '35',
-                                '40',
-                                '45',
-                                '50',
-                                '55',
-                                '60'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                          )),
-                      Text(
-                        '  min',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
-                  )),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(90, 280, 80, 0),
-                child: SizedBox(
-                  width: 350,
-                  height: 60,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 43, 121, 255)),
-                        shape:
-                        MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ))),
-                    onPressed: () async {
-                      setState(() {
-                        if (walkOrJogIndex == 1) {
-                          walkOrRunString = 'Run:';
-                        } else {
-                          walkOrRunString = 'Walk:';
-                        }
-                        cardioPopup = false;
-                        _isShow = true;
-                        _refreshRouteShow = true;
-                      });
-                      int speed = 0;
-                      if (walkOrJogIndex == 0) {
-                        speed = 5;
-                      } else {
-                        speed = 8;
-                      }
-                      _markers.clear();
-                      route = await HttpRequestHandler().getCardioRoute(59.331739,
-                          18.060259, int.parse(durationValue), speed);
-                      print(route);
-                      populateInfo();
-                    },
-                    child: Text('Select',
-                        style: TextStyle(fontFamily: "Dongle", fontSize: 50)),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget mixChoicesContainer() {
-    return Visibility(
-      visible: mixPopup,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
-        child: Container(
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30, 25, 0, 0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(40.0),
-                        bottomRight: Radius.circular(40.0),
-                        topLeft: Radius.circular(40.0),
-                        bottomLeft: Radius.circular(40.0)),
-                  ),
-                  height: 380.0,
-                  width: 350.0,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(110, 80, 110, 0),
-                child: Row(
-                  children: <Widget>[
-                    //Icon or text here -------------------------
-                    ToggleSwitch(
-                      minWidth: 90.0,
-                      cornerRadius: 15.0,
-                      activeBgColors: [
-                        [Color.fromARGB(255, 43, 121, 255)],
-                        [Color.fromARGB(255, 43, 121, 255)]
-                      ],
-                      activeFgColor: Colors.white,
-                      inactiveBgColor: Colors.white,
-                      inactiveFgColor: Colors.black,
-                      initialLabelIndex: walkOrJogIndex,
-                      totalSwitches: 2,
-                      labels: ['Walk', 'Run'],
-                      icons: [Outr_icons.walking, Outr_icons.exercise],
-                      iconSize: 30,
-                      radiusStyle: true,
-                      onToggle: (index) {
-                        setState(() {
-                          walkOrJogIndex = index!;
-                        });
-                      },
-                    ),
-                    //Icon or text here ----------------------------
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(135, 130, 135, 0),
-                child: Text('Duration:',
-                    style: TextStyle(fontFamily: "Dongle", fontSize: 50)),
-              ),
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(170, 185, 100, 0),
-                  child: Row(
-                    children: <Widget>[
-                      DecoratedBox(
-                          decoration: const ShapeDecoration(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: 1,
-                                    style: BorderStyle.solid,
-                                    color: Colors.black),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(0)),
-                              )),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 0.0),
-                            child: DropdownButton<String>(
-                              value: durationValue,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  durationValue = newValue!;
-                                });
-                              },
-                              underline: SizedBox(),
-                              items: <String>[
-                                '15',
-                                '20',
-                                '25',
-                                '30',
-                                '35',
-                                '40',
-                                '45',
-                                '50',
-                                '55',
-                                '60'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                          )),
-                      Text(
-                        '  min',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
-                  )),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(90, 280, 80, 0),
-                child: SizedBox(
-                  width: 350,
-                  height: 60,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 43, 121, 255)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ))),
-                    onPressed: () async {
-                      setState(() {
-                        if (walkOrJogIndex == 1) {
-                          walkOrRunString = 'Run:';
-                        } else {
-                          walkOrRunString = 'Walk:';
-                        }
-                        mixPopup = false;
-                        _isShow = true;
-                        _refreshRouteShow = true;
-                      });
-                      int speed = 0;
-                      if (walkOrJogIndex == 0) {
-                        speed = 5;
-                      } else {
-                        speed = 8;
-                      }
-                      _markers.clear();
-                      route = await HttpRequestHandler().getMixRoute(59.331739,
-                          18.060259, int.parse(durationValue), speed);
-                      print(route);
-                      populateInfo();
-                    },
-                    child: Text('Select',
-                        style: TextStyle(fontFamily: "Dongle", fontSize: 50)),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  //Function that I wanna use at MixChoices/CardioChoices callback
+  void getAndShowCardioOrMixRoute(bool getAndShowCardio) async{
+    if(getAndShowCardio) {
+      _refreshRouteShow = true;
+      _markers.clear();
+      route = await HttpRequestHandler().getCardioRoute(59.331739,
+          18.060259, int.parse(durationValue), speed);
+      populateInfo();
+    }else{
+      _refreshRouteShow = true;
+      _markers.clear();
+      route = await HttpRequestHandler().getMixRoute(59.331739,
+          18.060259, int.parse(durationValue), speed);
+      populateInfo();
+    }
   }
 
   void generateNewRoute(int selection) async {

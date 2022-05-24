@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:outr/ScreenPages/cardio_start_page.dart';
-import 'package:outr/ScreenPages/mix_start_page.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../DataClasses/userdata.dart';
 import '../ScreenPages/finished_gym_workout.dart';
@@ -17,7 +15,7 @@ class SlidingUpWidget extends StatefulWidget {
   const SlidingUpWidget({
     Key? key,
     required this.panelController,
-    required this.chooseButton, required this.user,
+    required this.chooseButton, required this.user
   }) : super(key: key);
 
   @override
@@ -85,8 +83,8 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                                         fontFamily: 'Dongle',
                                         fontSize: 50,
                                         color: Colors.black)),
-                                const Text("0:00",
-                                    style: TextStyle(
+                                Text('0:00',
+                                    style: const TextStyle(
                                         fontFamily: 'Dongle',
                                         fontSize: 50,
                                         color: Colors.black)),

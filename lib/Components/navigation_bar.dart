@@ -1,8 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:outr/Components/outr_icon_icons.dart';
-import 'package:outr/ScreenPages/cardio_start_page.dart';
-import 'package:outr/ScreenPages/mix_start_page.dart';
 import 'package:outr/ScreenPages/settings_page.dart';
 import '../DataClasses/userdata.dart';
 import '../ScreenPages/achievements_page.dart';
@@ -118,9 +116,6 @@ class OutrNavigationBar extends StatelessWidget {
         break;
 
       case 2:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MixStartPage(user),
-        ));
         break;
 
       case 3:
