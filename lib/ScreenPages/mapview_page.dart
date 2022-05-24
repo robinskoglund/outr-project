@@ -48,6 +48,7 @@ class _MapScreenState extends State<MapScreen> {
   int walkOrJogIndex = 0;
   bool cardioPopup = false;
   bool mixPopup = false;
+  bool _beginnerPopup = false;
   bool _isShow = false;
   bool _refreshRouteShow = false;
   String walkOrRunString = 'Walk';
@@ -157,6 +158,14 @@ class _MapScreenState extends State<MapScreen> {
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(20.0)),
           ),
+
+          Visibility(
+            child: AlertBeforeBeginnerProgram(
+              updateAlertBeforeBeginner: _updateAlertBeforeBeginner
+          ),
+            visible: _beginnerPopup,
+          ),
+
           Visibility(
             visible: _isShow,
             child: Stack(children: <Widget>[
@@ -655,6 +664,7 @@ class _MapScreenState extends State<MapScreen> {
             onPressed: () {
               setState(() {
                 avatarPopUp = !avatarPopUp;
+                _beginnerPopup = !_beginnerPopup;
               });
             },
             child: const Text(
@@ -703,6 +713,7 @@ class _MapScreenState extends State<MapScreen> {
     if (buttonSelection != 0) {
       //Executes when clicking Beginner button
       if (buttonSelection == 1) {
+        _beginnerPopup = !_beginnerPopup;
         _markers.clear();
         route =
         await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
@@ -801,6 +812,12 @@ class _MapScreenState extends State<MapScreen> {
       gymName = routeString2[0];
       gymLat = double.parse(routeString2[1]);
       gymLong = double.parse(routeString2[2]);
+    });
+  }
+
+  void _updateAlertBeforeBeginner(bool isVisible){
+    setState(() {
+      _beginnerPopup = !_beginnerPopup;
     });
   }
 }
