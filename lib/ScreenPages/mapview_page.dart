@@ -429,6 +429,7 @@ class _MapScreenState extends State<MapScreen> {
                       _markers.clear();
                       route = await HttpRequestHandler().getCardioRoute(59.331739,
                           18.060259, int.parse(durationValue), speed);
+                      print(route);
                       populateInfo();
                     },
                     child: Text('Select',
@@ -589,6 +590,7 @@ class _MapScreenState extends State<MapScreen> {
                       _markers.clear();
                       route = await HttpRequestHandler().getMixRoute(59.331739,
                           18.060259, int.parse(durationValue), speed);
+                      print(route);
                       populateInfo();
                     },
                     child: Text('Select',

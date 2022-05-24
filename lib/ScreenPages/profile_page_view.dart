@@ -30,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
     currentExperience = widget.user.xp.toString();
     currentRank = widget.user.rank.toString();
     xpToNextLevel = widget.user.xpToNextLevel.toString();
+    accountLoggedIn = widget.user.email.toString();
     super.initState();
   }
 
