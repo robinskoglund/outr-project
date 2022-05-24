@@ -431,7 +431,7 @@ class _MapScreenState extends State<MapScreen> {
                           18.060259,
                           int.parse(durationValue),
                           speed);
-                      await populateInfo();
+                      populateInfo();
                     },
                     child: Text('Select',
                         style: TextStyle(fontFamily: "Dongle", fontSize: 50)),
@@ -580,6 +580,7 @@ class _MapScreenState extends State<MapScreen> {
                         }
                         mixPopup = false;
                         _isShow = true;
+                        _refreshRouteShow = true;
                       });
                       int speed = 0;
                       if (walkOrJogIndex == 0) {
@@ -590,7 +591,7 @@ class _MapScreenState extends State<MapScreen> {
                       _markers.clear();
                       route = await HttpRequestHandler().getMixRoute(59.331739,
                           18.060259, int.parse(durationValue), speed);
-                      await populateInfo();
+                      populateInfo();
                     },
                     child: Text('Select',
                         style: TextStyle(fontFamily: "Dongle", fontSize: 50)),
@@ -675,25 +676,25 @@ class _MapScreenState extends State<MapScreen> {
       case 1:
         route =
             await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
-        await populateInfo();
+        populateInfo();
         break;
 
       case 2:
         route = await HttpRequestHandler()
             .getCardioRoute(59.331739, 18.060259, int.parse(durationValue), 5);
-        await populateInfo();
+        populateInfo();
         break;
 
       case 3:
         route =
             await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
-        await populateInfo();
+        populateInfo();
         break;
 
       case 4:
         route =
             await HttpRequestHandler().getMixRoute(59.331739, 18.060259, 5, 5);
-        await populateInfo();
+        populateInfo();
         break;
     }
   }
@@ -705,7 +706,7 @@ class _MapScreenState extends State<MapScreen> {
         _markers.clear();
         route =
         await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
-        await populateInfo();
+        populateInfo();
       }
       //Executes when clicking Cardio button
       if (buttonSelection == 2) {
@@ -715,7 +716,7 @@ class _MapScreenState extends State<MapScreen> {
       if (buttonSelection == 3) {
         route =
         await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
-        await populateInfo();
+        populateInfo();
         setState(() {
           walkOrRunString = 'Nearest gym is';
         });
@@ -736,7 +737,7 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
-  Future<Void> populateInfo() async {
+  void populateInfo() async {
     String tempRoute = route;
     List routeString = tempRoute.split('-');
 
@@ -778,11 +779,11 @@ class _MapScreenState extends State<MapScreen> {
         );
       }
     });
-    return Future.delayed(const Duration(seconds: 2));
   }
 
   //Get location for showing geo location marker on map
   getCurrentLocation() async {
+    LocationPermission permission = await Geolocator.requestPermission();
     var locatePosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
