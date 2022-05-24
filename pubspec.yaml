@@ -45,7 +45,7 @@ dependencies:
   http: ^0.13.4
 
   # Decode polyline strings into lat/long necessary to display route
-  flutter_polyline_points: ^0.2.6
+  flutter_polyline_points: ^1.0.0
 
   # Display map to users
   google_maps_flutter: ^2.0.2
