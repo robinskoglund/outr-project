@@ -40,6 +40,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   @override
   Widget build(BuildContext context) => ListView(
+    physics: NeverScrollableScrollPhysics(),
     padding: EdgeInsets.zero,
     children: <Widget>[
       const SizedBox(height: 15),
@@ -134,36 +135,13 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
             Padding(
               padding: EdgeInsets.fromLTRB(40, 0, 40, 40),
               child: Container(
-                width: 400,
-                height: 400,
+                width: 300,
+                height: 350,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    ElevatedButton.icon(
-                      style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all<Color>(
-                            Colors.black,
-                          ),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            Colors.white,
-                          ),
-                          shape: MaterialStateProperty.all<
-                              RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ),
-                          )),
-                      icon: Image.asset('assets/plainDude.png'),
-                      label: const Text('Beginner',
-                          style: TextStyle(
-                              fontFamily: 'Dongle', fontSize: 50)),
-                      onPressed: () {
-                        changeState();
-                        widget.chooseButton(1);
-                        widget.panelController.close();
-                      },
-                    ),
+
                     ElevatedButton.icon(
                       style: ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
