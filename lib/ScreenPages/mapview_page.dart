@@ -1,20 +1,15 @@
 import 'dart:collection';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:outr/Components/aler_before_beginner_program.dart';
 import 'package:outr/Components/gubbis.dart';
-import 'package:outr/Components/start_cardio_route_alert.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import '../API/directions_model.dart';
 import '../API/httprequesthandler.dart';
 import '../Components/cardio_choices_popup.dart';
 import '../Components/mix_choices_popup.dart';
 import '../Components/navigation_bar.dart';
-import '../Components/outr_icons_icons.dart';
 import '../Components/sliding_up_widget.dart';
 import '../DataClasses/userdata.dart';
 
@@ -102,25 +97,25 @@ class _MapScreenState extends State<MapScreen> {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Icon(
+            const Icon(
               Icons.local_fire_department,
               color: Colors.orange,
               size: 30,
             ),
             Text(widget.user.dailyStreak.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black54,
                   fontFamily: "Dongle",
                   fontSize: 28,
                 )),
-            SizedBox(width: 20),
-            Text('XP',
+            const SizedBox(width: 20),
+            const Text('XP',
                 style: TextStyle(
                     color: Colors.lightBlue,
                     fontFamily: "Dongle",
                     fontSize: 40)),
             Text(widget.user.xp.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black54, fontFamily: "Dongle", fontSize: 28)),
           ],
         ),
@@ -187,7 +182,7 @@ class _MapScreenState extends State<MapScreen> {
                       )),
                   icon: Icon(Icons.refresh_rounded,
                       size: 40, color: Colors.black),
-                  label: Text(
+                  label: const Text(
                       'Not happy with the route? \n'
                       'Press to generate a new route',
                       style: TextStyle(
@@ -215,7 +210,7 @@ class _MapScreenState extends State<MapScreen> {
                         children: <Widget>[
                           Text(
                             '$walkOrRunString',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Dongle',
                               fontSize: 30.0,
                               color: Colors.black,
@@ -229,14 +224,14 @@ class _MapScreenState extends State<MapScreen> {
                                 color: Colors.black,
                                 size: 20.0,
                               ),
-                              SizedBox(width: 2.0),
+                              const SizedBox(width: 2.0),
                               Text(() {
                                 if (buttonSelection == 3) {
                                   return '$distance away.';
                                 }
                                 return '$durationValue minutes*';
                               }(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                 fontFamily: 'Dongle',
                                 fontSize: 25.0,
                                 color: Colors.black,
@@ -245,7 +240,7 @@ class _MapScreenState extends State<MapScreen> {
                               ),
                             ],
                           ),
-                          Text(
+                          const Text(
                             '*This is only an estimate, take it at your own pace',
                             style: TextStyle(
                               fontFamily: 'Dongle',
@@ -253,14 +248,12 @@ class _MapScreenState extends State<MapScreen> {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          const SizedBox(height: 20),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               primary: Colors.blue,
                               padding:
-                                  EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                                  const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
@@ -271,7 +264,7 @@ class _MapScreenState extends State<MapScreen> {
                                 _isShow = false;
                               });
                             },
-                            child: Text(
+                            child: const Text(
                               'Start route',
                               style: TextStyle(
                                 fontSize: 40.0,
@@ -432,7 +425,7 @@ class _MapScreenState extends State<MapScreen> {
         Marker(
           markerId: MarkerId("0"),
           position: LatLng(geoPosition.latitude, geoPosition.longitude),
-          infoWindow: InfoWindow(
+          infoWindow: const InfoWindow(
             title: 'My Position',
             snippet: 'My current position',
           ),
@@ -451,7 +444,7 @@ class _MapScreenState extends State<MapScreen> {
         _setMarkerIcons();
         _markers.add(
           Marker(
-            markerId: MarkerId("1"),
+            markerId: const MarkerId("1"),
             position: LatLng(gymLat, gymLong),
             infoWindow: InfoWindow(
               title: gymName,
