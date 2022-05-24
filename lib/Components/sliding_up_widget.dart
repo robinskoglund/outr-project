@@ -6,6 +6,7 @@ import 'package:outr/ScreenPages/cardio_start_page.dart';
 import 'package:outr/ScreenPages/mix_start_page.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../DataClasses/userdata.dart';
+import '../ScreenPages/finished_gym_workout.dart';
 import '../ScreenPages/mapview_page.dart';
 
 class SlidingUpWidget extends StatefulWidget {
@@ -24,6 +25,7 @@ class SlidingUpWidget extends StatefulWidget {
 }
 
 class _SlidingUpWidgetState extends State<SlidingUpWidget> {
+  bool _endWorkout = false;
   bool _isActive = false;
   bool _isPaused = false;
   String _playPause = 'Play';
@@ -347,13 +349,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                           style: TextStyle(
                               fontFamily: 'Dongle', fontSize: 50)),
                       onPressed: () {
-                        changeState();
-                        stopWatch();
-                        resetTimer();
-                        _isPaused = false;
-                        _playPause = "Play";
-                        widget.chooseButton(5);
-                        widget.panelController.close();
+                        endWorkoutDialog(context);
                       },
                     ),
                   ],
@@ -379,6 +375,54 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
     ),
     onTap: togglePanelUpDown,
   );
+
+  void endWorkout(bool endWorkout) { //om man vill avsluta så körs denna metod
+    if(endWorkout == true) {
+      stopWatch();
+      resetTimer();
+      _isPaused = false;
+      _playPause = "Play";
+      widget.chooseButton(5);
+      widget.panelController.close();
+    }
+  }
+
+  void endWorkoutDialog(BuildContext context) {
+    var alert = AlertDialog(
+      title: Text("End workout",
+          style: TextStyle(fontFamily: "Dongle", fontSize: 40)),
+      content: Text("Do you wish to end your current workout?",
+          style: TextStyle(fontFamily: "Dongle", fontSize: 25)),
+      actions: <Widget>[
+        TextButton(onPressed: () {
+          Navigator.of(context).pop();
+          _endWorkout = false; //sätter att man vill avsluta till false
+        },
+          child: Text("Cancel", style: TextStyle(color: Colors.black,
+              fontFamily: 'Dongle', fontSize: 30),),
+        ),
+        SizedBox(width: 5.0),
+
+
+        TextButton(onPressed: () {
+          _endWorkout = true;  //sätter att man vill avsluta till ja
+          endWorkout(_endWorkout);
+          Navigator.pop(context);
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => //skickar användaren
+          //till FinishedGymWorkout sidan
+          FinishedGymWorkoutPage(widget.user)));
+        },
+          child: Text("End", style: TextStyle(color: Colors.red,
+              fontFamily: 'Dongle', fontSize: 30),),
+        ),
+        SizedBox(width: 5.0),
+      ],
+    );
+    showDialog(context: context, builder: (BuildContext context) => alert);
+    //visar alerten
+
+  }
 
   void changeState() {
     setState(() {
