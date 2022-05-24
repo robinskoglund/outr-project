@@ -1,8 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
-import 'package:flutter_signin_button/button_list.dart';
-import 'package:flutter_signin_button/button_view.dart';
 import 'package:outr/Components/text_field_container.dart';
 import '../API/dbapihandler.dart';
 import '../Components/alert_no_icon.dart';
@@ -181,18 +179,16 @@ class _HomeState extends State<Home> {
                     onPressed: () async {
                       final result = await FacebookAuth.i.login(permissions: [
                         "public_profile",
-                        "email",
-                        "user_friends"
+                        "email"
                       ]);
 
                       if (result.status == LoginStatus.success) {
                         final requestdata = await FacebookAuth.i.getUserData(
-                          fields: "email, name, friends",
+                          fields: "email, name",
                         );
                         print(requestdata);
                         var userEmail;
                         var userName;
-                        var friendsArray = [];
                         for (var k in requestdata.entries) {
                           if (k.key == 'email') {
                             userEmail = k.value;
@@ -200,11 +196,7 @@ class _HomeState extends State<Home> {
                           if (k.key == 'name') {
                             userName = k.value;
                           }
-                          if (k.key == 'friends') {
-                            friendsArray == k.value;
-                          }
                         }
-                        print(friendsArray);
                         //GET-call
                         User user = await getUser(userEmail);
                         print(user);
