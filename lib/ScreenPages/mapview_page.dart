@@ -355,7 +355,7 @@ class _MapScreenState extends State<MapScreen> {
                                     style: BorderStyle.solid,
                                     color: Colors.black),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(0)),
+                                BorderRadius.all(Radius.circular(0)),
                               )),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -405,10 +405,10 @@ class _MapScreenState extends State<MapScreen> {
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Color.fromARGB(255, 43, 121, 255)),
                         shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ))),
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ))),
                     onPressed: () async {
                       setState(() {
                         if (walkOrJogIndex == 1) {
@@ -418,6 +418,7 @@ class _MapScreenState extends State<MapScreen> {
                         }
                         cardioPopup = false;
                         _isShow = true;
+                        _refreshRouteShow = true;
                       });
                       int speed = 0;
                       if (walkOrJogIndex == 0) {
@@ -426,11 +427,8 @@ class _MapScreenState extends State<MapScreen> {
                         speed = 8;
                       }
                       _markers.clear();
-                      route = await HttpRequestHandler().getCardioRoute(
-                          59.331739,
-                          18.060259,
-                          int.parse(durationValue),
-                          speed);
+                      route = await HttpRequestHandler().getCardioRoute(59.331739,
+                          18.060259, int.parse(durationValue), speed);
                       populateInfo();
                     },
                     child: Text('Select',
