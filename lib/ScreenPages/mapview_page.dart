@@ -39,6 +39,7 @@ class _MapScreenState extends State<MapScreen> {
   late Position geoPosition;
   Set<Marker> _markers = HashSet<Marker>();
   late BitmapDescriptor _markerIcon;
+  late BitmapDescriptor _geoDudeIcon;
   String gymName = '';
   double gymLat = 0;
   double gymLong = 0;
@@ -56,7 +57,7 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     super.initState();
     getCurrentLocation();
-    _setGymMarkerIcon();
+    _setMarkerIcons();
     if (widget.showPopUp == true) {
       avatarPopUp = true;
     } else {
@@ -70,9 +71,11 @@ class _MapScreenState extends State<MapScreen> {
     super.dispose();
   }
 
-  void _setGymMarkerIcon() async {
+  void _setMarkerIcons() async {
     _markerIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(), 'assets/barbell.png');
+    _geoDudeIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), 'assets/geodude.png');
   }
 
   @override
@@ -749,6 +752,7 @@ class _MapScreenState extends State<MapScreen> {
             title: 'My Position',
             snippet: 'My current position',
           ),
+          icon: _geoDudeIcon,
         ),
       );
 
@@ -760,7 +764,7 @@ class _MapScreenState extends State<MapScreen> {
         //Sets up meters as distance
         distance = _info!.totalDistance;
         //Sets the gym marker icon
-        _setGymMarkerIcon();
+        _setMarkerIcons();
         _markers.add(
           Marker(
             markerId: MarkerId("1"),
