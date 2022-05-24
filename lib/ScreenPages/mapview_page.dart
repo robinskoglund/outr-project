@@ -5,6 +5,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:outr/Components/aler_before_beginner_program.dart';
+import 'package:outr/Components/gubbis.dart';
 import 'package:outr/Components/start_cardio_route_alert.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -284,7 +285,15 @@ class _MapScreenState extends State<MapScreen> {
               ),
             ]),
           ),
-          beginnerPopUpStack(),
+
+          Visibility(
+            visible: avatarPopUp,
+              child: Gubbis(updateIsAvatar: _updateAvatarPopup,
+              buttonSelectionOne: chooseButton,
+                updateAlertBeforeBeginner: _updateAlertBeforeBeginner,
+              ),
+          ),
+
           cardioChoicesContainer(),
           mixChoicesContainer(),
         ],
@@ -614,73 +623,6 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Widget beginnerPopUpStack() {
-    return Stack(
-      children: <Widget>[
-        Visibility(
-          visible: avatarPopUp,
-          child: Image.asset('assets/cropedgubbis.png'),
-        ),
-        Positioned(
-          top: 190,
-          right: 160,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-                side: BorderSide(color: Colors.black),
-              ),
-            ),
-            onPressed: () {
-              setState(() {
-                buttonSelection = 1;
-                chooseButton(1);
-                avatarPopUp = !avatarPopUp;
-              });
-              AlertBeforeBeginnerProgram;
-            },
-            child: const Text(
-              'Yes please!',
-              style: TextStyle(
-                  fontFamily: 'Dongle',
-                  color: Colors.green,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 190,
-          left: 220,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-                side: BorderSide(color: Colors.black),
-              ),
-            ),
-            onPressed: () {
-              setState(() {
-                avatarPopUp = !avatarPopUp;
-                _beginnerPopup = !_beginnerPopup;
-              });
-            },
-            child: const Text(
-              'No thanks!',
-              style: TextStyle(
-                  fontFamily: 'Dongle',
-                  color: Colors.red,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   void generateNewRoute(int selection) async {
     switch (selection) {
       case 1:
@@ -818,6 +760,11 @@ class _MapScreenState extends State<MapScreen> {
   void _updateAlertBeforeBeginner(bool isVisible){
     setState(() {
       _beginnerPopup = !_beginnerPopup;
+    });
+  }
+  void _updateAvatarPopup(bool isVisible){
+    setState(() {
+      avatarPopUp = !avatarPopUp;
     });
   }
 }
