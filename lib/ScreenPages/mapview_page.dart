@@ -123,6 +123,7 @@ class _MapScreenState extends State<MapScreen> {
       body: Stack(
         children: <Widget>[
           GoogleMap(
+            mapType: MapType.hybrid,
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
             initialCameraPosition: _initialCameraPosition,
@@ -433,10 +434,8 @@ class _MapScreenState extends State<MapScreen> {
         ),
       );
 
-      if (buttonSelection == 1 ||
-          buttonSelection == 3 ||
-          buttonSelection == 4) {
-        //Puts the gym into local variables
+      if (buttonSelection == 1 || buttonSelection == 3 || buttonSelection == 4) {
+        //Populates the stateful gym name and lat longs.
         setGymInformation();
         //Sets up meters as distance
         distance = _info!.totalDistance;
