@@ -1,5 +1,5 @@
 import 'dart:collection';
-import 'dart:ffi';
+//import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -91,6 +91,7 @@ class _MapScreenState extends State<MapScreen> {
     return Scaffold(
       endDrawer: OutrNavigationBar(widget.user),
       appBar: AppBar(
+
         centerTitle: true,
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
@@ -170,7 +171,7 @@ class _MapScreenState extends State<MapScreen> {
                         Colors.deepOrangeAccent,
                       ),
                       backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.transparent,
+                        Colors.white70,
                       )),
                   icon: Icon(Icons.refresh_rounded,
                       size: 40, color: Colors.black),
@@ -179,9 +180,10 @@ class _MapScreenState extends State<MapScreen> {
                       'Press to generate a new route',
                       style: TextStyle(
                           fontFamily: 'Dongle',
-                          fontSize: 20,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: 2)),
+                          letterSpacing: 1,
+                           color: Colors.black )),
                   onPressed: () {
                     generateNewRoute(buttonSelection);
                   },
@@ -289,11 +291,14 @@ class _MapScreenState extends State<MapScreen> {
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
         child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           child: Stack(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(30, 25, 0, 0),
+                padding:  EdgeInsets.fromLTRB(30, 25, 0, 0),
                 child: Container(
+
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(

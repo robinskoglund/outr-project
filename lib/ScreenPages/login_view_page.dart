@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:outr/Components/text_field_container.dart';
+import 'package:outr/Components/theme_provider.dart';
 import '../API/dbapihandler.dart';
 import '../Components/alert_no_icon.dart';
 import '../DataClasses/userdata.dart';
@@ -9,11 +10,19 @@ import 'mapview_page.dart';
 import 'register_view_page.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-void main() => runApp(MaterialApp(home: Home()));
+void main() => runApp(MaterialApp(
+  /* theme: ThemeData(
+  fontFamily: "Dongle",
+  ), Används för att skapa ett tema för hela appen med font, men blir fucked med
+  fonts o storlekarna
+    */
+    home: Home()));
 
 class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
+
+
 }
 
 class _HomeState extends State<Home> {
@@ -25,20 +34,22 @@ class _HomeState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       //Container that stretch to the whole screen that consists of backround image asset
+
       body: Container(
         width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
               colors: [const Color(0xff61A4FF), const Color(0xffD8EEFF)],
-              begin: const FractionalOffset(0.0, 0.0),
-              end: const FractionalOffset(1.0, 0.0),
+              begin:  FractionalOffset(0.0, 0.0),
+              end:  FractionalOffset(1.0, 0.0),
               stops: [0.0, 1.0],
               tileMode: TileMode.clamp),
         ),
         child: Stack(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(70, 365, 80, 0),
+              padding:  EdgeInsets.fromLTRB(70, 365, 80, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -78,17 +89,17 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 495, 0, 0),
+              padding:  EdgeInsets.fromLTRB(0, 520, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text.rich(
                     //Profil knappen
                     TextSpan(
-                      style: const TextStyle(
+                      style:  TextStyle(
                         color: Colors.black,
-                        fontSize: 22,
-                        decoration: TextDecoration.underline,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
                       ),
                       children: [
                         TextSpan(
@@ -132,10 +143,10 @@ class _HomeState extends State<Home> {
                   Text.rich(
                     //Profil knappen
                     TextSpan(
-                      style: const TextStyle(
+                      style:  TextStyle(
                         color: Colors.black,
-                        fontSize: 22,
-                        decoration: TextDecoration.underline,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
                       ),
                       children: [
                         TextSpan(
@@ -156,7 +167,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(90, 30, 90, 0),
+              padding:  EdgeInsets.fromLTRB(90, 50, 90, 0),
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Image.asset("assets/logo.png"),
@@ -165,16 +176,16 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(110, 530, 110, 80),
+              padding:  EdgeInsets.fromLTRB(110, 530, 110, 80),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   SignInButtonBuilder(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    text: 'login with facebook',
+                    text: 'Sign in with Facebook', fontSize: 14,
                     icon: Icons.facebook,
                     onPressed: () async {
                       final result = await FacebookAuth.i.login(permissions: [
@@ -226,7 +237,7 @@ class _HomeState extends State<Home> {
                 child: Stack(
                   children: const <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 25),
+                      padding: EdgeInsets.only(left: 25, top: 20),
                       child: Text('Start your journey',
                           style: TextStyle(
                               fontFamily: "Dongle",
@@ -235,7 +246,7 @@ class _HomeState extends State<Home> {
                               color: Colors.black)),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 30),
+                      padding: EdgeInsets.only(top: 50),
                       child: Text('to a healthier lifestyle',
                           style: TextStyle(
                               fontFamily: "Dongle",

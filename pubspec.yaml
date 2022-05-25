@@ -30,6 +30,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  provider: ^4.1.1
+
+
   #Toggle switch for cardi/mix page
   toggle_switch: ^2.0.1
 

@@ -87,7 +87,7 @@ class ShowAlertBeforeCardioRoute extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '*This is only an estimate, take it at your own pace',
+                  '*This is only an estimate, take it at your own pace', //denna används aldrig?
                   style: TextStyle(
                     fontFamily: 'Dongle',
                     fontSize: 16.0,

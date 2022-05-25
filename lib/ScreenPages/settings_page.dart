@@ -1,4 +1,8 @@
+import 'package:provider/provider.dart';
+
+import '../Components/change_theme_button.dart';
 import '../Components/navigation_bar.dart';
+import '../Components/theme_provider.dart';
 import '../DataClasses/userdata.dart';
 import '../ScreenPages/saved_routes_page.dart';
 import '../ScreenPages/mapview_page.dart';
@@ -12,27 +16,31 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
-        foregroundColor: Colors.black, //ändrar färgen på burgarmeny
-        title: const Text('Settings'),
-        titleTextStyle: TextStyle(
-            fontFamily: "Dongle",
-            fontSize: 44,
-            color: Colors.black),
-        backgroundColor: Colors.white,
-      ),
-      endDrawer: OutrNavigationBar(user),
-      body: buildBasicListView(context),
+      return Scaffold(
 
-    );
-  }
+        appBar: AppBar(
+          leading: IconButton(icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
+          centerTitle: true,
+          foregroundColor: Colors.black,
+          //ändrar färgen på burgarmeny
+          title: const Text('Settings'),
+          titleTextStyle: TextStyle(
+              fontFamily: "Dongle",
+              fontSize: 44,
+              color: Colors.black),
+          backgroundColor: Colors.white,
+        ),
+        endDrawer: OutrNavigationBar(user),
+        body: buildBasicListView(context),
+        );
+      }
+
+
 
   Widget buildBasicListView(BuildContext context) => ListView(
+
     children: [
       ListTile(
         title: Text("Account",
@@ -132,3 +140,5 @@ class SettingsPage extends StatelessWidget {
     ],
   );
 }
+
+

@@ -25,18 +25,12 @@ class AchievementsPage extends StatelessWidget {
       endDrawer: OutrNavigationBar(user),
       body: Container(
         color: Colors.grey[200],
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: Stack(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(40, 25, 25, 0),
+              padding:  EdgeInsets.fromLTRB(40, 25, 25, 0),
               child: Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,

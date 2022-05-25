@@ -44,6 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       //Container that stretch to the whole screen that consists of backround image asset
       body: Container(
         width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
               colors: [const Color(0xff61A4FF), const Color(0xffD8EEFF)],
@@ -55,7 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Stack(
           children: <Widget>[
             Padding(
-                padding: const EdgeInsets.fromLTRB(70, 10, 70, 0),
+                padding:  EdgeInsets.fromLTRB(70, 10, 70, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[

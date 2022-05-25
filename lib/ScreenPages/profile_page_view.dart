@@ -59,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
         child: Stack(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+              padding:  EdgeInsets.fromLTRB(25, 25, 25, 0),
               child: Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(145, 20, 80, 0),
+              padding:  EdgeInsets.fromLTRB(145, 20, 80, 0),
               child: Text(
                 'Level: $currentLevel',
                 style: const TextStyle(
@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(165, 50, 80, 0),
+              padding:  EdgeInsets.fromLTRB(165, 50, 80, 0),
               child: Text(
                 '$currentRank',
                 style: const TextStyle(
@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(220, 110, 60, 0),
+              padding:  EdgeInsets.fromLTRB(220, 110, 60, 0),
               child: Container(
                 height: 150.0,
                 width: 160.0,
@@ -112,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                 ),
               ),
              Padding(
-              padding: const EdgeInsets.fromLTRB(225, 270, 0, 0),
+              padding:  EdgeInsets.fromLTRB(225, 270, 0, 0),
               child: Text(
                 '$xpToNextLevel xp to',
                 style: TextStyle(
@@ -134,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(120, 370, 80, 0),
+              padding:  EdgeInsets.fromLTRB(120, 370, 80, 0),
               child: Row(
                 children: <Widget>[
                   Text(
@@ -170,7 +170,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
             ),
             Padding(
-                padding: const EdgeInsets.fromLTRB(85, 470, 80, 10),
+                padding:  EdgeInsets.fromLTRB(85, 470, 80, 10),
                 child: SizedBox(
                   width: 350,
                   height: 60,
