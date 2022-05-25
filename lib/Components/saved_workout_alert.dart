@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:outr/ScreenPages/saved_routes_page.dart';
+import '../DataClasses/userdata.dart';
+import '../ScreenPages/mapview_page.dart';
 
 //Kan anropas så här:
 // showDialog(context: context,
@@ -8,8 +12,9 @@ import 'package:flutter/material.dart';
 class SavedWorkoutAlert extends StatelessWidget{
 
   final String nameOfWorkout;
+  final User user;
 
-  SavedWorkoutAlert(this.nameOfWorkout);
+  SavedWorkoutAlert(this.nameOfWorkout, this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +31,7 @@ class SavedWorkoutAlert extends StatelessWidget{
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.all(20.0),
-          margin: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.rectangle,
@@ -69,7 +73,8 @@ class SavedWorkoutAlert extends StatelessWidget{
               ),
 
               Text(
-                nameOfWorkout,
+                '$nameOfWorkout',
+                textAlign: TextAlign.center,
                 style:  TextStyle(
                   fontSize: 45.0,
                   fontFamily: 'Dongle',
@@ -97,7 +102,12 @@ class SavedWorkoutAlert extends StatelessWidget{
                 ),
                 //TODO: implement direction to saved routes
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SavedRoutesPage(user)),
+                  );
                 },
                 child:Text(
                   'Go to your routes',
@@ -120,7 +130,12 @@ class SavedWorkoutAlert extends StatelessWidget{
                 ),
                 //TODO: implement direction to start
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MapScreen(showPopUp: false, user: user)),
+                  );
                 },
                 child: Text(
                   'Back to start',
