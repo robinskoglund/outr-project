@@ -30,7 +30,7 @@ class _MapScreenState extends State<MapScreen> {
   int buttonSelection = 0;
   final slidingUpPanelController = PanelController();
   final CameraPosition _initialCameraPosition = const CameraPosition(
-    target: LatLng(59.330668, 18.056498),
+    target: LatLng(59.311926, 18.069933),
     zoom: 11.5,
   );
   late GoogleMapController _googleMapController;
@@ -651,14 +651,12 @@ class _MapScreenState extends State<MapScreen> {
     if(getAndShowCardio) {
       _refreshRouteShow = true;
       _markers.clear();
-      route = await HttpRequestHandler().getCardioRoute(59.331739,
-          18.060259, int.parse(durationValue), speed);
+      route = await HttpRequestHandler().getCardioRoute(59.311926, 18.069933, int.parse(durationValue), speed);
       populateInfo();
     }else{
       _refreshRouteShow = true;
       _markers.clear();
-      route = await HttpRequestHandler().getMixRoute(59.331739,
-          18.060259, int.parse(durationValue), speed);
+      route = await HttpRequestHandler().getMixRoute(59.311926, 18.069933, int.parse(durationValue), speed);
       populateInfo();
     }
   }
@@ -667,25 +665,25 @@ class _MapScreenState extends State<MapScreen> {
     switch (selection) {
       case 1:
         route =
-            await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+            await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
         populateInfo();
         break;
 
       case 2:
         route = await HttpRequestHandler()
-            .getCardioRoute(59.331739, 18.060259, int.parse(durationValue), 5);
+            .getCardioRoute(59.311926, 18.069933, int.parse(durationValue), 5);
         populateInfo();
         break;
 
       case 3:
         route =
-            await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+            await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
         populateInfo();
         break;
 
       case 4:
         route =
-            await HttpRequestHandler().getMixRoute(59.331739, 18.060259, 5, 5);
+            await HttpRequestHandler().getMixRoute(59.311926, 18.069933, 5, 5);
         populateInfo();
         break;
     }
@@ -700,7 +698,7 @@ class _MapScreenState extends State<MapScreen> {
       //Executes when clicking Strength button
       if (selection == 3) {
         route =
-        await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
+        await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
         populateInfo();
         setState(() {
           walkOrRunString = 'Nearest gym is';

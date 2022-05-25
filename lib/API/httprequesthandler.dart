@@ -29,10 +29,9 @@ class HttpRequestHandler{
   }
 
   Future<String> getStrengthRoute(double lat, double long) async {
-    /*final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getpathtoclosestgym?originLatitude=' +
+    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getpathtoclosestgym?originLatitude=' +
         lat.toString() + '&originLongitude=' +
-        long.toString()));*/
-    final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getpathtoclosestgym'));
+        long.toString()));
 
     if(response.statusCode == 200){
       route = response.body;
