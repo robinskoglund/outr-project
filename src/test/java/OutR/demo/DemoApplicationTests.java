@@ -56,7 +56,7 @@ class DemoApplicationTests {
         Sociotop s = new Sociotop();
         s.run();
         for (Object o : s.coordinateMap.keySet()){
-            System.out.println(o);
+          // System.out.println(o);
         }
     }
 }
