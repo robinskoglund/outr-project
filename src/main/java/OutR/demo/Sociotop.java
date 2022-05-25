@@ -20,7 +20,7 @@ public class Sociotop {
     static {
         properties = new Properties();
     }
-
+    // Öppnar upp filen som innehåller geojson datan samt skapar nödvänliga parametrar
     public void run() {
         try {
             JSONParser jparser = new JSONParser();
@@ -32,7 +32,7 @@ public class Sociotop {
             ex.printStackTrace();
         }
     }
-
+    // Läser in datan
     public void getData(Object object2) throws ParseException {
         JSONArray jsonArr = (JSONArray) object2;
         for (int k = 0; k < jsonArr.size(); k++) {
@@ -44,7 +44,7 @@ public class Sociotop {
             }
         }
     }
-
+    // Parsar igenom datan och skapar objekt (parker)
     public void parser(JSONObject jsonObject) throws ParseException {
         Set<Object> set = jsonObject.keySet();
         Iterator<Object> iterator = set.iterator();
@@ -77,6 +77,7 @@ public class Sociotop {
                 }
                 break;
             }
+            // lägger till objekten till en hashmap
             park.setcord(park.getCord());
             parkmap.put(park.getId(), park);
             coordinateMap.put(park.getCord(),park);
