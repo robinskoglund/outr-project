@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,8 +11,8 @@ import '../API/httprequesthandler.dart';
 import '../Components/cardio_choices_popup.dart';
 import '../Components/mix_choices_popup.dart';
 import '../Components/navigation_bar.dart';
-import '../Components/sliding_up_widget.dart';
 import '../DataClasses/userdata.dart';
+import 'finished_gym_workout.dart';
 
 class MapScreen extends StatefulWidget {
   final User user;
@@ -43,15 +44,26 @@ class _MapScreenState extends State<MapScreen> {
   double gymLong = 0;
   bool avatarPopUp = true;
   String durationValue = '15';
-  int walkOrJogIndex = 0;
   bool cardioPopup = false;
   bool mixPopup = false;
   bool _beginnerPopup = false;
   bool _isShow = false;
   bool _refreshRouteShow = false;
   String walkOrRunString = 'Walk';
-  String distance = '';
+  String distance = '0:00';
   int speed = 0;
+
+  bool _endWorkout = false;
+  bool _isActive = false;
+  bool _isPaused = false;
+  String _playPause = 'Play';
+  String _sliderHeader = 'Start';
+  Stopwatch _watch = Stopwatch();
+  late Timer _timer;
+  bool _startStop = true;
+  bool _click = false;
+  String _elapsedTime = '00:00';
+  String arrivalDuration = '0:00';
 
   @override
   void initState() {
@@ -145,16 +157,7 @@ class _MapScreenState extends State<MapScreen> {
             controller: slidingUpPanelController,
             minHeight: slidingUpPanelHeightCollapsed,
             maxHeight: slidingUpPanelHeightOpened,
-            panelBuilder: (controller) => SlidingUpWidget(
-              user: widget.user,
-              panelController: slidingUpPanelController,
-              chooseButton: (int buttonNumber) {
-                setState(() {
-                  buttonSelection = buttonNumber;
-                  chooseButton(buttonSelection);
-                });
-              },
-            ),
+            panelBuilder: (controller) => slidingUpWidget(),
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(20.0)),
           ),
@@ -263,6 +266,8 @@ class _MapScreenState extends State<MapScreen> {
                             onPressed: () {
                               setState(() {
                                 _isShow = false;
+                                setPlayPause();
+                                startOrStop();
                               });
                             },
                             child: const Text(
@@ -330,6 +335,317 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  Widget slidingUpWidget(){
+    return ListView(
+      physics: NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        const SizedBox(height: 15),
+        openUpPanelDragHandle(),
+        Center(
+          child: ElevatedButton(
+              onPressed: () {
+                togglePanelUpDown();
+              },
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(Size(390, 30)),
+                backgroundColor:
+                MaterialStateProperty.all<Color>(Colors.white),
+                elevation: MaterialStateProperty.all<double>(0),
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      Visibility(
+                        visible: !_isActive,
+                        child: Text(
+                          _sliderHeader,
+                          style: const TextStyle(
+                            fontSize: 60.0,
+                            letterSpacing: 1.5,
+                            color: Colors.blueGrey,
+                            fontFamily: 'Dongle',
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                          visible: _isActive,
+                          child: Stack(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(_elapsedTime,
+                                      style: const TextStyle(
+                                          fontFamily: 'Dongle',
+                                          fontSize: 50,
+                                          color: Colors.black)),
+                                  Text(distance,
+                                      style: const TextStyle(
+                                          fontFamily: 'Dongle',
+                                          fontSize: 50,
+                                          color: Colors.black)),
+                                  Text(arrivalDuration,
+                                      style: const TextStyle(
+                                          fontFamily: 'Dongle',
+                                          fontSize: 50,
+                                          color: Colors.black)),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 40),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: const <Widget>[
+                                    Text("Min",
+                                        style: TextStyle(
+                                            fontFamily: 'Dongle',
+                                            fontSize: 30,
+                                            color: Colors.black)),
+                                    Text("      KM",
+                                        style: TextStyle(
+                                            fontFamily: 'Dongle',
+                                            fontSize: 30,
+                                            color: Colors.black)),
+                                    Text("Arrival",
+                                        style: TextStyle(
+                                            fontFamily: 'Dongle',
+                                            fontSize: 30,
+                                            color: Colors.black)),
+                                  ],
+                                ),
+                              )
+                            ],
+                          )),
+                    ],
+                  )
+                ],
+              )),
+        ),
+        Visibility(
+          visible: !_isActive,
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 40, 40),
+                child: Container(
+                  width: 300,
+                  height: 350,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+
+                      ElevatedButton.icon(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.black,
+                            ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.white,
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                            )),
+                        icon: Image.asset('assets/cardioDude.png'),
+                        label: const Text('Cardio',
+                            style: TextStyle(
+                                fontFamily: 'Dongle', fontSize: 50)),
+                        onPressed: () {
+                          changeState();
+                          chooseButton(2);
+                          setState(() {
+                            buttonSelection = 2;
+                          });
+                          slidingUpPanelController.close();
+                        },
+                      ),
+                      ElevatedButton.icon(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.black,
+                            ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.white,
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                            )),
+                        icon: Image.asset('assets/strengthDude.png'),
+                        label: const Text('Strength',
+                            style: TextStyle(
+                                fontFamily: 'Dongle', fontSize: 50)),
+                        onPressed: () {
+                          changeState();
+                          chooseButton(3);
+                          setState(() {
+                            buttonSelection = 3;
+                          });
+                          slidingUpPanelController.close();
+                        },
+                      ),
+                      ElevatedButton.icon(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.black,
+                            ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.white,
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                            )),
+                        icon: Image.asset('assets/mixDude.png'),
+                        label: const Text('Mix',
+                            style: TextStyle(
+                                fontFamily: 'Dongle', fontSize: 50)),
+                        onPressed: () {
+                          changeState();
+                          chooseButton(4);
+                          setState(() {
+                            buttonSelection = 4;
+                          });
+                          slidingUpPanelController.close();
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Visibility(
+          visible: _isActive,
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 40, 40),
+                child: Container(
+                  width: 400,
+                  height: 400,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceEvenly,
+                              children: const <Widget>[
+                                Text(
+                                  "0,00",
+                                  style: TextStyle(
+                                    fontSize: 60.0,
+                                    letterSpacing: 1.5,
+                                    color: Colors.black,
+                                    fontFamily: 'Dongle',
+                                  ),
+                                ),
+                                Text("0,00",
+                                    style: TextStyle(
+                                      fontSize: 60.0,
+                                      letterSpacing: 1.5,
+                                      color: Colors.black,
+                                      fontFamily: 'Dongle',
+                                    )),
+                              ]),
+                          Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceEvenly,
+                              children: const <Widget>[
+                                Text("KM left",
+                                    style: TextStyle(
+                                      fontSize: 40.0,
+                                      letterSpacing: 1.5,
+                                      color: Colors.black,
+                                      fontFamily: 'Dongle',
+                                    )),
+                                Text("Min/KM",
+                                    style: TextStyle(
+                                      fontSize: 40.0,
+                                      letterSpacing: 1.5,
+                                      color: Colors.black,
+                                      fontFamily: 'Dongle',
+                                    ))
+                              ]),
+                        ],
+                      ),
+                      ElevatedButton.icon(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.black,
+                            ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.white,
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                            )),
+                        icon: Icon(
+                            (_isPaused == false)
+                                ? Icons.play_arrow
+                                : Icons.pause_circle,
+                            size: 40),
+                        label: Text(_playPause,
+                            style: const TextStyle(
+                                fontFamily: 'Dongle', fontSize: 50)),
+                        onPressed: () {
+                          togglePanelUpDown();
+                          setState(() {
+                            setPlayPause();
+                            startOrStop();
+                          });
+                        },
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.white,
+                            ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.red,
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                            )),
+                        child: const Text('End',
+                            style: TextStyle(
+                                fontFamily: 'Dongle', fontSize: 50)),
+                        onPressed: () {
+                          endWorkoutDialog(context);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   //Function that I wanna use at MixChoices/CardioChoices callback
   void getAndShowCardioOrMixRoute(bool getAndShowCardio) async{
     if(getAndShowCardio) {
@@ -376,21 +692,13 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void chooseButton(int selection) async {
-    if (buttonSelection != 0) {
-      //Executes when clicking Beginner button
-      if (buttonSelection == 1) {
-        _beginnerPopup = !_beginnerPopup;
-        _markers.clear();
-        route =
-        await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
-        populateInfo();
-      }
+    if (selection != 0) {
       //Executes when clicking Cardio button
-      if (buttonSelection == 2) {
+      if (selection == 2) {
         cardioPopup = true;
       }
       //Executes when clicking Strength button
-      if (buttonSelection == 3) {
+      if (selection == 3) {
         route =
         await HttpRequestHandler().getStrengthRoute(59.331739, 18.060259);
         populateInfo();
@@ -401,14 +709,14 @@ class _MapScreenState extends State<MapScreen> {
         _refreshRouteShow = false;
       }
       //Mix choices popup
-      if (buttonSelection == 4) {
+      if (selection == 4) {
         mixPopup = true;
       }
-      if (buttonSelection == 5) {
+      if (selection == 5) {
         _markers.clear();
         _info = null;
       }
-      if (buttonSelection == 6) {
+      if (selection == 6) {
         _isShow = false;
       }
     }
@@ -439,6 +747,7 @@ class _MapScreenState extends State<MapScreen> {
         setGymInformation();
         //Sets up meters as distance
         distance = _info!.totalDistance;
+        arrivalDuration = _info!.totalDuration;
         //Sets the gym marker icon
         _setMarkerIcons();
         _markers.add(
@@ -488,5 +797,149 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       avatarPopUp = !avatarPopUp;
     });
+  }
+
+  Widget openUpPanelDragHandle() => GestureDetector(
+    child: Center(
+      child: Container(
+        width: 50,
+        height: 5,
+        decoration: BoxDecoration(
+          color: Colors.grey[600],
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+    ),
+    onTap: togglePanelUpDown,
+  );
+
+  void endWorkout(bool endWorkout) { //om man vill avsluta så körs denna metod
+    if(endWorkout == true) {
+      stopWatch();
+      resetTimer();
+      _isPaused = false;
+      _playPause = "Play";
+      buttonSelection = 5;
+      slidingUpPanelController.close();
+    }
+  }
+
+  void endWorkoutDialog(BuildContext context) {
+    var alert = AlertDialog(
+      title: const Text("End workout",
+          style: TextStyle(fontFamily: "Dongle", fontSize: 40)),
+      content: const Text("Do you wish to end your current workout?",
+          style: TextStyle(fontFamily: "Dongle", fontSize: 25)),
+      actions: <Widget>[
+        TextButton(onPressed: () {
+          Navigator.of(context).pop();
+          _endWorkout = false; //sätter att man vill avsluta till false
+        },
+          child: const Text("Cancel", style: TextStyle(color: Colors.black,
+              fontFamily: 'Dongle', fontSize: 30),),
+        ),
+        const SizedBox(width: 5.0),
+
+
+        TextButton(onPressed: () {
+          _endWorkout = true;  //sätter att man vill avsluta till ja
+          endWorkout(_endWorkout);
+          Navigator.pop(context);
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => //skickar användaren
+          //till FinishedGymWorkout sidan
+          FinishedGymWorkoutPage(widget.user)));
+        },
+          child: const Text("End", style: TextStyle(color: Colors.red,
+              fontFamily: 'Dongle', fontSize: 30),),
+        ),
+        const SizedBox(width: 5.0),
+      ],
+    );
+    showDialog(context: context, builder: (BuildContext context) => alert);
+    //visar alerten
+  }
+
+  void changeState() {
+    setState(() {
+      if (!_isActive) {
+        _isActive = true;
+      } else {
+        _isActive = false;
+      }
+    });
+  }
+
+  void togglePanelUpDown() => slidingUpPanelController.isPanelOpen
+      ? slidingUpPanelController.close()
+      : slidingUpPanelController.open();
+
+  void setPlayPause () {
+    if (_isPaused) {
+      _playPause = 'Play';
+
+    } else {
+      _playPause = 'Pause';
+    }
+    _isPaused = !_isPaused;
+  }
+
+  startOrStop() {
+    if (_startStop) {
+      _click = true;
+      startWatch();
+    } else {
+      stopWatch();
+    }
+  }
+
+  resetTimer() {
+    _watch.reset();
+    _elapsedTime = "00:00";
+  }
+
+  startWatch() {
+    setState(() {
+      _startStop = false;
+      _watch.start();
+      _timer = Timer.periodic(Duration(milliseconds: 100), updateTime);
+    });
+  }
+
+  stopWatch() {
+    setState(() {
+      _click = false;
+      _startStop = true;
+      _watch.stop();
+      setTime();
+    });
+  }
+
+  setTime() {
+    var timeSoFar = _watch.elapsedMilliseconds;
+    setState(() {
+      _elapsedTime = transformMilliSeconds(timeSoFar);
+    });
+  }
+
+  transformMilliSeconds(int milliseconds) {
+    int hundreds = (milliseconds / 10).truncate();
+    int seconds = (hundreds / 100).truncate();
+    int minutes = (seconds / 60).truncate();
+    // int hours = (minutes / 60).truncate();
+
+    // String hoursStr = (hours % 60).toString().padLeft(2, '0');
+    String minutesStr = (minutes % 60).toString().padLeft(2, '0');
+    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
+
+    return "$minutesStr:$secondsStr";
+  }
+
+  updateTime(Timer timer) {
+    if (_watch.isRunning) {
+      setState(() {
+        _elapsedTime = transformMilliSeconds(_watch.elapsedMilliseconds);
+      });
+    }
   }
 }
