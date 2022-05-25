@@ -15,8 +15,6 @@ public class Sociotop {
     public HashMap<Object, Park2> coordinateMap = new HashMap<Object, Park2>();
     public static Properties properties = null;
     public static JSONObject jsonObject = null;
-    public CharSequence c1 = "17";
-    public CharSequence c2 = "18";
 
     static {
         properties = new Properties();
@@ -67,6 +65,7 @@ public class Sociotop {
                 } else if ((obj.toString().equals("vattenkont"))) {
                     if ((Long) jsonObject.get(obj) == 1) {
                         park.setWaterContact(true);
+                        park.setcord(park.getCord());
                     } else {
                         park.setWaterContact(false);
                     }
@@ -75,11 +74,14 @@ public class Sociotop {
                 } else {
                     park.setRunning(false);
                 }
+                break;
             }
             park.setcord(park.getCord());
-            System.out.println(park.getCord());
+            System.out.println(park.returnCord());
             parkmap.put(park.getId(), park);
+            break;
         }
+
         /*for(Park p : parkmap.values()){
             for (List l : p.parkCoordinates){
                 for (Object o : l){
@@ -93,23 +95,19 @@ public class Sociotop {
                     coordinateMap.put(o,park2);
                 }
             }*/
-        for(long p : parkmap.keySet()){
-            for(List l : park.parkCoordinates){
+        for (long p : parkmap.keySet()) {
+            for (List l : park.parkCoordinates) {
                 Park2 park2 = new Park2();
                 park2.setId(park.id);
                 park2.setRunning(park.running);
                 park2.setWalk(park.walk);
                 park2.setWaterContact(park.waterContact);
-                for (Object o : l){
-              //      coordinateMap.put(parkmap.get().,park2);
+                for (Object o : l) {
+                    //      coordinateMap.put(parkmap.get().,park2);
                 }
             }
         }
-        }
-       /* for (Map.Entry<Object, Park2> map : coordinateMap.entrySet()){
-            Coordinate coordinate = new Coordinate();
-            coordinate.setLatitude(map.getKey());
-        }*/
+    }
 
     public class Park {
         private long id;
@@ -118,12 +116,16 @@ public class Sociotop {
         private boolean running;
         private String cord;
 
-        public void setcord(String cord) {
-            this.cord = cord;
+        public void setcord(String c) {
+            this.cord = c;
         }
 
         public String getCord() {
             return parkCoordinates.get(0).toString();
+        }
+
+        public String returnCord() {
+            return cord;
         }
 
         private ArrayList<ArrayList<Double>> parkCoordinates;
@@ -168,7 +170,7 @@ public class Sociotop {
         }
     }
 
-    public class Park2{
+    public class Park2 {
         private long id;
         private boolean walk;
         private boolean waterContact;
