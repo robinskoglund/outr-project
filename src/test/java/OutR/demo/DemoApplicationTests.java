@@ -55,6 +55,8 @@ class DemoApplicationTests {
     void testSociotop() throws IOException{
         Sociotop s = new Sociotop();
         s.run();
-        System.out.println(s.parkmap);
+        for (Object o : s.coordinateMap.keySet()){
+            System.out.println(o);
+        }
     }
 }

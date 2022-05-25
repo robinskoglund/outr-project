@@ -5,10 +5,14 @@ import java.util.*;
 
 import org.json.simple.*;
 import org.json.simple.parser.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class Sociotop {
     public Park park = new Park();
+    @Autowired
+    public CoordinateRepository coordinateRepository;
     public HashMap<Long, Park> parkmap = new HashMap<Long, Park>();
+    public HashMap<Object, Park2> coordinateMap = new HashMap<Object, Park2>();
     public static Properties properties = null;
     public static JSONObject jsonObject = null;
 
@@ -72,6 +76,22 @@ public class Sociotop {
             }
             parkmap.put(park.getId(), park);
         }
+        for(Park p : parkmap.values()){
+            for (List l : p.parkCoordinates){
+                for (Object o : l){
+                    Park2 park2 = new Park2();
+                    park2.setId(p.id);
+                    park2.setRunning(p.running);
+                    park2.setWalk(p.walk);
+                    park2.setWaterContact(p.waterContact);
+                    coordinateMap.put(o,park2);
+                }
+            }
+        }
+       /* for (Map.Entry<Object, Park2> map : coordinateMap.entrySet()){
+            Coordinate coordinate = new Coordinate();
+            coordinate.setLatitude(map.getKey());
+        }*/
     }
 
     public class Park {
@@ -117,6 +137,47 @@ public class Sociotop {
                     ", waterContact=" + waterContact +
                     ", running=" + running +
                     ", parkCoordinates=" + parkCoordinates +
+                    '}';
+        }
+    }
+
+    public class Park2{
+        private long id;
+        private boolean walk;
+        private boolean waterContact;
+        private boolean running;
+
+        public Park2() {
+
+        }
+
+        public void setId(long id) {
+            this.id = id;
+        }
+
+        public void setWalk(boolean walk) {
+            this.walk = walk;
+        }
+
+        public void setWaterContact(boolean waterContact) {
+            this.waterContact = waterContact;
+        }
+
+        public void setRunning(boolean running) {
+            this.running = running;
+        }
+
+        public long getId() {
+            return id;
+        }
+
+        @Override
+        public String toString() {
+            return "Park{" +
+                    "id=" + id +
+                    ", walk=" + walk +
+                    ", waterContact=" + waterContact +
+                    ", running=" + running +
                     '}';
         }
     }
