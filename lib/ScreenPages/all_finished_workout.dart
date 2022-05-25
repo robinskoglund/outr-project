@@ -7,16 +7,16 @@ import  'package:intl/intl.dart';
 
 class FinishedWorkoutPage extends StatefulWidget {
   final User user;
-  final String exercisetypeInLowerCase_beginner_cardio_gym_mix;
-  final String minutes;
-  final double kilometers;
+  final int buttonSelection;
+  final String elapsedTime;
+  final String distance;
   final String minPerKM;
 
   FinishedWorkoutPage(
       this.user,
-      this.exercisetypeInLowerCase_beginner_cardio_gym_mix,
-      this.minutes,
-      this.kilometers,
+      this.buttonSelection,
+      this.elapsedTime,
+      this.distance,
       this.minPerKM);
 
   @override
@@ -27,26 +27,31 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
   final String date = DateFormat("yyyy-MM-dd").format(DateTime.now());
   late String title = getTitle();
   late String minutes = getMinutes();
-  late double kilometers = getKilometers();
+  late String kilometers = getKilometers();
   late String minPerKM = getMinPerKM();
+  late int buttonSelection = getButtonSelection();
 
   String getTitle() {
-    if (widget.exercisetypeInLowerCase_beginner_cardio_gym_mix == 'beginner')
+    if (getButtonSelection() == 1)
       return title = 'Beginner workout $date';
-    else if (widget.exercisetypeInLowerCase_beginner_cardio_gym_mix == 'cardio')
+    else if (getButtonSelection() == 2)
       return title = 'Cardio $date';
-    else if (widget.exercisetypeInLowerCase_beginner_cardio_gym_mix == 'gym')
+    else if (getButtonSelection() == 3)
       return title = 'Strength $date';
     else
-      return title = 'Mix + $date';
+      return title = 'Mix $date';
+  }
+
+  int getButtonSelection(){
+    return buttonSelection = widget.buttonSelection;
   }
 
   String getMinutes() {
-    return minutes = widget.minutes;
+    return minutes = widget.elapsedTime;
   }
 
-  double getKilometers() {
-    return kilometers = widget.kilometers;
+  String getKilometers() {
+    return kilometers = widget.distance;
   }
 
   String getMinPerKM() {
@@ -70,6 +75,7 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
       ),
       body: Column(
         children: <Widget>[
+          SizedBox(height: 20.0),
           TextFormField(
             textAlign: TextAlign.center,
             initialValue: '$title',
@@ -86,7 +92,7 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
               suffixIconColor: Colors.black,
             ),
           ),
-          SizedBox(height: 50.0),
+          SizedBox(height: 20.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[

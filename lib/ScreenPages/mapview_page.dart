@@ -12,6 +12,7 @@ import '../Components/cardio_choices_popup.dart';
 import '../Components/mix_choices_popup.dart';
 import '../Components/navigation_bar.dart';
 import '../DataClasses/userdata.dart';
+import 'all_finished_workout.dart';
 import 'finished_gym_workout.dart';
 
 class MapScreen extends StatefulWidget {
@@ -710,10 +711,6 @@ class _MapScreenState extends State<MapScreen> {
       if (selection == 4) {
         mixPopup = true;
       }
-      if (selection == 5) {
-        _markers.clear();
-        _info = null;
-      }
       if (selection == 6) {
         _isShow = false;
       }
@@ -817,7 +814,6 @@ class _MapScreenState extends State<MapScreen> {
       resetTimer();
       _isPaused = false;
       _playPause = "Play";
-      buttonSelection = 5;
       slidingUpPanelController.close();
     }
   }
@@ -838,15 +834,17 @@ class _MapScreenState extends State<MapScreen> {
         ),
         const SizedBox(width: 5.0),
 
-
         TextButton(onPressed: () {
+          print(buttonSelection);
+          _markers.clear();
+          _info = null;
           _endWorkout = true;  //sätter att man vill avsluta till ja
           endWorkout(_endWorkout);
           Navigator.pop(context);
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => //skickar användaren
-          //till FinishedGymWorkout sidan
-          FinishedGymWorkoutPage(widget.user)));
+            FinishedWorkoutPage(widget.user, buttonSelection, _elapsedTime, distance, 'MINPERKM')
+          ));
         },
           child: const Text("End", style: TextStyle(color: Colors.red,
               fontFamily: 'Dongle', fontSize: 30),),
