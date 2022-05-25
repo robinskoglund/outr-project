@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class Sociotop {
     public Park park = new Park();
+    public Park2 park2 = new Park2();
     @Autowired
     public CoordinateRepository coordinateRepository;
     public HashMap<Long, Park> parkmap = new HashMap<Long, Park>();
-    public HashMap<Object, Park2> coordinateMap = new HashMap<Object, Park2>();
+    public HashMap<String, Park> coordinateMap = new HashMap<String, Park>();
     public static Properties properties = null;
     public static JSONObject jsonObject = null;
 
@@ -77,8 +78,9 @@ public class Sociotop {
                 break;
             }
             park.setcord(park.getCord());
-            System.out.println(park.returnCord());
             parkmap.put(park.getId(), park);
+            coordinateMap.put(park.getCord(),park);
+            System.out.println(coordinateMap.keySet());
             break;
         }
 
@@ -95,18 +97,6 @@ public class Sociotop {
                     coordinateMap.put(o,park2);
                 }
             }*/
-        for (long p : parkmap.keySet()) {
-            for (List l : park.parkCoordinates) {
-                Park2 park2 = new Park2();
-                park2.setId(park.id);
-                park2.setRunning(park.running);
-                park2.setWalk(park.walk);
-                park2.setWaterContact(park.waterContact);
-                for (Object o : l) {
-                    //      coordinateMap.put(parkmap.get().,park2);
-                }
-            }
-        }
     }
 
     public class Park {
@@ -115,6 +105,18 @@ public class Sociotop {
         private boolean waterContact;
         private boolean running;
         private String cord;
+
+        public boolean isWalk() {
+            return walk;
+        }
+
+        public boolean isWaterContact() {
+            return waterContact;
+        }
+
+        public boolean isRunning() {
+            return running;
+        }
 
         public void setcord(String c) {
             this.cord = c;
