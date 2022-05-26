@@ -35,7 +35,8 @@ class _SavedRoutesPageState extends State<SavedRoutesPage> {
     if(routes != null){
       return ListView(
           children: <Widget>[
-            for(r.Route route in routes!) Route(route.typeOfWorkout, route.distance, route.nameOfRoute, route.durationInMinutes),
+            for(r.Route route in routes!)
+              Route(route.typeOfWorkout, route.distance, route.nameOfRoute, route.durationInMinutes),
             SizedBox(height: 16),
             Divider(color: Colors.black),
             SizedBox(height: 16),
@@ -58,12 +59,13 @@ class _SavedRoutesPageState extends State<SavedRoutesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
         foregroundColor: Colors.black, //ändrar färgen på burgarmeny
-        title: const Text('Saved Routes',
-          textAlign: TextAlign.center,),
+        title: const Text('Saved Routes'
+        ),
         titleTextStyle: TextStyle(
             fontFamily: "Dongle",
             fontSize: 44,
