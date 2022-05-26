@@ -1,3 +1,6 @@
+import 'package:outr/API/dbapihandler.dart';
+import 'package:outr/DataClasses/routedata.dart' as r;
+
 import '../DataClasses/userdata.dart';
 import 'package:flutter/material.dart';
 import '../Components/navigation_bar.dart';
@@ -5,7 +8,13 @@ import '../Components/navigation_bar.dart';
 class SavedRoutesPage extends StatelessWidget {
   final User user;
 
+  //final List<r.Route> routes;
+
   SavedRoutesPage(this.user);
+
+  /*void getRoutes() async {
+    routes = await getAllUserRoutes(user.email);
+  }*/
 
   Widget buildBasicListView(BuildContext context) => ListView(
 

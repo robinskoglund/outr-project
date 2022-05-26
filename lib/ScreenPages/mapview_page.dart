@@ -846,7 +846,7 @@ class _MapScreenState extends State<MapScreen> {
           Navigator.pop(context);
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => //skickar användaren
-            FinishedWorkoutPage(widget.user, buttonSelection, _elapsedTime, distance, 'MINPERKM')
+            FinishedWorkoutPage(widget.user, buttonSelection, _elapsedTime, distance, 'MINPERKM', route)
           ));
         },
           child: const Text("End", style: TextStyle(color: Colors.red,

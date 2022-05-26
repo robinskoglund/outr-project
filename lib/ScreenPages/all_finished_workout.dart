@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:outr/API/dbapihandler.dart';
 import 'package:outr/Components/navigation_bar.dart';
 import '../Components/saved_workout_alert.dart';
 import '../DataClasses/userdata.dart';
@@ -11,13 +12,15 @@ class FinishedWorkoutPage extends StatefulWidget {
   final String elapsedTime;
   final String distance;
   final String minPerKM;
+  final String route;
 
   FinishedWorkoutPage(
       this.user,
       this.buttonSelection,
       this.elapsedTime,
       this.distance,
-      this.minPerKM);
+      this.minPerKM,
+      this.route);
 
   @override
   State<FinishedWorkoutPage> createState() => _FinishedWorkoutPageState();
@@ -30,6 +33,8 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
   late String elapsedTime;
   late String distance;
   late String minPerKM;
+  late String email;
+  late String route;
 
   @override
   void initState(){
@@ -37,6 +42,8 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
     elapsedTime = widget.elapsedTime;
     distance = widget.distance;
     minPerKM = widget.minPerKM;
+    email = widget.user.email;
+    route = widget.route;
     super.initState();
   }
 
@@ -53,6 +60,17 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
       return title = 'Strength $date';
     else
       return title = 'Mix $date';
+  }
+
+  String getTypeOfWorkout(){
+    if (buttonSelection == 1)
+      return title = 'Beginner workout';
+    else if (buttonSelection == 2)
+      return title = 'Cardio';
+    else if (buttonSelection == 3)
+      return title = 'Strength';
+    else
+      return title = 'Mix';
   }
 
   @override
@@ -198,6 +216,10 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
                   ),
                 ),
                 onPressed: () {
+
+                  //Skicka till db
+                  saveRoute(email, route, getTypeOfWorkout(), distance, title, elapsedTime);
+
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {

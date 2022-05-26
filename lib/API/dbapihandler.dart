@@ -115,3 +115,22 @@ List<Achievement> parseAchievements(String responseBody) {
 
   return parsed.map<Achievement>((json) => Achievement.fromJson(json)).toList();
 }
+
+Future<http.Response> saveRoute(String email, String route, String typeOfWorkout, String distance,
+    String nameOfRoute, String duration){
+  //För att testa på sin localhost ska använd din ip-adress istället för "localhost" i adressen
+  return http.post(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/route/add?email=' + email + '&route=' + route +
+  '&typeOfWorkout=' + typeOfWorkout + '&distance=' + distance+ "&nameOfRoute=" + nameOfRoute + '&duration=' + duration),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body :jsonEncode(<String, String>{
+      'email': email,
+      'route': route,
+      'typeOfWorkout': typeOfWorkout,
+      'distance': distance,
+      'nameOfRoute': nameOfRoute,
+      'duration': duration
+    }),
+  );
+}
