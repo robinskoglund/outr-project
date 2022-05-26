@@ -14,6 +14,7 @@ import '../Components/navigation_bar.dart';
 import '../DataClasses/userdata.dart';
 import 'all_finished_workout.dart';
 
+
 class MapScreen extends StatefulWidget {
   final User user;
   final bool showPopUp;
@@ -653,6 +654,7 @@ class _MapScreenState extends State<MapScreen> {
       _markers.clear();
       route = await HttpRequestHandler().getCardioRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
       populateInfo();
+      print(route);
     }else{
       _refreshRouteShow = true;
       _markers.clear();
@@ -732,6 +734,7 @@ class _MapScreenState extends State<MapScreen> {
       distance = _info!.totalDistance;
       //Sets up directions arrival as arrivalDuration
       arrivalDuration = _info!.totalDuration;
+      print(distance);
       _markers.add(
         Marker(
           markerId: MarkerId("0"),
