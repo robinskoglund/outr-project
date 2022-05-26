@@ -25,6 +25,7 @@ class _CardioChoicesState extends State<CardioChoices>{
   bool cardioPopup = false;
   bool _refreshRouteShow = false;
   bool _isShow = false;
+  late double speed;
 
   @override
   Widget build(BuildContext context) {
@@ -155,19 +156,15 @@ class _CardioChoicesState extends State<CardioChoices>{
                     setState(() {
                       if (walkOrJogIndex == 1) {
                         walkOrRunString = 'Run:';
+                        speed = 2.22;
                       } else {
                         walkOrRunString = 'Walk:';
+                        speed = 1.4;
                       }
                       cardioPopup = false;
                       _isShow = true;
                       _refreshRouteShow = true;
                     });
-                    int speed = 0;
-                    if (walkOrJogIndex == 0) {
-                      speed = 5;
-                    } else {
-                      speed = 8;
-                    }
                     widget.dataCallback(durationValue, walkOrRunString, cardioPopup, _isShow, speed);
                     widget.functionCallback(true);
                   },
@@ -183,5 +180,5 @@ class _CardioChoicesState extends State<CardioChoices>{
   }
 }
 
-typedef ChoicesCallback = void Function(String durationValue, String walkOrRunString, bool popUp, bool _isShow, int speed);
+typedef ChoicesCallback = void Function(String durationValue, String walkOrRunString, bool popUp, bool _isShow, double speed);
 typedef FunctionCallback = void Function(bool isCardio);

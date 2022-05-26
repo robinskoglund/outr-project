@@ -52,7 +52,7 @@ class _MapScreenState extends State<MapScreen> {
   bool _refreshRouteShow = false;
   String walkOrRunString = 'Walk';
   String distance = '0:00';
-  int speed = 0;
+  double speed = 0;
 
   bool _endWorkout = false;
   bool _isActive = false;

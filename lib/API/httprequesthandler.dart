@@ -14,7 +14,7 @@ class HttpRequestHandler{
   String userExperience = '';
 
   //Metoden som ska posta geolocation till backend
-  Future<String> getMixRoute(double lat, double long, int duration, int speed) async {
+  Future<String> getMixRoute(double lat, double long, int duration, double speed) async {
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getmixedroute?originLatitude=' +
         lat.toString() + '&originLongitude=' +
         long.toString() + '&distanceOrDuration=' +
@@ -41,7 +41,7 @@ class HttpRequestHandler{
     return route;
   }
 
-  Future<String> getCardioRoute(double lat, double long, int duration, int speed) async {
+  Future<String> getCardioRoute(double lat, double long, int duration, double speed) async {
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getrandomroute?originLatitude=' +
         lat.toString() + '&originLongitude=' +
         long.toString() + '&distanceOrDuration=' +
