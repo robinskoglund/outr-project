@@ -87,6 +87,27 @@ public class Sociotop {
             coordinateMap.put(park.getCord(),p2);
         }
 
+        for(Map.Entry<String, Park2> entry : coordinateMap.entrySet()){
+            Coordinate coordinate = new Coordinate();
+            String[] keys = entry.getKey().split(",");
+
+            String latitude = keys[0];
+            latitude = latitude.replace("[", "");
+            String longitude = keys[1];
+            longitude = longitude.replace("]", "");
+
+            double lat = Double.parseDouble(latitude);
+            double lon = Double.parseDouble(longitude);
+            coordinate.setLatitude(lat);
+            coordinate.setLongitude(lon);
+            coordinate.setId(entry.getValue().id);
+            coordinate.setRunning(entry.getValue().running);
+            coordinate.setWalk(entry.getValue().walk);
+            coordinate.setWaterContact(entry.getValue().waterContact);
+
+            coordinateRepository.save(coordinate);
+        }
+
         /*for(Park p : parkmap.values()){
             for (List l : p.parkCoordinates){
                 for (Object o : l){
