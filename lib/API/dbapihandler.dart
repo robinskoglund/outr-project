@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:outr/DataClasses/routedata.dart' as r;
 import 'dart:convert';
 
 import '../DataClasses/userdata.dart';
@@ -82,4 +83,19 @@ Future<bool> checkPassword(String email, String password) async {
   }
   return false;
 
+}
+
+Future<List<r.Route>> getAllUserRoutes(String email) async {
+  final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/route/getAllUserRoutes?email=' + email));
+
+  if(response.statusCode == 200){
+    return parseRoutes(response.body);
+  }
+  throw 'Something went wrong';
+}
+
+List<r.Route> parseRoutes(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<r.Route>((json) => r.Route.fromJson(json)).toList();
 }
