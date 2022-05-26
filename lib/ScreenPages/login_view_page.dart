@@ -29,10 +29,10 @@ class _HomeState extends State<Home> {
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-              colors: [const Color(0xff61A4FF), const Color(0xffD8EEFF)],
-              begin: const FractionalOffset(0.0, 0.0),
-              end: const FractionalOffset(1.0, 0.0),
-              stops: [0.0, 1.0],
+              colors: [const Color(0xffFFFFFF), const Color(0xffA4EEC1)],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stops: [0.0, 1.5],
               tileMode: TileMode.clamp),
         ),
         child: Stack(
