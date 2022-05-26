@@ -728,6 +728,8 @@ class _MapScreenState extends State<MapScreen> {
     final directions = await HttpRequestHandler().getDirections(routeString[0]);
     setState(() {
       _info = directions;
+      distance = _info!.totalDistance;
+      arrivalDuration = _info!.totalDuration;
       _markers.add(
         Marker(
           markerId: MarkerId("0"),
@@ -743,9 +745,6 @@ class _MapScreenState extends State<MapScreen> {
       if (buttonSelection == 1 || buttonSelection == 3 || buttonSelection == 4) {
         //Populates the stateful gym name and lat longs.
         setGymInformation();
-        //Sets up meters as distance
-        distance = _info!.totalDistance;
-        arrivalDuration = _info!.totalDuration;
         //Sets the gym marker icon
         _setMarkerIcons();
         _markers.add(
