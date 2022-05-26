@@ -664,24 +664,28 @@ class _MapScreenState extends State<MapScreen> {
   void generateNewRoute(int selection) async {
     switch (selection) {
       case 1:
+        _markers.clear();
         route =
             await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
         populateInfo();
         break;
 
       case 2:
+        _markers.clear();
         route = await HttpRequestHandler()
             .getCardioRoute(59.311926, 18.069933, int.parse(durationValue), 5);
         populateInfo();
         break;
 
       case 3:
+        _markers.clear();
         route =
             await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
         populateInfo();
         break;
 
       case 4:
+        _markers.clear();
         route =
             await HttpRequestHandler().getMixRoute(59.311926, 18.069933, 5, 5);
         populateInfo();
