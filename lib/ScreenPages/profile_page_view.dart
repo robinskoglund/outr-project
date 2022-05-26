@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../API/httprequesthandler.dart';
 import '../Components/navigation_bar.dart';
 import '../DataClasses/userdata.dart';
 import 'achievements_page.dart';
@@ -22,6 +21,11 @@ class _ProfileScreenState extends State<ProfileScreen>{
   String accountLoggedIn = '';
   String xpToNextLevel = '';
 
+  double xpBarWidth = 0;
+  int currentLevelInt = 0;
+  int currentExperienceInt = 0;
+  int xpToNextLevelInt = 0;
+  int totalXpForNextLevel = 0;
 
   @override
   void initState() {
@@ -31,6 +35,12 @@ class _ProfileScreenState extends State<ProfileScreen>{
     currentRank = widget.user.rank.toString();
     xpToNextLevel = widget.user.xpToNextLevel.toString();
     accountLoggedIn = widget.user.email.toString();
+
+    currentLevelInt = widget.user.level;
+    currentExperienceInt = widget.user.xp;
+    xpToNextLevelInt = widget.user.xpToNextLevel;
+    totalXpForNextLevel = widget.user.totalXpForNextLevel;
+
     super.initState();
   }
 
@@ -108,11 +118,12 @@ class _ProfileScreenState extends State<ProfileScreen>{
                     image: AssetImage('assets/profileavatar.png'),
                     fit: BoxFit.fill,
                   ),
-                  ),
                 ),
               ),
-             Padding(
-              padding: const EdgeInsets.fromLTRB(225, 270, 0, 0),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(220, 280, 55, 0),
               child: Text(
                 '$xpToNextLevel xp to',
                 style: TextStyle(
@@ -122,41 +133,88 @@ class _ProfileScreenState extends State<ProfileScreen>{
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(235, 290, 0, 0),
-              child: Text(
-                'level up',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 40,
-                  fontFamily: 'Dongle',
-                ),
-              ),
-            ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(120, 370, 80, 0),
+              padding: const EdgeInsets.fromLTRB(35, 300, 50, 0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
+                  Stack(
+                    children:<Widget> [
+                      //This is the exp-bar
+                      Container(
+                        height: 40,
+                        width: getXpBarWidth(),
+                        decoration: BoxDecoration(
+                          color: Colors.greenAccent[700],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      //This is the full bar
+                      Container(
+                        height: 40,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(width: 4.0, color: Colors.black),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            SizedBox(width: 8.0),
+                            Text(
+                              '$currentExperience xp',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 40,
+                                fontFamily: 'Dongle',
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                   Text(
-                    '$currentStreak workouts',
-                    style: const TextStyle(
+                    'level up',
+                    style: TextStyle(
                       color: Colors.black,
                       fontSize: 40,
                       fontFamily: 'Dongle',
                     ),
                   ),
-                  Container(
-                    height: 60.0,
-                    width: 60.0,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/hotstreak.png'),
-                        fit: BoxFit.fill,
+                ],
+              ),
+            ),
+
+
+            Padding(
+                padding: const EdgeInsets.fromLTRB(120, 370, 80, 0),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      '$currentStreak workouts',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 40,
+                        fontFamily: 'Dongle',
                       ),
                     ),
-                  ),
-                ],
-              )
+                    Container(
+                      height: 60.0,
+                      width: 60.0,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/hotstreak.png'),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
             ),
             const Padding(
               padding: EdgeInsets.fromLTRB(150, 390, 80, 0),
@@ -178,9 +236,9 @@ class _ProfileScreenState extends State<ProfileScreen>{
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 43, 121, 255)),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
                         )
                     ),
                     onPressed: () {
@@ -189,7 +247,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                         MaterialPageRoute(builder: (context) => AchievementsPage(widget.user)),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                         'Achievements',
                         style: TextStyle(
                             fontFamily: "Dongle",
@@ -203,5 +261,10 @@ class _ProfileScreenState extends State<ProfileScreen>{
         ),
       ),
     );
+  }
+
+  double getXpBarWidth(){
+    double xpPerPixel = totalXpForNextLevel/150;
+    return xpBarWidth = (totalXpForNextLevel - xpToNextLevelInt) / xpPerPixel;
   }
 }

@@ -9,6 +9,7 @@ class User{
   final int xp;
   final String rank;
   final int xpToNextLevel;
+  final int totalXpForNextLevel;
 
   const User({
     required this.name,
@@ -20,7 +21,8 @@ class User{
     required this.level,
     required this.xp,
     required this.rank,
-    required this.xpToNextLevel
+    required this.xpToNextLevel,
+    required this.totalXpForNextLevel
   });
 
   factory User.fromJson(Map<String, dynamic> json){
@@ -34,7 +36,8 @@ class User{
         level: json['level'],
         xp: json['xp'],
         rank: json['rank'],
-        xpToNextLevel: json['xpToNextLevel']
+        xpToNextLevel: json['xpToNextLevel'],
+        totalXpForNextLevel: json['totalXpForNextLevel'],
     );
   }
 
