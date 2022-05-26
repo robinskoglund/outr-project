@@ -18,7 +18,7 @@ class HttpRequestHandler{
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getmixedroute?originLatitude=' +
         lat.toString() + '&originLongitude=' +
         long.toString() + '&distanceOrDuration=' +
-        duration.toString() + '&speed' +
+        duration.toString() + '&speed=' +
         speed.toString()));
     if(response.statusCode == 200){
       route = response.body;
@@ -45,7 +45,7 @@ class HttpRequestHandler{
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getrandomroute?originLatitude=' +
         lat.toString() + '&originLongitude=' +
         long.toString() + '&distanceOrDuration=' +
-        duration.toString() + '&speed' +
+        duration.toString() + '&speed=' +
         speed.toString()));
     if(response.statusCode == 200){
       route = response.body;
