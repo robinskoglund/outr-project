@@ -651,12 +651,12 @@ class _MapScreenState extends State<MapScreen> {
     if(getAndShowCardio) {
       _refreshRouteShow = true;
       _markers.clear();
-      route = await HttpRequestHandler().getCardioRoute(59.311926, 18.069933, int.parse(durationValue), speed);
+      route = await HttpRequestHandler().getCardioRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
       populateInfo();
     }else{
       _refreshRouteShow = true;
       _markers.clear();
-      route = await HttpRequestHandler().getMixRoute(59.311926, 18.069933, int.parse(durationValue), speed);
+      route = await HttpRequestHandler().getMixRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
       populateInfo();
     }
   }
@@ -666,28 +666,28 @@ class _MapScreenState extends State<MapScreen> {
       case 1:
         _markers.clear();
         route =
-            await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
+            await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
         populateInfo();
         break;
 
       case 2:
         _markers.clear();
         route = await HttpRequestHandler()
-            .getCardioRoute(59.311926, 18.069933, int.parse(durationValue), 5);
+            .getCardioRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
         populateInfo();
         break;
 
       case 3:
         _markers.clear();
         route =
-            await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
+            await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
         populateInfo();
         break;
 
       case 4:
         _markers.clear();
         route =
-            await HttpRequestHandler().getMixRoute(59.311926, 18.069933, 5, 5);
+            await HttpRequestHandler().getMixRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
         populateInfo();
         break;
     }
@@ -702,7 +702,7 @@ class _MapScreenState extends State<MapScreen> {
       //Executes when clicking Strength button
       if (selection == 3) {
         route =
-        await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
+        await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
         populateInfo();
         setState(() {
           walkOrRunString = 'Nearest gym is';
@@ -728,6 +728,10 @@ class _MapScreenState extends State<MapScreen> {
     final directions = await HttpRequestHandler().getDirections(routeString[0]);
     setState(() {
       _info = directions;
+      //Sets up directions distance as distance
+      distance = _info!.totalDistance;
+      //Sets up directions arrival as arrivalDuration
+      arrivalDuration = _info!.totalDuration;
       _markers.add(
         Marker(
           markerId: MarkerId("0"),
@@ -743,9 +747,6 @@ class _MapScreenState extends State<MapScreen> {
       if (buttonSelection == 1 || buttonSelection == 3 || buttonSelection == 4) {
         //Populates the stateful gym name and lat longs.
         setGymInformation();
-        //Sets up meters as distance
-        distance = _info!.totalDistance;
-        arrivalDuration = _info!.totalDuration;
         //Sets the gym marker icon
         _setMarkerIcons();
         _markers.add(
