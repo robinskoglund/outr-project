@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:outr/DataClasses/achievementdata.dart';
 import 'package:outr/DataClasses/routedata.dart' as r;
 import 'dart:convert';
 
@@ -98,4 +99,19 @@ List<r.Route> parseRoutes(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 
   return parsed.map<r.Route>((json) => r.Route.fromJson(json)).toList();
+}
+
+Future<List<Achievement>> getAllUserAchievements(String email) async{
+  final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/achievement/getAllForUser?email=' + email));
+
+  if(response.statusCode == 200){
+    return parseAchievements(response.body);
+  }
+  throw 'Something went wrong';
+}
+
+List<Achievement> parseAchievements(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<Achievement>((json) => Achievement.fromJson(json)).toList();
 }
