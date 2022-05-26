@@ -13,7 +13,6 @@ import '../Components/mix_choices_popup.dart';
 import '../Components/navigation_bar.dart';
 import '../DataClasses/userdata.dart';
 import 'all_finished_workout.dart';
-import 'finished_gym_workout.dart';
 
 class MapScreen extends StatefulWidget {
   final User user;
