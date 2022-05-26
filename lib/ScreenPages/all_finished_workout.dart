@@ -26,36 +26,33 @@ class FinishedWorkoutPage extends StatefulWidget {
 class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
   final String date = DateFormat("yyyy-MM-dd").format(DateTime.now());
   late String title = getTitle();
-  late String minutes = getMinutes();
-  late String kilometers = getKilometers();
-  late String minPerKM = getMinPerKM();
-  late int buttonSelection = getButtonSelection();
+  late int buttonSelection;
+  late String elapsedTime;
+  late String distance;
+  late String minPerKM;
+
+  @override
+  void initState(){
+    buttonSelection = widget.buttonSelection;
+    elapsedTime = widget.elapsedTime;
+    distance = widget.distance;
+    minPerKM = widget.minPerKM;
+    super.initState();
+  }
+
+  void setTitle(String newTitle){
+    this.title = newTitle;
+  }
 
   String getTitle() {
-    if (getButtonSelection() == 1)
+    if (buttonSelection == 1)
       return title = 'Beginner workout $date';
-    else if (getButtonSelection() == 2)
+    else if (buttonSelection == 2)
       return title = 'Cardio $date';
-    else if (getButtonSelection() == 3)
+    else if (buttonSelection == 3)
       return title = 'Strength $date';
     else
       return title = 'Mix $date';
-  }
-
-  int getButtonSelection(){
-    return buttonSelection = widget.buttonSelection;
-  }
-
-  String getMinutes() {
-    return minutes = widget.elapsedTime;
-  }
-
-  String getKilometers() {
-    return kilometers = widget.distance;
-  }
-
-  String getMinPerKM() {
-    return minPerKM = widget.minPerKM;
   }
 
   @override
@@ -91,6 +88,9 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
               suffixIcon: Icon(Icons.edit),
               suffixIconColor: Colors.black,
             ),
+              onChanged: (text){
+                setTitle(text);
+              }
           ),
           SizedBox(height: 20.0),
           Row(
@@ -100,7 +100,7 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    '$minutes',
+                    '$elapsedTime',
                     style: TextStyle(
                       fontFamily: 'Dongle',
                       fontSize: 50,
@@ -121,7 +121,7 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Text>[
                   Text(
-                    '$kilometers',
+                    '$distance',
                     style: TextStyle(
                       fontFamily: 'Dongle',
                       fontSize: 50,
@@ -201,7 +201,7 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return SavedWorkoutAlert('$title', widget.user);
+                      return SavedWorkoutAlert(title, widget.user);
                     },
                   );
                 }, //lägg till så rutten sparas
