@@ -813,7 +813,6 @@ class _MapScreenState extends State<MapScreen> {
   void endWorkout(bool endWorkout) { //om man vill avsluta så körs denna metod
     if(endWorkout == true) {
       stopWatch();
-      resetTimer();
       _isPaused = false;
       _playPause = "Play";
       slidingUpPanelController.close();
