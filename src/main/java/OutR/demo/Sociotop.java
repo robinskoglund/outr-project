@@ -13,7 +13,7 @@ public class Sociotop {
     @Autowired
     public CoordinateRepository coordinateRepository;
     public HashMap<Long, Park> parkmap = new HashMap<Long, Park>();
-    public HashMap<String, Park> coordinateMap = new HashMap<String, Park>();
+    public HashMap<String, Park2> coordinateMap = new HashMap<String, Park2>();
     public static Properties properties = null;
     public static JSONObject jsonObject = null;
 
@@ -75,14 +75,16 @@ public class Sociotop {
                 } else {
                     park.setRunning(false);
                 }
-                break;
             }
             // lägger till objekten till en hashmap
             park.setcord(park.getCord());
             parkmap.put(park.getId(), park);
-            coordinateMap.put(park.getCord(),park);
-            System.out.println(coordinateMap.keySet());
-            break;
+            Park2 p2 = new Park2();
+            p2.setId(park.id);
+            p2.setRunning(park.running);
+            p2.setWalk(park.walk);
+            p2.setWaterContact(park.waterContact);
+            coordinateMap.put(park.getCord(),p2);
         }
 
         /*for(Park p : parkmap.values()){
