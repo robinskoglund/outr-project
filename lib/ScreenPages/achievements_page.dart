@@ -18,9 +18,9 @@ class _AchievementsPageState extends State<AchievementsPage> {
   List<Achievement>? achievements;
 
   void getAchievements() async {
-    final myAchievements = await getAllUserAchievements(widget.user.email);
+    final allAchievements = await getAllUserAchievements(widget.user.email);
     setState(() {
-      achievements = myAchievements;
+      achievements = allAchievements;
     });
   }
 
