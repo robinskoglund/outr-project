@@ -79,7 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                       topLeft: Radius.circular(40.0),
                       bottomLeft: Radius.circular(40.0)),
                 ),
-                height: 530.0,
+                height: 630.0,
                 width: 400.0,
               ),
             ),
@@ -123,12 +123,12 @@ class _ProfileScreenState extends State<ProfileScreen>{
             ),
 
             Padding(
-              padding: const EdgeInsets.fromLTRB(220, 280, 55, 0),
+              padding: const EdgeInsets.fromLTRB(210, 280, 45, 0),
               child: Text(
                 '$xpToNextLevel xp to',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 40,
+                  fontSize: 35,
                   fontFamily: 'Dongle',
                 ),
               ),
@@ -182,7 +182,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                     'level up',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 40,
+                      fontSize: 35,
                       fontFamily: 'Dongle',
                     ),
                   ),
@@ -192,7 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
 
 
             Padding(
-                padding: const EdgeInsets.fromLTRB(120, 370, 80, 0),
+                padding: const EdgeInsets.fromLTRB(80, 390, 80, 0),
                 child: Row(
                   children: <Widget>[
                     Text(
@@ -217,7 +217,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                 )
             ),
             const Padding(
-              padding: EdgeInsets.fromLTRB(150, 390, 80, 0),
+              padding: EdgeInsets.fromLTRB(150, 420, 80, 0),
               child: Text(
                 'streak',
                 style: TextStyle(
@@ -228,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
             ),
             Padding(
-                padding: const EdgeInsets.fromLTRB(85, 470, 80, 10),
+                padding: const EdgeInsets.fromLTRB(85, 520, 80, 10),
                 child: SizedBox(
                   width: 350,
                   height: 60,
@@ -251,7 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
                         'Achievements',
                         style: TextStyle(
                             fontFamily: "Dongle",
-                            fontSize: 50
+                            fontSize: 42
                         )
                     ),
                   ),

@@ -210,7 +210,7 @@ class _MapScreenState extends State<MapScreen> {
                 child: Padding(
                   padding: EdgeInsets.only(top: 180),
                   child: Container(
-                    height: 200,
+                    height: 220,
                     width: 250,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15.0),
@@ -252,14 +252,14 @@ class _MapScreenState extends State<MapScreen> {
                             ],
                           ),
                           const Text(
-                            '*This is only an estimate, take it at your own pace',
+                            ' *This is only an estimate, take it at your own\n  pace',
                             style: TextStyle(
                               fontFamily: 'Dongle',
                               fontSize: 16.0,
                               color: Colors.black,
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 10),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               primary: Colors.blue,

@@ -9,7 +9,11 @@ import 'mapview_page.dart';
 import 'register_view_page.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-void main() => runApp(MaterialApp(home: Home()));
+void main() => runApp(MaterialApp(
+    theme: ThemeData(
+      fontFamily: "Dongle",
+    ),
+    home: Home()));
 
 class Home extends StatefulWidget {
   @override
@@ -27,6 +31,7 @@ class _HomeState extends State<Home> {
       //Container that stretch to the whole screen that consists of backround image asset
       body: Container(
         width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
               colors: [Color(0xffDCEEE3), Color(0xffA4EEC1), Color(0xff1E7440), Color(0xffDCEEE3)],
@@ -92,7 +97,7 @@ class _HomeState extends State<Home> {
                       ),
                       children: [
                         TextSpan(
-                          text: 'Login ',
+                          text: 'Login ', style: const TextStyle(fontSize: 40),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () async {
                               bool check = await checkPassword(
@@ -139,7 +144,7 @@ class _HomeState extends State<Home> {
                       ),
                       children: [
                         TextSpan(
-                          text: 'Register ',
+                          text: 'Register ', style: const TextStyle(fontSize: 40),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.push(
@@ -165,7 +170,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(110, 530, 110, 80),
+              padding: const EdgeInsets.fromLTRB(90, 550, 90, 70),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -174,7 +179,7 @@ class _HomeState extends State<Home> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    text: 'login with facebook',
+                    text: 'login with facebook', fontSize: 24,
                     icon: Icons.facebook,
                     onPressed: () async {
                       final result = await FacebookAuth.i.login(permissions: [
@@ -222,7 +227,7 @@ class _HomeState extends State<Home> {
               padding: EdgeInsets.fromLTRB(60, 250, 40, 0),
               child: Container(
                 height: 90,
-                width: 290,
+                width: 300,
                 child: Stack(
                   children: const <Widget>[
                     Padding(
@@ -230,7 +235,7 @@ class _HomeState extends State<Home> {
                       child: Text('Start your journey',
                           style: TextStyle(
                               fontFamily: "Dongle",
-                              fontSize: 43,
+                              fontSize: 38,
                               fontWeight: FontWeight.bold,
                               color: Colors.black)),
                     ),
@@ -239,7 +244,7 @@ class _HomeState extends State<Home> {
                       child: Text('to a healthier lifestyle',
                           style: TextStyle(
                               fontFamily: "Dongle",
-                              fontSize: 43,
+                              fontSize: 38,
                               fontWeight: FontWeight.bold,
                               color: Colors.black)),
                     ),

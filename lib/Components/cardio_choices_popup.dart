@@ -30,7 +30,7 @@ class _CardioChoicesState extends State<CardioChoices>{
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(0, 70, 0, 0),
+      padding: EdgeInsets.fromLTRB(0, 70, 30, 0),
       child: Container(
         child: Stack(
           children: <Widget>[
@@ -50,7 +50,7 @@ class _CardioChoicesState extends State<CardioChoices>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(110, 80, 110, 0),
+              padding: const EdgeInsets.fromLTRB(100, 80, 70, 0),
               child: Row(
                 children: <Widget>[
                   //Icon or text here -------------------------
@@ -81,7 +81,7 @@ class _CardioChoicesState extends State<CardioChoices>{
               ),
             ),
             const Padding(
-              padding: EdgeInsets.fromLTRB(135, 130, 135, 0),
+              padding: EdgeInsets.fromLTRB(110, 130, 70, 0),
               child: Text('Duration:',
                   style: TextStyle(fontFamily: "Dongle", fontSize: 50)),
             ),
@@ -131,7 +131,7 @@ class _CardioChoicesState extends State<CardioChoices>{
                           ),
                         )),
                     Text(
-                      '  min',
+                      ' min',
                       style: TextStyle(
                         fontSize: 20,
                       ),
