@@ -33,7 +33,8 @@ class _MapScreenState extends State<MapScreen> {
     target: LatLng(59.311926, 18.069933),
     zoom: 11.5,
   );
-  late GoogleMapController _googleMapController;
+  //late GoogleMapController _googleMapController;
+  final Completer<GoogleMapController> _googleMapController = Completer();
   Directions? _info;
   late Position geoPosition;
   Set<Marker> _markers = HashSet<Marker>();
@@ -52,6 +53,7 @@ class _MapScreenState extends State<MapScreen> {
   String walkOrRunString = 'Walk';
   String distance = '0:00';
   double speed = 0;
+  double zoom = 18.5;
 
   bool _endWorkout = false;
   bool _isActive = false;
@@ -68,8 +70,11 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    getCurrentLocation();
     _setMarkerIcons();
+    getCurrentLocationStream().listen((position){
+      centerScreen(position);
+      geoPosition = position;
+    });
     if (widget.showPopUp == true) {
       avatarPopUp = true;
     } else {
@@ -79,7 +84,6 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void dispose() {
-    _googleMapController.dispose();
     super.dispose();
   }
 
@@ -136,10 +140,13 @@ class _MapScreenState extends State<MapScreen> {
         children: <Widget>[
           GoogleMap(
             mapType: MapType.hybrid,
-            myLocationButtonEnabled: false,
+            myLocationEnabled: true,
             zoomControlsEnabled: false,
             initialCameraPosition: _initialCameraPosition,
-            onMapCreated: (controller) => _googleMapController = controller,
+            onCameraMove: onGeoChanged,
+            onMapCreated: (GoogleMapController controller){
+              _googleMapController.complete(controller);
+            },
             markers: _markers,
             polylines: {
               if (_info != null)
@@ -159,13 +166,13 @@ class _MapScreenState extends State<MapScreen> {
             maxHeight: slidingUpPanelHeightOpened,
             panelBuilder: (controller) => slidingUpWidget(),
             borderRadius:
-                const BorderRadius.vertical(top: Radius.circular(20.0)),
+            const BorderRadius.vertical(top: Radius.circular(20.0)),
           ),
 
           Visibility(
             child: AlertBeforeBeginnerProgram(
-              updateAlertBeforeBeginner: _updateAlertBeforeBeginner
-          ),
+                updateAlertBeforeBeginner: _updateAlertBeforeBeginner
+            ),
             visible: _beginnerPopup,
           ),
 
@@ -177,7 +184,7 @@ class _MapScreenState extends State<MapScreen> {
                 child: ElevatedButton.icon(
                   style: ButtonStyle(
                       minimumSize:
-                          MaterialStateProperty.all<Size>(Size.fromHeight(50)),
+                      MaterialStateProperty.all<Size>(Size.fromHeight(50)),
                       foregroundColor: MaterialStateProperty.all<Color>(
                         Colors.deepOrangeAccent,
                       ),
@@ -188,7 +195,7 @@ class _MapScreenState extends State<MapScreen> {
                       size: 40, color: Colors.black),
                   label: const Text(
                       'Not happy with the route? \n'
-                      'Press to generate a new route',
+                          'Press to generate a new route',
                       style: TextStyle(
                           fontFamily: 'Dongle',
                           fontSize: 20,
@@ -224,7 +231,7 @@ class _MapScreenState extends State<MapScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Icon((buttonSelection == 3) ?
-                                Icons.directions_walk : Icons.timer_outlined,
+                              Icons.directions_walk : Icons.timer_outlined,
                                 color: Colors.black,
                                 size: 20.0,
                               ),
@@ -236,11 +243,11 @@ class _MapScreenState extends State<MapScreen> {
                                 return '$durationValue minutes*';
                               }(),
                                 style: const TextStyle(
-                                fontFamily: 'Dongle',
-                                fontSize: 25.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                  fontFamily: 'Dongle',
+                                  fontSize: 25.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
@@ -257,7 +264,7 @@ class _MapScreenState extends State<MapScreen> {
                             style: ElevatedButton.styleFrom(
                               primary: Colors.blue,
                               padding:
-                                  const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                              const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
@@ -290,10 +297,10 @@ class _MapScreenState extends State<MapScreen> {
 
           Visibility(
             visible: avatarPopUp,
-              child: Gubbis(updateIsAvatar: _updateAvatarPopup,
+            child: Gubbis(updateIsAvatar: _updateAvatarPopup,
               buttonSelectionOne: chooseButton,
-                updateAlertBeforeBeginner: _updateAlertBeforeBeginner,
-              ),
+              updateAlertBeforeBeginner: _updateAlertBeforeBeginner,
+            ),
           ),
 
           Visibility(
@@ -646,17 +653,59 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  Future<void> centerScreen(Position position) async{
+    final GoogleMapController controller = await _googleMapController.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(position.latitude, position.longitude),
+      zoom: zoom,
+    ),
+    ),
+    );
+    _markers.add(
+      Marker(
+        markerId: MarkerId("0"),
+        position: LatLng(position.latitude, position.longitude),
+        infoWindow: const InfoWindow(
+          title: 'My Position',
+          snippet: 'My current position',
+        ),
+        icon: _geoDudeIcon,
+      ),
+    );
+  }
+
+  Stream<Position> getCurrentLocationStream(){
+    LocationSettings settings = const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 2);
+    var stream = Geolocator.getPositionStream(locationSettings: settings);
+    return stream;
+  }
+
+  //Get location for showing geo location marker on map
+  getCurrentLocation(Position position) async {
+    var locatePosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      geoPosition = locatePosition;
+    });
+  }
+
+  void onGeoChanged(CameraPosition position){
+    setState(() {
+      zoom = position.zoom;
+    });
+  }
+
   //Function that I wanna use at MixChoices/CardioChoices callback
   void getAndShowCardioOrMixRoute(bool getAndShowCardio) async{
     if(getAndShowCardio) {
       _refreshRouteShow = true;
       _markers.clear();
-      route = await HttpRequestHandler().getCardioRoute(59.311926, 18.069933, int.parse(durationValue), speed);
+      route = await HttpRequestHandler().getCardioRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
       populateInfo();
     }else{
       _refreshRouteShow = true;
       _markers.clear();
-      route = await HttpRequestHandler().getMixRoute(59.311926, 18.069933, int.parse(durationValue), speed);
+      route = await HttpRequestHandler().getMixRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
       populateInfo();
     }
   }
@@ -666,28 +715,28 @@ class _MapScreenState extends State<MapScreen> {
       case 1:
         _markers.clear();
         route =
-            await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
+        await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
         populateInfo();
         break;
 
       case 2:
         _markers.clear();
         route = await HttpRequestHandler()
-            .getCardioRoute(59.311926, 18.069933, int.parse(durationValue), 5);
+            .getCardioRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
         populateInfo();
         break;
 
       case 3:
         _markers.clear();
         route =
-            await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
+        await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
         populateInfo();
         break;
 
       case 4:
         _markers.clear();
         route =
-            await HttpRequestHandler().getMixRoute(59.311926, 18.069933, 5, 5);
+        await HttpRequestHandler().getMixRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
         populateInfo();
         break;
     }
@@ -702,7 +751,7 @@ class _MapScreenState extends State<MapScreen> {
       //Executes when clicking Strength button
       if (selection == 3) {
         route =
-        await HttpRequestHandler().getStrengthRoute(59.311926, 18.069933);
+        await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
         populateInfo();
         setState(() {
           walkOrRunString = 'Nearest gym is';
@@ -730,18 +779,6 @@ class _MapScreenState extends State<MapScreen> {
       _info = directions;
       distance = _info!.totalDistance;
       arrivalDuration = _info!.totalDuration;
-      _markers.add(
-        Marker(
-          markerId: MarkerId("0"),
-          position: LatLng(geoPosition.latitude, geoPosition.longitude),
-          infoWindow: const InfoWindow(
-            title: 'My Position',
-            snippet: 'My current position',
-          ),
-          icon: _geoDudeIcon,
-        ),
-      );
-
       if (buttonSelection == 1 || buttonSelection == 3 || buttonSelection == 4) {
         //Populates the stateful gym name and lat longs.
         setGymInformation();
@@ -759,17 +796,6 @@ class _MapScreenState extends State<MapScreen> {
           ),
         );
       }
-    });
-  }
-
-  //Get location for showing geo location marker on map
-  getCurrentLocation() async {
-    LocationPermission permission = await Geolocator.requestPermission();
-    var locatePosition = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    setState(() {
-      geoPosition = locatePosition;
     });
   }
 
@@ -844,7 +870,7 @@ class _MapScreenState extends State<MapScreen> {
           Navigator.pop(context);
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => //skickar användaren
-            FinishedWorkoutPage(widget.user, buttonSelection, _elapsedTime, distance, 'MINPERKM', route)
+          FinishedWorkoutPage(widget.user, buttonSelection, _elapsedTime, distance, 'MINPERKM', route)
           ));
         },
           child: const Text("End", style: TextStyle(color: Colors.red,
