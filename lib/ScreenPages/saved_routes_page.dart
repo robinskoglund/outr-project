@@ -21,8 +21,6 @@ class _SavedRoutesPageState extends State<SavedRoutesPage> {
     setState(() {
       routes = myRoutes;
     });
-    print("hello");
-    print(myRoutes[1]);
   }
 
   @override
@@ -35,11 +33,9 @@ class _SavedRoutesPageState extends State<SavedRoutesPage> {
     if(routes != null){
       return ListView(
           children: <Widget>[
+            SizedBox(height: 16.0),
             for(r.Route route in routes!)
               Route(route.typeOfWorkout, route.distance, route.nameOfRoute, route.durationInMinutes),
-            SizedBox(height: 16),
-            Divider(color: Colors.black),
-            SizedBox(height: 16),
           ]);
     }
     return ListView(
@@ -100,7 +96,10 @@ class Route extends StatelessWidget{
     else
       image = 'assets/mixDude.png';
 
-    return ListTile(
+    return Column(
+      children: <Widget>[
+        SizedBox(height: 16),
+        ListTile(
       leading: Image.asset(image),
       title: Text(title,
         style: TextStyle(
@@ -112,6 +111,9 @@ class Route extends StatelessWidget{
             fontFamily: "Dongle", fontSize: 20
         ),
       ),
+        ),
+        Divider(color: Colors.black),
+    ],
     );
   }
 }
