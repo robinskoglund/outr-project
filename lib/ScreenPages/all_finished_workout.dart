@@ -218,7 +218,7 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
                 onPressed: () {
 
                   //Skicka till db
-                  distance = distance.replaceAll(' km', '');
+                  //distance = distance.replaceAll(' km', '');
                   saveRoute(email, route, getTypeOfWorkout(), distance, title, elapsedTime);
 
                   showDialog(

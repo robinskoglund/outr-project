@@ -118,6 +118,7 @@ List<Achievement> parseAchievements(String responseBody) {
 
 Future<http.Response> saveRoute(String email, String route, String typeOfWorkout, String distance,
     String nameOfRoute, String duration){
+  route = route.replaceAll('&', '€');
   //För att testa på sin localhost ska använd din ip-adress istället för "localhost" i adressen
   return http.post(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/route/add?email=' + email + '&route=' + route +
   '&typeOfWorkout=' + typeOfWorkout + '&distance=' + distance+ "&nameOfRoute=" + nameOfRoute + '&duration=' + duration),
