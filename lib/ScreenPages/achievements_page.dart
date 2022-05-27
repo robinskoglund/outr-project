@@ -27,6 +27,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
   @override
   void initState() {
     getAchievements();
+    print(achievements);
     super.initState();
   }
 
@@ -37,7 +38,7 @@ class _AchievementsPageState extends State<AchievementsPage> {
         children: <Widget>[
           for(Achievement myAchievement in achievements!)
             MyAchievement(myAchievement.achievementText,
-                myAchievement.achievementLevel
+                myAchievement.typeOfWorkout
             ),
         ],
       );
@@ -65,6 +66,11 @@ class _AchievementsPageState extends State<AchievementsPage> {
         //ändrar färgen på burgarmeny
         centerTitle: true,
         title: const Text('Achievements'),
+        titleTextStyle: TextStyle(
+            fontFamily: "Dongle",
+            fontSize: 44,
+            color: Colors.black
+        ),
         backgroundColor: Colors.white,
       ),
       endDrawer: OutrNavigationBar(widget.user),

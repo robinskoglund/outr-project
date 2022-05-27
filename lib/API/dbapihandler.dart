@@ -134,17 +134,17 @@ Future<http.Response> saveRoute(String email, String route, String typeOfWorkout
   );
 }
 
-Future<http.Response> saveAchievement(String email, String achievementText, String achievementLevel){
+Future<http.Response> saveAchievement(String email, String achievementText, String typeOfWorkout){
   //För att testa på sin localhost ska använd din ip-adress istället för "localhost" i adressen
   return http.post(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/achievement/add?email=' + email +
-  '&achievementText=' + achievementText + '&achievementLevel=' + achievementLevel),
+  '&achievementText=' + achievementText + '&typeOfWorkout=' + typeOfWorkout),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body :jsonEncode(<String, String>{
       'email': email,
       'achievementText': achievementText,
-      'achievementLevel': achievementLevel
+      'typeOfWorkout': typeOfWorkout
     }),
   );
 }

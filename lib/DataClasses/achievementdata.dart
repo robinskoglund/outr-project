@@ -2,18 +2,18 @@ import 'package:outr/DataClasses/userdata.dart';
 
 class Achievement{
   final String achievementText;
-  final String achievementLevel;
+  final String typeOfWorkout;
   final int id;
 
   const Achievement({
     required this.achievementText,
-    required this.achievementLevel,
+    required this.typeOfWorkout,
     required this.id
   });
   factory Achievement.fromJson(Map<String, dynamic> json){
     return Achievement(
         achievementText: json['achievementText'],
-        achievementLevel: json['achievementLevel'],
+        typeOfWorkout: json['typeOfWorkout'],
         id: json['id']);
   }
 }

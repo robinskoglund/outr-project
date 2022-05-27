@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:outr/Components/aler_before_beginner_program.dart';
 import 'package:outr/Components/gubbis.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import '../API/dbapihandler.dart';
 import '../API/directions_model.dart';
 import '../API/httprequesthandler.dart';
 import '../Components/cardio_choices_popup.dart';

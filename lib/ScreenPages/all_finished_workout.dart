@@ -204,6 +204,7 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
                   ),
                 ),
                 onPressed: () {
+                  saveAchievement(email, getAchievementText(), getTypeOfWorkout());
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
