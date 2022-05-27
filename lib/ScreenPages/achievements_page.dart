@@ -1,13 +1,58 @@
 import 'dart:math';
+import 'package:outr/API/dbapihandler.dart';
+import 'package:outr/DataClasses/achievementdata.dart';
 import '../Components/navigation_bar.dart';
 import 'package:flutter/material.dart';
-
 import '../DataClasses/userdata.dart';
 
-class AchievementsPage extends StatelessWidget {
+class AchievementsPage extends StatefulWidget {
   final User user;
 
   AchievementsPage(this.user);
+
+  @override
+  State<AchievementsPage> createState() => _AchievementsPageState();
+}
+
+class _AchievementsPageState extends State<AchievementsPage> {
+  List<Achievement>? achievements;
+
+  void getAchievements() async {
+    final myAchievements = await getAllUserAchievements(widget.user.email);
+    setState(() {
+      achievements = myAchievements;
+    });
+  }
+
+  @override
+  void initState() {
+    getAchievements();
+    super.initState();
+  }
+
+  //buildBasicListView(context)
+  Widget buildBasicListView(BuildContext context) {
+    if (achievements != null) {
+      return ListView(
+        children: <Widget>[
+          for(Achievement myAchievement in achievements!)
+            MyAchievement(myAchievement.achievementText,
+                myAchievement.achievementLevel
+            ),
+        ],
+      );
+    }
+    return ListView(
+      children: <Widget>[
+        SizedBox(height: 30.0),
+        ListTile(
+          leading: Image.asset('assets/sadDude.png'),
+          title: Text('Achievements are empty',
+              style: TextStyle(fontFamily: "Dongle", fontSize: 24)),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +67,7 @@ class AchievementsPage extends StatelessWidget {
         title: const Text('Achievements'),
         backgroundColor: Colors.white,
       ),
-      endDrawer: OutrNavigationBar(user),
+      endDrawer: OutrNavigationBar(widget.user),
       body: Container(
         color: Colors.grey[200],
         width: MediaQuery
@@ -54,201 +99,47 @@ class AchievementsPage extends StatelessWidget {
           ],
         ),
       ),
-
     );
   }
+}
 
-  //buildBasicListView(context)
+class MyAchievement extends StatelessWidget {
+  final String text;
+  final String level;
 
-  Widget buildBasicListView(BuildContext context) =>
-      ListView(
+  MyAchievement(this.text, this.level);
 
-        children: [
-          ListTile(
-            leading: Image.asset(
-                "assets/goldmedal.png", width: 100, height: 100,
-                fit: BoxFit.contain),
-            title: const Text("60 minute run!",
-                style: TextStyle(fontFamily: "Dongle", fontSize: 24)),
-            subtitle: const Text("Completed!",
-                style: TextStyle(fontFamily: "Dongle", fontSize: 20)),
-            trailing: const Icon(
-                Icons.facebook_rounded, color: Colors.blue, size: 30),
+  @override
+  Widget build(BuildContext context) {
+    String image;
 
-            onTap: () => sixtyMinuteRun(context),
+    //Fler level-typer kan läggas till
+    if (level == 'beginner workout')
+      image = 'assets/outrmedal.png';
+    else if (level == 'Strength')
+      image = 'assets/strengthmedal.png';
+    else if (level == 'Cardio')
+      image = 'assets/cardiomedal.png';
+    else
+      image = 'assets/mixmedal.png';
 
+    return Column(
+      children: <Widget>[
+        SizedBox(height: 16),
+        ListTile(
+          leading: Image.asset(image),
+          title: Text(
+            text,
+            style: TextStyle(fontFamily: "Dongle", fontSize: 24),
           ),
-          SizedBox(height: 16),
-          Divider(color: Colors.black),
-          SizedBox(height: 16),
-
-          ListTile(
-            leading: Image.asset(
-                "assets/silvermedal.png", width: 100, height: 100,
-                fit: BoxFit.contain),
-            title: Text("30 minute walk!",
-                style: TextStyle(fontFamily: "Dongle", fontSize: 24)),
-            subtitle: Text("Completed!",
-                style: TextStyle(fontFamily: "Dongle", fontSize: 20)),
-            trailing: Icon(
-                Icons.facebook_rounded, color: Colors.blue, size: 30),
-
-            onTap: () => thirtyMinuteRun(context),
-
+          subtitle: Text(
+            '$level',
+            style: TextStyle(fontFamily: "Dongle", fontSize: 20),
           ),
-          SizedBox(height: 16),
-          Divider(color: Colors.black),
-          SizedBox(height: 16),
-
-          //KOD FÖR BEGINNER WORKOUT ACHIVEMENTEN.
-          ListTile(
-            leading: Image.asset(
-                "assets/bronzemedal.png", width: 100, height: 100,
-                fit: BoxFit.contain),
-            title: Text("Beginner workout!",
-                style: TextStyle(fontFamily: "Dongle", fontSize: 24)),
-            subtitle: Text("Completed!",
-                style: TextStyle(fontFamily: "Dongle", fontSize: 20)),
-            trailing: Icon(
-                Icons.facebook_rounded, color: Colors.blue, size: 30),
-
-            onTap: () => beginnerWorkout(context),
-
-          ),
-          SizedBox(height: 16),
-          Divider(color: Colors.black),
-          SizedBox(height: 16),
-        ],
-      );
-
-  void sixtyMinuteRun(BuildContext context) {
-    var alert = AlertDialog(
-      title: Text("60 minute run!", textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: "Dongle", fontSize: 40)),
-      content: Text("Congratulations!\nYou completed a 60 minute run!",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: "Dongle", fontSize: 28)),
-      alignment: Alignment.center,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-      ),
-      actions: <Widget>[
-
-        Image.asset("assets/goldmedal.png", width: 400, height: 200,
-            fit: BoxFit.contain),
-
-        SizedBox(height: 20),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Flexible(
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                    )
-                ),
-                child: const Text(
-                    "Share on Facebook", style: TextStyle(fontFamily: "Dongle",
-                    fontSize: 24, fontWeight: FontWeight.normal)),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-          ],
         ),
+        Divider(color: Colors.black),
+        SizedBox(height: 16),
       ],
-
     );
-    showDialog(context: context, builder: (BuildContext context) => alert);
-  }
-
-  void thirtyMinuteRun(BuildContext context) {
-    var alert = AlertDialog(
-      title: Text("30 minute walk!", textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: "Dongle", fontSize: 40)),
-      content: Text("Congratulations \nYou completed a 30 minute walk!",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: "Dongle", fontSize: 28)),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-      ),
-      actions: <Widget>[
-
-        Image.asset("assets/silvermedal.png", width: 400, height: 200,
-            fit: BoxFit.contain),
-
-        SizedBox(height: 20),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Flexible(
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                    )
-                ),
-                child: const Text(
-                    "Share on Facebook", style: TextStyle(fontFamily: "Dongle",
-                    fontSize: 24, fontWeight: FontWeight.normal)),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-          ],
-        ),
-      ],
-
-    );
-    showDialog(context: context, builder: (BuildContext context) => alert);
-  }
-
-  // KOD FÖR BEGINNERWORKOUT ACHIVEMENT, FUNGERAR KORREKT FÖRUTOM IKONEN!
-  void beginnerWorkout(BuildContext context) {
-    var alert = AlertDialog(
-      title: Text("Beginner workout!", textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: "Dongle", fontSize: 40)),
-      content: Text("Congratulations \nYou completed the Beginner workout!",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: "Dongle", fontSize: 28)),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-      ),
-      actions: <Widget>[
-
-        Image.asset("assets/bronzemedal2.png", width: 400, height: 200,
-            fit: BoxFit.contain),
-
-        SizedBox(height: 20),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Flexible(
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
-                    )
-                ),
-                child: const Text(
-                    "Share on Facebook", style: TextStyle(fontFamily: "Dongle",
-                    fontSize: 24, fontWeight: FontWeight.normal)),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-          ],
-        ),
-      ],
-
-    );
-    showDialog(context: context, builder: (BuildContext context) => alert);
   }
 }

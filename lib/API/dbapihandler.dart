@@ -86,7 +86,7 @@ Future<bool> checkPassword(String email, String password) async {
 
 }
 
-Future<List<r.Route>> getAllUserRoutes(String email) async {
+Future<List<r.RouteObject>> getAllUserRoutes(String email) async {
   final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/route/getAllUserRoutes?email=' + email));
 
   if(response.statusCode == 200){
@@ -95,10 +95,9 @@ Future<List<r.Route>> getAllUserRoutes(String email) async {
   throw 'Something went wrong';
 }
 
-List<r.Route> parseRoutes(String responseBody) {
+List<r.RouteObject> parseRoutes(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<r.Route>((json) => r.Route.fromJson(json)).toList();
+  return parsed.map<r.RouteObject>((json) => r.RouteObject.fromJson(json)).toList();
 }
 
 Future<List<Achievement>> getAllUserAchievements(String email) async{
@@ -135,17 +134,17 @@ Future<http.Response> saveRoute(String email, String route, String typeOfWorkout
   );
 }
 
-Future<http.Response> saveAchievement(String email, String achievementText, int achievementLevel){
+Future<http.Response> saveAchievement(String email, String achievementText, String achievementLevel){
   //För att testa på sin localhost ska använd din ip-adress istället för "localhost" i adressen
   return http.post(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/achievement/add?email=' + email +
-  '&achievementText=' + achievementText + '&achievementLevel=' + achievementLevel.toString()),
+  '&achievementText=' + achievementText + '&achievementLevel=' + achievementLevel),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body :jsonEncode(<String, String>{
       'email': email,
       'achievementText': achievementText,
-      'achievementLevel': achievementLevel.toString()
+      'achievementLevel': achievementLevel
     }),
   );
 }

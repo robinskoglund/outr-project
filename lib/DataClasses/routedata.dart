@@ -1,7 +1,6 @@
 import 'package:outr/DataClasses/userdata.dart';
 
-class Route{
-  final User user;
+class RouteObject{
   final String route;
   final String typeOfWorkout;
   final String distance;
@@ -9,8 +8,7 @@ class Route{
   final String durationInMinutes;
   final int id;
 
-  const Route({
-    required this.user,
+  const RouteObject({
     required this.route,
     required this.typeOfWorkout,
     required this.distance,
@@ -18,9 +16,8 @@ class Route{
     required this.durationInMinutes,
     required this.id
   });
-  factory Route.fromJson(Map<String, dynamic> json){
-    return Route(
-        user: json['user'] as User,
+  factory RouteObject.fromJson(Map<String, dynamic> json){
+    return RouteObject(
         route: json['route'] as String,
         typeOfWorkout: json['typeOfWorkout'] as String,
         distance: json['distance'] as String,

@@ -35,6 +35,8 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
   late String minPerKM;
   late String email;
   late String route;
+  late String achievementText;
+  late String typeOfWorkout;
 
   @override
   void initState(){
@@ -45,6 +47,17 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
     email = widget.user.email;
     route = widget.route;
     super.initState();
+  }
+
+  String getAchievementText(){
+    if (buttonSelection == 1)
+      return achievementText = 'Completed the OutR workout!';
+    else if (buttonSelection == 2)
+      return typeOfWorkout = 'Your first cardio workout completed';
+    else if (buttonSelection == 3)
+      return typeOfWorkout = 'Your first strength workout completed';
+    else
+      return typeOfWorkout = 'Your first mix workout completed';
   }
 
   void setTitle(String newTitle){
@@ -64,13 +77,13 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
 
   String getTypeOfWorkout(){
     if (buttonSelection == 1)
-      return title = 'Beginner workout';
+      return typeOfWorkout = 'Beginner workout';
     else if (buttonSelection == 2)
-      return title = 'Cardio';
+      return typeOfWorkout = 'Cardio';
     else if (buttonSelection == 3)
-      return title = 'Strength';
+      return typeOfWorkout = 'Strength';
     else
-      return title = 'Mix';
+      return typeOfWorkout = 'Mix';
   }
 
   @override
@@ -220,6 +233,7 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
                   //Skicka till db
                   distance = distance.replaceAll(' km', '');
                   saveRoute(email, route, getTypeOfWorkout(), distance, title, elapsedTime);
+                    saveAchievement(email, getAchievementText(), getTypeOfWorkout());
 
                   showDialog(
                     context: context,
