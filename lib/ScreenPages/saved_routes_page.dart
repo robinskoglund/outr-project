@@ -16,6 +16,12 @@ class SavedRoutesPage extends StatefulWidget {
 class _SavedRoutesPageState extends State<SavedRoutesPage> {
   List<r.Route>? routes;
 
+  @override
+  void initState(){
+    getRoutes();
+    super.initState();
+  }
+
   void getRoutes() async {
     final myRoutes = await getAllUserRoutes(widget.user.email);
     setState(() {
@@ -25,18 +31,12 @@ class _SavedRoutesPageState extends State<SavedRoutesPage> {
     print(myRoutes[1]);
   }
 
-  @override
-  void initState(){
-    getRoutes();
-    super.initState();
-  }
-
   Widget buildBasicListView(BuildContext context){
     if(routes != null){
       return ListView(
           children: <Widget>[
             for(r.Route route in routes!)
-              Route(route.typeOfWorkout, route.distance, route.nameOfRoute, route.durationInMinutes),
+              RoutePage(route.typeOfWorkout, route.distance, route.nameOfRoute, route.durationInMinutes),
             SizedBox(height: 16),
             Divider(color: Colors.black),
             SizedBox(height: 16),
@@ -79,13 +79,13 @@ class _SavedRoutesPageState extends State<SavedRoutesPage> {
   }
 }
 
-class Route extends StatelessWidget{
+class RoutePage extends StatelessWidget{
   final String typeOfWorkout;
   final String distance;
   final String title;
   final String elapsedTime;
 
-  Route(this.typeOfWorkout, this.distance, this.title, this.elapsedTime);
+  RoutePage(this.typeOfWorkout, this.distance, this.title, this.elapsedTime);
 
   @override
   Widget build(BuildContext context) {
