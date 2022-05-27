@@ -23,14 +23,12 @@ class Directions {
 
     int count = (data['legs'] as List).length;
 
-    double totalDistance = 0;
-    int totalDuration = 0;
+    double totalDistancee = 0;
+    int totalDurationn = 0;
     double tempDistance;
     int tempDuration;
     String tempDistanceNoKm;
     String tempDurationNoMin;
-
-    print(count);
 
     for(int i = 0; i < count; i++){
       var leg = data['legs'][i];
@@ -40,25 +38,38 @@ class Directions {
       tempDistanceNoKm = tempDistanceNoKm.replaceAll(' m', '');
       tempDistanceNoKm = tempDistanceNoKm.replaceAll(',', '.');
       tempDistance = double.parse(tempDistanceNoKm);
-      totalDistance += tempDistance;
+      totalDistancee += tempDistance;
 
       tempDurationNoMin = leg['duration']['text'];
+      tempDurationNoMin = tempDurationNoMin.replaceAll(' mins', '');
       tempDurationNoMin = tempDurationNoMin.replaceAll(' min', '');
       tempDurationNoMin = tempDurationNoMin.replaceAll(' hour', '');
-      tempDurationNoMin = tempDurationNoMin.replaceAll(' mins', '');
       tempDurationNoMin = tempDurationNoMin.replaceAll('s', '');
-      tempDuration = int.parse(tempDurationNoMin);
-      totalDuration += tempDuration;
+      List splitString;
+      if(tempDurationNoMin.contains(' ')){
+        splitString = tempDurationNoMin.split(' ');
+        int splitString1 = int.parse(splitString[0]);
+        splitString1 = splitString1 * 60;
+        int splitString2 = int.parse(splitString[1]);
+        tempDuration = splitString1 + splitString2;
+      } else{
+        tempDuration = int.parse(tempDurationNoMin);
+      }
+      totalDurationn += tempDuration;
     }
 
     String totalDurationString = '';
-    if(totalDuration > 179){
-      totalDurationString = '3:' + (totalDuration - 180).toString();
-    } else if(totalDuration > 119){
-      totalDurationString = '2:' + (totalDuration - 120).toString();
-    } else if (totalDuration > 59){
-      totalDurationString = '1:' + (totalDuration - 60).toString();
+    if(totalDurationn > 179){
+      totalDurationString = '3:' + (totalDurationn - 180).toString();
+    } else if(totalDurationn > 119){
+      totalDurationString = '2:' + (totalDurationn - 120).toString();
+    } else if (totalDurationn > 59){
+      totalDurationString = '1:' + (totalDurationn - 60).toString();
+    } else{
+      totalDurationString = totalDurationn.toString() + ' min';
     }
+
+    totalDistancee = double.parse(totalDistancee.toStringAsFixed(2));
 
     // Distances and duration
     /*String distance = '';
@@ -71,8 +82,12 @@ class Directions {
 
     return Directions(
       polylinePoints: PolylinePoints().decodePolyline(data['overview_polyline']['points']),
-      totalDistance: totalDistance.toString(),
+      totalDistance: totalDistancee.toString(),
       totalDuration: totalDurationString,
     );
+  }
+
+  void clear(){
+
   }
 }
