@@ -86,7 +86,7 @@ Future<bool> checkPassword(String email, String password) async {
 
 }
 
-Future<List<r.RouteObject>> getAllUserRoutes(String email) async {
+Future<List<r.Route>> getAllUserRoutes(String email) async {
   final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/route/getAllUserRoutes?email=' + email));
 
   if(response.statusCode == 200){
@@ -95,9 +95,9 @@ Future<List<r.RouteObject>> getAllUserRoutes(String email) async {
   throw 'Something went wrong';
 }
 
-List<r.RouteObject> parseRoutes(String responseBody) {
+List<r.Route> parseRoutes(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-  return parsed.map<r.RouteObject>((json) => r.RouteObject.fromJson(json)).toList();
+  return parsed.map<r.Route>((json) => r.Route.fromJson(json)).toList();
 }
 
 Future<List<Achievement>> getAllUserAchievements(String email) async{
