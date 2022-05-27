@@ -40,8 +40,9 @@ class AchievementsPage extends StatelessWidget {
                       topLeft: Radius.circular(40.0),
                       bottomLeft: Radius.circular(40.0)),
                 ),
-                height: 370.0,
-                width: 330.0,
+                height: MediaQuery.of(context).size.height * 0.6, //gör så att de
+                //får plats med 4 achievements
+                width: MediaQuery.of(context).size.width,
                 child: buildBasicListView(context),
               ),
             ),
@@ -97,7 +98,7 @@ class AchievementsPage extends StatelessWidget {
           //KOD FÖR BEGINNER WORKOUT ACHIVEMENTEN.
           ListTile(
             leading: Image.asset(
-                "assets/bronzemedal.png", width: 100, height: 100,
+                "assets/bronzerunner.png", width: 100, height: 100,
                 fit: BoxFit.contain),
             title: Text("Beginner workout!",
                 style: TextStyle(fontFamily: "Dongle", fontSize: 24)),
@@ -112,6 +113,26 @@ class AchievementsPage extends StatelessWidget {
           SizedBox(height: 16),
           Divider(color: Colors.black),
           SizedBox(height: 16),
+
+          // Kod för mixed
+          ListTile(
+            leading: Image.asset(
+                "assets/mixgold.png", width: 100, height: 100,
+                fit: BoxFit.contain),
+            title: Text("Best of both worlds!",
+                style: TextStyle(fontFamily: "Dongle", fontSize: 24)),
+            subtitle: Text("Completed!",
+                style: TextStyle(fontFamily: "Dongle", fontSize: 20)),
+            trailing: Icon(
+                Icons.facebook_rounded, color: Colors.blue, size: 30),
+
+            onTap: () => mixWorkout(context),
+
+          ),
+          SizedBox(height: 16),
+          Divider(color: Colors.black),
+          SizedBox(height: 16),
+
         ],
       );
 
@@ -202,7 +223,7 @@ class AchievementsPage extends StatelessWidget {
     showDialog(context: context, builder: (BuildContext context) => alert);
   }
 
-  // KOD FÖR BEGINNERWORKOUT ACHIVEMENT, FUNGERAR KORREKT FÖRUTOM IKONEN!
+  // KOD FÖR BEGINNERWORKOUT ACHIVEMENT
   void beginnerWorkout(BuildContext context) {
     var alert = AlertDialog(
       title: Text("Beginner workout!", textAlign: TextAlign.center,
@@ -215,7 +236,52 @@ class AchievementsPage extends StatelessWidget {
       ),
       actions: <Widget>[
 
-        Image.asset("assets/bronzemedal2.png", width: 400, height: 200,
+        Image.asset("assets/beginnerbronze.png", width: 400, height: 200,
+            fit: BoxFit.contain),
+
+        SizedBox(height: 20),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Flexible(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0)),
+                    )
+                ),
+                child: const Text(
+                    "Share on Facebook", style: TextStyle(fontFamily: "Dongle",
+                    fontSize: 24, fontWeight: FontWeight.normal)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+
+    );
+    showDialog(context: context, builder: (BuildContext context) => alert);
+  }
+
+
+  // KOD FÖR MixWORKOUT ACHIVEMENT
+  void mixWorkout(BuildContext context) {
+    var alert = AlertDialog(
+      title: Text("Mixed workout!", textAlign: TextAlign.center,
+          style: TextStyle(fontFamily: "Dongle", fontSize: 40)),
+      content: Text("Congratulations \nYou completed a mixed workout!",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontFamily: "Dongle", fontSize: 28)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(32.0)),
+      ),
+      actions: <Widget>[
+
+        Image.asset("assets/mixgold.png", width: 400, height: 200,
             fit: BoxFit.contain),
 
         SizedBox(height: 20),

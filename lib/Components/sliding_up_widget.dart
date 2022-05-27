@@ -42,6 +42,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
   Widget build(BuildContext context) => ListView(
     physics: NeverScrollableScrollPhysics(),
     padding: EdgeInsets.zero,
+
     children: <Widget>[
       const SizedBox(height: 15),
       openUpPanelDragHandle(),
@@ -143,6 +144,7 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
                   children: <Widget>[
 
                     ElevatedButton.icon(
+
                       style: ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(
                             Colors.black,
@@ -342,9 +344,11 @@ class _SlidingUpWidgetState extends State<SlidingUpWidget> {
 
   Widget openUpPanelDragHandle() => GestureDetector(
     child: Center(
+
       child: Container(
-        width: 50,
-        height: 5,
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width * 0.1,
+        height: MediaQuery.of(context).size.height * 0.005,
         decoration: BoxDecoration(
           color: Colors.grey[600],
           borderRadius: BorderRadius.circular(12),

@@ -41,6 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen>{
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       endDrawer: OutrNavigationBar(widget.user),
       appBar: AppBar(
@@ -51,12 +53,15 @@ class _ProfileScreenState extends State<ProfileScreen>{
         title: Text(accountLoggedIn),
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
+        titleTextStyle: TextStyle(fontFamily: "Dongle", fontSize: 45,
+          color: Colors.black),
       ),
       body: Container(
         color: Colors.grey[200],
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Stack(
+
           children: <Widget>[
             Padding(
               padding:  EdgeInsets.fromLTRB(25, 25, 25, 0),
@@ -69,8 +74,8 @@ class _ProfileScreenState extends State<ProfileScreen>{
                       topLeft: Radius.circular(40.0),
                       bottomLeft: Radius.circular(40.0)),
                 ),
-                height: 530.0,
-                width: 400.0,
+                height: MediaQuery.of(context).size.height * 0.7, //gör att de scaleable
+                width: MediaQuery.of(context).size.width,
               ),
             ),
             Padding(

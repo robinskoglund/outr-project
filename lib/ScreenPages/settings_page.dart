@@ -27,7 +27,6 @@ class SettingsPage extends StatelessWidget {
           //ändrar färgen på burgarmeny
           title: const Text('Settings'),
           titleTextStyle: TextStyle(
-              fontFamily: "Dongle",
               fontSize: 44,
               color: Colors.black),
           backgroundColor: Colors.white,
@@ -44,9 +43,9 @@ class SettingsPage extends StatelessWidget {
     children: [
       ListTile(
         title: Text("Account",
-            style: TextStyle(fontFamily: "Dongle", fontSize: 30)),
+            style: TextStyle( fontSize: 30)),
         subtitle: Text("Logged in as " + user.email,
-            style: TextStyle(fontFamily: "Dongle", fontSize: 20)),
+            style: TextStyle( fontSize: 20)),
         trailing: Icon(Icons.arrow_forward, color: Colors.black),
 
         onTap: () => Navigator.pop(context),
@@ -59,9 +58,9 @@ class SettingsPage extends StatelessWidget {
 
       ListTile(
         title: Text("Notifications",
-            style: TextStyle(fontFamily: "Dongle", fontSize: 30)),
+            style: TextStyle( fontSize: 30)),
         subtitle: Text("Manage your Notifications",
-            style: TextStyle(fontFamily: "Dongle", fontSize: 20)),
+            style: TextStyle( fontSize: 20)),
         trailing: Icon(Icons.arrow_forward, color: Colors.black),
 
         onTap: () => Navigator.pop(context),
@@ -74,9 +73,9 @@ class SettingsPage extends StatelessWidget {
 
       ListTile(
         title: Text("Application language",
-            style: TextStyle(fontFamily: "Dongle", fontSize: 30)),
+            style: TextStyle( fontSize: 30)),
         subtitle: Text("Manage your language settings",
-            style: TextStyle(fontFamily: "Dongle", fontSize: 20)),
+            style: TextStyle( fontSize: 20)),
         trailing: Icon(Icons.arrow_forward, color: Colors.black),
 
         onTap: () => Navigator.pop(context),
@@ -89,9 +88,9 @@ class SettingsPage extends StatelessWidget {
 
       ListTile(
         title: Text("Terms and Conditions",
-            style: TextStyle(fontFamily: "Dongle", fontSize: 30)),
+            style: TextStyle( fontSize: 30)),
         subtitle: Text("Read the Terms and Conditions",
-            style: TextStyle(fontFamily: "Dongle", fontSize: 20)),
+            style: TextStyle( fontSize: 20)),
         trailing: Icon(Icons.arrow_forward, color: Colors.black),
 
         onTap: () => Navigator.pop(context),
@@ -104,9 +103,9 @@ class SettingsPage extends StatelessWidget {
 
       ListTile(
         title: Text("About",
-            style: TextStyle(fontFamily: "Dongle", fontSize: 30)),
+            style: TextStyle( fontSize: 30)),
         subtitle: Text("About OutR",
-            style: TextStyle(fontFamily: "Dongle", fontSize: 20)),
+            style: TextStyle( fontSize: 20)),
         trailing: Icon(Icons.arrow_forward, color: Colors.black),
 
         onTap: () => Navigator.pop(context),
@@ -127,7 +126,7 @@ class SettingsPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30.0)),
                   )
               ),
-              child: const Text("Log Out", style: TextStyle(fontFamily: "Dongle",
+              child: const Text("Log Out", style: TextStyle(
                   fontSize: 30, fontWeight: FontWeight.normal,
                   color: Colors.black)),
               onPressed: () {

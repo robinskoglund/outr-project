@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_builder.dart';
+import 'package:outr/Components/navigation_bar.dart';
 import 'package:outr/Components/text_field_container.dart';
 import 'package:outr/Components/theme_provider.dart';
 import '../API/dbapihandler.dart';
@@ -11,11 +12,9 @@ import 'register_view_page.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 void main() => runApp(MaterialApp(
-  /* theme: ThemeData(
+   theme: ThemeData(
   fontFamily: "Dongle",
-  ), Används för att skapa ett tema för hela appen med font, men blir fucked med
-  fonts o storlekarna
-    */
+  ),
     home: Home()));
 
 class Home extends StatefulWidget {
@@ -103,7 +102,7 @@ class _HomeState extends State<Home> {
                       ),
                       children: [
                         TextSpan(
-                          text: 'Login ',
+                          text: 'Login ', style: TextStyle(fontSize: 40),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () async {
                               bool check = await checkPassword(
@@ -150,7 +149,7 @@ class _HomeState extends State<Home> {
                       ),
                       children: [
                         TextSpan(
-                          text: 'Register ',
+                          text: 'Register ', style: TextStyle(fontSize: 40),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.push(
@@ -176,7 +175,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             Padding(
-              padding:  EdgeInsets.fromLTRB(110, 530, 110, 80),
+              padding:  EdgeInsets.fromLTRB(90, 600, 90, 100),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -185,7 +184,7 @@ class _HomeState extends State<Home> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    text: 'Sign in with Facebook', fontSize: 14,
+                    text: 'Sign in with Facebook', fontSize: 24,
                     icon: Icons.facebook,
                     onPressed: () async {
                       final result = await FacebookAuth.i.login(permissions: [

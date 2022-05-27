@@ -53,15 +53,9 @@ class OutrNavigationBar extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   buildMenuItem(
-                    text: 'History',
-                    icon: Icons.history,
-                    onClicked: () => selectedItem(context, 2),
-                  ),
-                  const SizedBox(height: 16),
-                  buildMenuItem(
                     text: 'Saved routes',
                     icon: Icons.star,
-                    onClicked: () => selectedItem(context, 3),
+                    onClicked: () => selectedItem(context, 2),
                   ),
                   const SizedBox(height: 24),
                   Divider(color: Colors.black),
@@ -69,13 +63,13 @@ class OutrNavigationBar extends StatelessWidget {
                   buildMenuItem(
                     text: 'Settings',
                     icon: Icons.settings,
-                    onClicked: () => selectedItem(context, 4),
+                    onClicked: () => selectedItem(context, 3),
                   ),
                   const SizedBox(height: 24),
                   buildMenuItem(
                     text: 'Logout',
                     icon: Icons.logout,
-                    onClicked: () => selectedItem(context, 5),
+                    onClicked: () => selectedItem(context, 4),
                   ),
                 ],
               ),
@@ -119,21 +113,15 @@ class OutrNavigationBar extends StatelessWidget {
 
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MixStartPage(user),
-        ));
-        break;
-
-      case 3:
-        Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => SavedRoutesPage(user),
         ));
         break;
-      case 4:
+      case 3:
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => SettingsPage(user),
         ));
         break;
-      case 5:
+      case 4:
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => Home(),
         ));
