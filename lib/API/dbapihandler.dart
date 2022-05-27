@@ -97,7 +97,6 @@ Future<List<r.Route>> getAllUserRoutes(String email) async {
 
 List<r.Route> parseRoutes(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-
   return parsed.map<r.Route>((json) => r.Route.fromJson(json)).toList();
 }
 
@@ -118,10 +117,9 @@ List<Achievement> parseAchievements(String responseBody) {
 
 Future<http.Response> saveRoute(String email, String route, String typeOfWorkout, String distance,
     String nameOfRoute, String duration){
-  route = route.replaceAll('&', '€');
   //För att testa på sin localhost ska använd din ip-adress istället för "localhost" i adressen
   return http.post(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/route/add?email=' + email + '&route=' + route +
-  '&typeOfWorkout=' + typeOfWorkout + '&distance=' + distance+ "&nameOfRoute=" + nameOfRoute + '&duration=' + duration),
+      '&typeOfWorkout=' + typeOfWorkout + '&distance=' + distance+ "&nameOfRoute=" + nameOfRoute + '&duration=' + duration),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -136,17 +134,17 @@ Future<http.Response> saveRoute(String email, String route, String typeOfWorkout
   );
 }
 
-Future<http.Response> saveAchievement(String email, String achievementText, int achievementLevel){
+Future<http.Response> saveAchievement(String email, String achievementText, String typeOfWorkout){
   //För att testa på sin localhost ska använd din ip-adress istället för "localhost" i adressen
   return http.post(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/achievement/add?email=' + email +
-  '&achievementText=' + achievementText + '&achievementLevel=' + achievementLevel.toString()),
+      '&achievementText=' + achievementText + '&typeOfWorkout=' + typeOfWorkout),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body :jsonEncode(<String, String>{
       'email': email,
       'achievementText': achievementText,
-      'achievementLevel': achievementLevel.toString()
+      'typeOfWorkout': typeOfWorkout
     }),
   );
 }
