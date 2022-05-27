@@ -7,7 +7,7 @@ import 'mapview_page.dart';
 import  'package:intl/intl.dart';
 
 class FinishedWorkoutPage extends StatefulWidget {
-  final User user;
+  User user;
   final int buttonSelection;
   final String elapsedTime;
   final String distance;
@@ -203,8 +203,16 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   saveAchievement(email, getAchievementText(), getTypeOfWorkout());
+
+                  double distanceAsDouble = double.parse(distance);
+                  distanceAsDouble *= 1000;
+                  int distanceAsInt = distanceAsDouble.toInt();
+                  updateXp(email, distanceAsInt);
+
+                  widget.user = await getUser(email);
+
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -229,12 +237,19 @@ class _FinishedWorkoutPageState extends State<FinishedWorkoutPage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
 
                   //Skicka till db
                   distance = distance.replaceAll(' km', '');
                   saveRoute(email, route, getTypeOfWorkout(), distance, title, elapsedTime);
                   saveAchievement(email, getAchievementText(), getTypeOfWorkout());
+
+                  double distanceAsDouble = double.parse(distance);
+                  distanceAsDouble *= 1000;
+                  int distanceAsInt = distanceAsDouble.toInt();
+                  updateXp(email, distanceAsInt);
+
+                  widget.user = await getUser(email);
 
                   showDialog(
                     context: context,
@@ -272,8 +287,13 @@ class endWorkoutAlert extends StatelessWidget {
       actions: <Widget>[
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop();
-          },
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MapScreen(
+                user: user, showPopUp: false)),
+      );
+    },
           child: Text(
             'Cancel',
             style: TextStyle(

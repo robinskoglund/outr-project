@@ -148,3 +148,20 @@ Future<http.Response> saveAchievement(String email, String achievementText, Stri
     }),
   );
 }
+
+Future<http.Response> updateXp(String email, int xp){
+  //För att testa på sin localhost ska använd din ip-adress istället för "localhost" i adressen
+  print('https://group-4-15.pvt.dsv.su.se/outr/data/user/increaseXP?email=' + email +
+      '&xp=' + xp.toString());
+  return http.put(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/increaseXp?email=' + email +
+    '&xp=' + xp.toString()),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body :jsonEncode(<String, String>{
+      'email': email,
+      'xp': xp.toString()
+    }),
+  );
+}
+

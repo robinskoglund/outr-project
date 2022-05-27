@@ -51,12 +51,6 @@ class OutrNavigationBar extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   buildMenuItem(
-                    text: 'History',
-                    icon: Icons.history,
-                    onClicked: () => selectedItem(context, 2),
-                  ),
-                  const SizedBox(height: 16),
-                  buildMenuItem(
                     text: 'Saved routes',
                     icon: Icons.star,
                     onClicked: () => selectedItem(context, 3),
