@@ -38,6 +38,7 @@ class _CardioChoicesState extends State<CardioChoices>{
               padding: const EdgeInsets.fromLTRB(30, 25, 0, 0),
               child: Container(
                 decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(40.0),
