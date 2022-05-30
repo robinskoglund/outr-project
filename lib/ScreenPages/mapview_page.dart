@@ -185,7 +185,7 @@ class _MapScreenState extends State<MapScreen> {
                       minimumSize:
                       MaterialStateProperty.all<Size>(Size.fromHeight(50)),
                       foregroundColor: MaterialStateProperty.all<Color>(
-                        Colors.deepOrangeAccent,
+                        Colors.black,
                       ),
                       backgroundColor: MaterialStateProperty.all<Color>(
                         Colors.transparent,

@@ -38,6 +38,7 @@ class _CardioChoicesState extends State<CardioChoices>{
               padding: const EdgeInsets.fromLTRB(30, 25, 0, 0),
               child: Container(
                 decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(40.0),
@@ -50,7 +51,7 @@ class _CardioChoicesState extends State<CardioChoices>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(100, 80, 70, 0),
+              padding: const EdgeInsets.fromLTRB(120, 60, 50, 0),
               child: Row(
                 children: <Widget>[
                   //Icon or text here -------------------------
@@ -81,7 +82,7 @@ class _CardioChoicesState extends State<CardioChoices>{
               ),
             ),
             const Padding(
-              padding: EdgeInsets.fromLTRB(110, 130, 70, 0),
+              padding: EdgeInsets.fromLTRB(140, 130, 50, 0),
               child: Text('Duration:',
                   style: TextStyle(fontFamily: "Dongle", fontSize: 50)),
             ),
@@ -139,7 +140,7 @@ class _CardioChoicesState extends State<CardioChoices>{
                   ],
                 )),
             Padding(
-              padding: const EdgeInsets.fromLTRB(90, 280, 80, 0),
+              padding: const EdgeInsets.fromLTRB(120, 280, 80, 0),
               child: SizedBox(
                 width: 350,
                 height: 60,
