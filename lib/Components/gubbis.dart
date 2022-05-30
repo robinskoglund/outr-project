@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 class Gubbis extends StatelessWidget {
   final ValueChanged<bool> updateIsAvatar;
   final ValueChanged<bool> updateAlertBeforeBeginner;
-  final ValueChanged<int> buttonSelectionOne;
+  final ChoicesCallback dataCallback;
 
-  Gubbis({
+  Gubbis({required this.dataCallback,
     required this.updateIsAvatar,
-    required this.buttonSelectionOne,
   required this.updateAlertBeforeBeginner});
 
   @override
@@ -27,7 +26,7 @@ class Gubbis extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              buttonSelectionOne(1);
+              dataCallback(5, 1);
               updateIsAvatar(false);
               updateAlertBeforeBeginner(false);
             },
@@ -69,3 +68,5 @@ class Gubbis extends StatelessWidget {
     );
   }
 }
+
+typedef ChoicesCallback = void Function(double introductionSpeed, int buttonChoice);

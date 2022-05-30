@@ -51,7 +51,7 @@ class _MapScreenState extends State<MapScreen> {
   bool _isShow = false;
   bool _refreshRouteShow = false;
   String walkOrRunString = 'Walk';
-  String distance = '0:00';
+  String distance = '0.0';
   double speed = 0;
   double zoom = 18.5;
 
@@ -298,8 +298,14 @@ class _MapScreenState extends State<MapScreen> {
           Visibility(
             visible: avatarPopUp,
             child: Gubbis(updateIsAvatar: _updateAvatarPopup,
-              buttonSelectionOne: chooseButton,
-              updateAlertBeforeBeginner: _updateAlertBeforeBeginner,
+              updateAlertBeforeBeginner: _updateAlertBeforeBeginner, dataCallback: (double introductionSpeed, int buttonChoice) {
+              chooseButton(buttonChoice);
+              changeState();
+              setState(() {
+                speed = introductionSpeed;
+                buttonSelection = buttonChoice;
+              });
+              },
             ),
           ),
 
@@ -407,17 +413,17 @@ class _MapScreenState extends State<MapScreen> {
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
                                   children: const <Widget>[
-                                    Text("Min",
+                                    Text("Elapsed",
                                         style: TextStyle(
                                             fontFamily: 'Dongle',
                                             fontSize: 30,
                                             color: Colors.black)),
-                                    Text("      KM",
+                                    Text("Distance",
                                         style: TextStyle(
                                             fontFamily: 'Dongle',
                                             fontSize: 30,
                                             color: Colors.black)),
-                                    Text("Arrival",
+                                    Text("ETA",
                                         style: TextStyle(
                                             fontFamily: 'Dongle',
                                             fontSize: 30,
@@ -744,6 +750,13 @@ class _MapScreenState extends State<MapScreen> {
 
   void chooseButton(int selection) async {
     if (selection != 0) {
+      //Executes when clicking beginner program "Yes" button.
+      if (selection == 1){
+        _markers.clear();
+        route = await HttpRequestHandler()
+            .getCardioRoute(geoPosition.latitude, geoPosition.longitude, 10, 1.4);
+        populateInfo();
+      }
       //Executes when clicking Cardio button
       if (selection == 2) {
         cardioPopup = true;
@@ -779,7 +792,7 @@ class _MapScreenState extends State<MapScreen> {
       _info = directions;
       distance = _info!.totalDistance;
       arrivalDuration = _info!.totalDuration;
-      if (buttonSelection == 1 || buttonSelection == 3 || buttonSelection == 4) {
+      if (buttonSelection == 3 || buttonSelection == 4) {
         //Populates the stateful gym name and lat longs.
         setGymInformation();
         //Sets the gym marker icon
@@ -862,7 +875,6 @@ class _MapScreenState extends State<MapScreen> {
         const SizedBox(width: 5.0),
 
         TextButton(onPressed: () {
-          print(buttonSelection);
           _markers.clear();
           _info = null;
           _endWorkout = true;  //sätter att man vill avsluta till ja
