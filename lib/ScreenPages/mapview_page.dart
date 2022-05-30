@@ -30,8 +30,8 @@ class _MapScreenState extends State<MapScreen> {
   int buttonSelection = 0;
   final slidingUpPanelController = PanelController();
   final CameraPosition _initialCameraPosition = const CameraPosition(
-    target: LatLng(59.311926, 18.069933),
-    zoom: 11.5,
+    target: LatLng(59.342739, 18.063349),
+    zoom: 18.5,
   );
   //late GoogleMapController _googleMapController;
   final Completer<GoogleMapController> _googleMapController = Completer();
@@ -71,10 +71,10 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     super.initState();
     _setMarkerIcons();
-    getCurrentLocationStream().listen((position){
+    /*getCurrentLocationStream().listen((position){
       centerScreen(position);
       geoPosition = position;
-    });
+    });*/
     if (widget.showPopUp == true) {
       avatarPopUp = true;
     } else {
@@ -139,7 +139,6 @@ class _MapScreenState extends State<MapScreen> {
       body: Stack(
         children: <Widget>[
           GoogleMap(
-            mapType: MapType.hybrid,
             myLocationEnabled: true,
             zoomControlsEnabled: false,
             initialCameraPosition: _initialCameraPosition,
@@ -269,7 +268,6 @@ class _MapScreenState extends State<MapScreen> {
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
                             ),
-                            //TODO: implement direction to start route
                             onPressed: () {
                               setState(() {
                                 _isShow = false;
@@ -301,6 +299,8 @@ class _MapScreenState extends State<MapScreen> {
               updateAlertBeforeBeginner: _updateAlertBeforeBeginner, dataCallback: (double introductionSpeed, int buttonChoice) {
               chooseButton(buttonChoice);
               changeState();
+              setPlayPause();
+              startOrStop();
               setState(() {
                 speed = introductionSpeed;
                 buttonSelection = buttonChoice;
@@ -443,7 +443,7 @@ class _MapScreenState extends State<MapScreen> {
           child: Stack(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(40, 0, 40, 40),
+                padding: EdgeInsets.fromLTRB(60, 0, 40, 40),
                 child: Container(
                   width: 300,
                   height: 350,
@@ -706,12 +706,12 @@ class _MapScreenState extends State<MapScreen> {
     if(getAndShowCardio) {
       _refreshRouteShow = true;
       _markers.clear();
-      route = await HttpRequestHandler().getCardioRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
+      route = await HttpRequestHandler().getCardioRoute(59.342739, 18.063349, int.parse(durationValue), speed);
       populateInfo();
     }else{
       _refreshRouteShow = true;
       _markers.clear();
-      route = await HttpRequestHandler().getMixRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
+      route = await HttpRequestHandler().getMixRoute(59.342739, 18.063349, int.parse(durationValue), speed);
       populateInfo();
     }
   }
@@ -721,28 +721,28 @@ class _MapScreenState extends State<MapScreen> {
       case 1:
         _markers.clear();
         route =
-        await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
+        await HttpRequestHandler().getStrengthRoute(59.342739, 18.063349);
         populateInfo();
         break;
 
       case 2:
         _markers.clear();
         route = await HttpRequestHandler()
-            .getCardioRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
+            .getCardioRoute(59.342739, 18.063349, int.parse(durationValue), speed);
         populateInfo();
         break;
 
       case 3:
         _markers.clear();
         route =
-        await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
+        await HttpRequestHandler().getStrengthRoute(59.342739, 18.063349);
         populateInfo();
         break;
 
       case 4:
         _markers.clear();
         route =
-        await HttpRequestHandler().getMixRoute(geoPosition.latitude, geoPosition.longitude, int.parse(durationValue), speed);
+        await HttpRequestHandler().getMixRoute(59.342739, 18.063349, int.parse(durationValue), speed);
         populateInfo();
         break;
     }
@@ -754,7 +754,7 @@ class _MapScreenState extends State<MapScreen> {
       if (selection == 1){
         _markers.clear();
         route = await HttpRequestHandler()
-            .getCardioRoute(geoPosition.latitude, geoPosition.longitude, 10, 1.4);
+            .getCardioRoute(59.342739, 18.063349, 10, 1.4);
         populateInfo();
       }
       //Executes when clicking Cardio button
@@ -764,7 +764,7 @@ class _MapScreenState extends State<MapScreen> {
       //Executes when clicking Strength button
       if (selection == 3) {
         route =
-        await HttpRequestHandler().getStrengthRoute(geoPosition.latitude, geoPosition.longitude);
+        await HttpRequestHandler().getStrengthRoute(59.342739, 18.063349);
         populateInfo();
         setState(() {
           walkOrRunString = 'Nearest gym is';
@@ -785,6 +785,17 @@ class _MapScreenState extends State<MapScreen> {
   void populateInfo() async {
     String tempRoute = route;
     List routeString = tempRoute.split('-');
+    _markers.add(
+      Marker(
+        markerId: MarkerId("0"),
+        position: LatLng(59.342739, 18.063349),
+        infoWindow: const InfoWindow(
+          title: 'My Position',
+          snippet: 'My current position',
+        ),
+        icon: _geoDudeIcon,
+      ),
+    );
 
     HttpRequestHandler().getRoute();
     final directions = await HttpRequestHandler().getDirections(routeString[0]);

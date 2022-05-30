@@ -97,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(165, 50, 80, 0),
+              padding: const EdgeInsets.fromLTRB(125, 50, 80, 0),
               child: Text(
                 '$currentRank',
                 style: const TextStyle(
@@ -134,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(35, 300, 50, 0),
+              padding: const EdgeInsets.fromLTRB(35, 300, 90, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[

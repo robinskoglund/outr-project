@@ -101,8 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onPressed: () async {
                         if (await validateRegistration(mailInput.text)) {
                           addUser(nameInput.text, mailInput.text.toLowerCase());
-                          addLogin(
-                              mailInput.text.toLowerCase(), passwordInput.text);
+                          addLogin(mailInput.text.toLowerCase(), passwordInput.text);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
