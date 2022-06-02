@@ -104,9 +104,6 @@ class _HomeState extends State<Home> {
                                   mailInput.text.toLowerCase(),
                                   passwordInput.text);
 
-                              print(mailInput.text);
-                              print(passwordInput.text);
-
                               if (check == true) {
                                 updateLogin(mailInput.text.toLowerCase());
                                 User user = await getUser(mailInput.text);
@@ -191,7 +188,6 @@ class _HomeState extends State<Home> {
                         final requestdata = await FacebookAuth.i.getUserData(
                           fields: "email, name",
                         );
-                        print(requestdata);
                         var userEmail;
                         var userName;
                         for (var k in requestdata.entries) {
@@ -204,7 +200,6 @@ class _HomeState extends State<Home> {
                         }
                         //GET-call
                         User user = await getUser(userEmail);
-                        print(user);
                         if (user.email.isEmpty) {
                           addUser(userName, userEmail);
                           user = await getUser(userEmail);

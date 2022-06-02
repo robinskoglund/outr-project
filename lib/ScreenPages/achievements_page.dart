@@ -27,7 +27,6 @@ class _AchievementsPageState extends State<AchievementsPage> {
   @override
   void initState() {
     getAchievements();
-    print(achievements);
     super.initState();
   }
 

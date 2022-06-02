@@ -107,7 +107,6 @@ class HttpRequestHandler{
 
     final response = await _dio.get(route + googleAPIKey);
     if(response.statusCode == 200) {
-      print(response);
       return Directions.fromMap(response.data);
     }
     return null;
