@@ -14,6 +14,8 @@ class ShowAlertBeforeCardioRoute extends StatelessWidget {
 
   ShowAlertBeforeCardioRoute(this.walkOrRunInt, this.minutes);
 
+  //Popup som kommer när rutt har genererats som inkluderar refresh button för att skapa ny rutt
+  //samt lite information om rutten
   @override
   Widget build(BuildContext context) {
     String walkOrRunString;

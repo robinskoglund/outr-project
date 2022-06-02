@@ -27,6 +27,7 @@ class _MixChoicesState extends State<MixChoices>{
   bool _isShow = false;
   late double speed;
 
+  //Detta är popup för användarinputs till Mix
   @override
   Widget build(BuildContext context) {
     return Padding(

@@ -1,5 +1,6 @@
 import 'package:outr/DataClasses/userdata.dart';
 
+//Klass för Achievement-objekt
 class Achievement{
   final String achievementText;
   final String typeOfWorkout;

@@ -15,6 +15,7 @@ class AlertNoIcon extends StatelessWidget{
   @override
   Widget build(BuildContext context){
 
+    //Hjälpklass för att kunna skapa enkla alerts
     return AlertDialog(
       title: Text(title, style: TextStyle(fontFamily: 'Dongle', fontSize: 30),),
       content: Text(content, style: TextStyle(fontFamily: 'Dongle', fontSize: 25),),
@@ -25,8 +26,6 @@ class AlertNoIcon extends StatelessWidget{
           child: Text(leftButtonText, style: TextStyle(color: Colors.black, fontFamily: 'Dongle', fontSize: 30),),
         ),
         SizedBox(width: 5.0),
-
-        //TODO: onPressed på denna textbutton, tror metod måste läggas till i main för att directa till den plats man vill
         TextButton(onPressed: () {
           Navigator.of(context).pop();
         },

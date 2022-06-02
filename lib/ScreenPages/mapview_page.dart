@@ -87,6 +87,7 @@ class _MapScreenState extends State<MapScreen> {
     super.dispose();
   }
 
+  //Funktion för att populera ikon-variablerna med ikoner från assets
   void _setMarkerIcons() async {
     _markerIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(), 'assets/barbell.png');
@@ -104,6 +105,7 @@ class _MapScreenState extends State<MapScreen> {
         MediaQuery.of(context).size.height * 0.14;
     final slidingUpPanelHeightOpened = MediaQuery.of(context).size.height * 0.8;
 
+    //Scaffolden som innehåller allt som map pagen visar, t.ex google maps och diverse knapper och liknande
     return Scaffold(
       endDrawer: OutrNavigationBar(widget.user),
       appBar: AppBar(
@@ -269,7 +271,6 @@ class _MapScreenState extends State<MapScreen> {
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
                             ),
-                            //TODO: implement direction to start route
                             onPressed: () {
                               setState(() {
                                 _isShow = false;
@@ -348,6 +349,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  //Själva sliding panelen
   Widget slidingUpWidget(){
     return ListView(
       physics: NeverScrollableScrollPhysics(),
@@ -659,6 +661,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  //Funktion för att centrera kameravy till geo location, här uppdaterar vi också geoposition-marker, så att den följer våran geo position
   Future<void> centerScreen(Position position) async{
     final GoogleMapController controller = await _googleMapController.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
@@ -680,6 +683,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  //Strömmen som kontinuerligt hämtar in våran geoposition
   Stream<Position> getCurrentLocationStream(){
     LocationSettings settings = const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 2);
     var stream = Geolocator.getPositionStream(locationSettings: settings);
@@ -695,13 +699,14 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+  //Funktion för att zoomen ska sparas och inte resetas varje gång cameraposition ändras
   void onGeoChanged(CameraPosition position){
     setState(() {
       zoom = position.zoom;
     });
   }
 
-  //Function that I wanna use at MixChoices/CardioChoices callback
+  //Funktionen som skapar rutter med hjälp av användarinputs från cardio/mix popups. Anropas via callbacks från cardio/mix popup klasserna
   void getAndShowCardioOrMixRoute(bool getAndShowCardio) async{
     if(getAndShowCardio) {
       _refreshRouteShow = true;
@@ -716,6 +721,7 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  //Funktionen som genererar nya rutter när man klickar på refresh knappen
   void generateNewRoute(int selection) async {
     switch (selection) {
       case 1:
@@ -748,6 +754,7 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  //Funktionen som genererar de initiala rutterna, det som sker vid själva knapptrycken på sliding bar menyn
   void chooseButton(int selection) async {
     if (selection != 0) {
       //Executes when clicking beginner program "Yes" button.
@@ -782,6 +789,9 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  //Funktionen som skall hämta rutt från google via API kall och populerar våra info variabler
+  //den splittar också stringen vi får som resultat för att kunna lägga in gymmen(se readme.txt)
+  //det är också här vi lägger till själva markers för gym ifall en rutt inkluderar ett gym
   void populateInfo() async {
     String tempRoute = route;
     List routeString = tempRoute.split('-');
@@ -812,7 +822,7 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  //update the gym information based on the get request from pathfinder, after the "-"
+  //Funktion för att ta del av ruttsträngen som inehåller gyminformation efter "-" (Se readme.txt)
   void setGymInformation() {
     String tempRoute = route;
     List routeString = tempRoute.split('-');
@@ -824,17 +834,21 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+  //Funktion för att hantera om beginner popup ska visas eller ej
   void _updateAlertBeforeBeginner(bool isVisible){
     setState(() {
       _beginnerPopup = !_beginnerPopup;
     });
   }
+
+  //Funktion för att hantera om avatar popup ska visas eller ej
   void _updateAvatarPopup(bool isVisible){
     setState(() {
       avatarPopUp = !avatarPopUp;
     });
   }
 
+  //Widget gällande sliding panelen för att kunna slida upp eller ner med gesture
   Widget openUpPanelDragHandle() => GestureDetector(
     child: Center(
       child: Container(
@@ -849,7 +863,11 @@ class _MapScreenState extends State<MapScreen> {
     onTap: togglePanelUpDown,
   );
 
-  void endWorkout(bool endWorkout) { //om man vill avsluta så körs denna metod
+  void togglePanelUpDown() => slidingUpPanelController.isPanelOpen
+      ? slidingUpPanelController.close()
+      : slidingUpPanelController.open();
+
+  void endWorkout(bool endWorkout) { //om man vill avsluta så körs denna funktion
     if(endWorkout == true) {
       stopWatch();
       _isPaused = false;
@@ -858,6 +876,7 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  //Funktion för att skapa popup för konfirmation om man vill avsluta rutt
   void endWorkoutDialog(BuildContext context) {
     var alert = AlertDialog(
       title: const Text("End workout",
@@ -895,6 +914,7 @@ class _MapScreenState extends State<MapScreen> {
     //visar alerten
   }
 
+  //Funktion för att visa ruttinformation istället för knappar när rutt är igång
   void changeState() {
     setState(() {
       if (!_isActive) {
@@ -905,10 +925,7 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  void togglePanelUpDown() => slidingUpPanelController.isPanelOpen
-      ? slidingUpPanelController.close()
-      : slidingUpPanelController.open();
-
+  //Funktion för att ändra texten på play/pause knappen baserat på om elapsed time är igång eller ej
   void setPlayPause () {
     if (_isPaused) {
       _playPause = 'Play';
@@ -919,6 +936,7 @@ class _MapScreenState extends State<MapScreen> {
     _isPaused = !_isPaused;
   }
 
+  //Funktion för att starta eller stoppa elapsed time
   startOrStop() {
     if (_startStop) {
       _click = true;
@@ -928,11 +946,13 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  //Funktion för att återställa elapsed time
   resetTimer() {
     _watch.reset();
     _elapsedTime = "00:00";
   }
 
+  //Funktion för att påbörja räkning av tid för elapsed time
   startWatch() {
     setState(() {
       _startStop = false;
@@ -941,6 +961,7 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+  //Funktion för att stoppa räkning av tid för elapsed time
   stopWatch() {
     setState(() {
       _click = false;
@@ -950,6 +971,7 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+  //Funktion för att ändra själva strängen som ska innehålla elapsed time baserat på räknaren
   setTime() {
     var timeSoFar = _watch.elapsedMilliseconds;
     setState(() {
@@ -957,6 +979,7 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+  //Funktion för anpassa tids strängen enligt tidsregler
   transformMilliSeconds(int milliseconds) {
     int hundreds = (milliseconds / 10).truncate();
     int seconds = (hundreds / 100).truncate();
@@ -970,6 +993,7 @@ class _MapScreenState extends State<MapScreen> {
     return "$minutesStr:$secondsStr";
   }
 
+  //Funktion för att uppdatera elapsed time live när räknaren är igång
   updateTime(Timer timer) {
     if (_watch.isRunning) {
       setState(() {

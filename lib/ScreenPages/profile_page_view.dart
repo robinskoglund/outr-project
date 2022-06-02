@@ -51,6 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
 
   @override
   Widget build(BuildContext context) {
+    //Scaffold som innehåller allt som finns på profilsidan
     return Scaffold(
       endDrawer: OutrNavigationBar(widget.user),
       appBar: AppBar(
@@ -263,6 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen>{
     );
   }
 
+  //Funktion för att räkna ut hur många pixlar expbaren skall visa
   double getXpBarWidth(){
     double xpPerPixel = totalXpForNextLevel/150;
     return xpBarWidth = (totalXpForNextLevel - xpToNextLevelInt) / xpPerPixel;

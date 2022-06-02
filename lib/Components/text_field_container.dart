@@ -8,6 +8,7 @@ class TextContainer extends StatelessWidget {
     required this.child,
   }) :super(key: key);
 
+  //Komponent till själva textinput rutorna för loginen. Användarnamn/Lösenord
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery

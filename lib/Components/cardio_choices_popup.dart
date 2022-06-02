@@ -27,6 +27,7 @@ class _CardioChoicesState extends State<CardioChoices>{
   bool _isShow = false;
   late double speed;
 
+  //Detta är popup för användarinputs till Cardio
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -54,7 +55,7 @@ class _CardioChoicesState extends State<CardioChoices>{
               padding: const EdgeInsets.fromLTRB(100, 80, 70, 0),
               child: Row(
                 children: <Widget>[
-                  //Icon or text here -------------------------
+                  //Själva togglen där man väljer run eller walk på
                   ToggleSwitch(
                     minWidth: 90.0,
                     cornerRadius: 15.0,

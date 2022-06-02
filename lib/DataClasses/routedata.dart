@@ -1,5 +1,6 @@
 import 'package:outr/DataClasses/userdata.dart';
 
+//Klass för Route-objekt
 class Route{
   final String route;
   final String typeOfWorkout;

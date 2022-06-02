@@ -33,6 +33,7 @@ class Directions {
     for(int i = 0; i < count; i++){
       var leg = data['legs'][i];
 
+      //Temporär fullösning för att kunna hantera distance och duration strängarna från en rutt/direction
       tempDistanceNoKm = leg['distance']['text'];
       tempDistanceNoKm = tempDistanceNoKm.replaceAll(' km', '');
       tempDistanceNoKm = tempDistanceNoKm.replaceAll(' m', '');
@@ -80,6 +81,7 @@ class Directions {
       duration = leg['duration']['text'];
     }*/
 
+    //Returnera en "Directions" som innehåller polylines(rutt linjerna på kartan) samt distance/duration
     return Directions(
       polylinePoints: PolylinePoints().decodePolyline(data['overview_polyline']['points']),
       totalDistance: totalDistancee.toString(),

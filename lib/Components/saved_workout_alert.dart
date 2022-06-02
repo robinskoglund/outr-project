@@ -16,6 +16,7 @@ class SavedWorkoutAlert extends StatelessWidget{
 
   SavedWorkoutAlert(this.nameOfWorkout, this.user);
 
+  //Popupen som kommer när man ska spara en rutt
   @override
   Widget build(BuildContext context) {
     return Dialog(

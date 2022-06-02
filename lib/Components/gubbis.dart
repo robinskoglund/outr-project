@@ -9,6 +9,7 @@ class Gubbis extends StatelessWidget {
     required this.updateIsAvatar,
   required this.updateAlertBeforeBeginner});
 
+  //Denna class är själva introduktions popupen som kommer när man loggar in
   @override
   Widget build(BuildContext context) {
     return Stack(

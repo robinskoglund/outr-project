@@ -19,6 +19,8 @@ class OutrNavigationBar extends StatelessWidget {
 
   OutrNavigationBar(this.user, {Key? key}) : super(key: key);
 
+
+  //Detta är själva "hamburgarmeny" navigation baren som används på många av pages i appen
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //mediaquery, screenHeight

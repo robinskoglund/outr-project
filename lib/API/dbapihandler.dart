@@ -24,6 +24,7 @@ Future<User> getUser(String email) async {
   }
 }
 
+//Kontroll ifall användare finns i databas
 Future<bool> userExists(String email) async {
   final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/get?email=' + email));
   if(response.statusCode == 200){
@@ -86,6 +87,7 @@ Future<bool> checkPassword(String email, String password) async {
 
 }
 
+//Get request för att hämta ut specifik användares sparade rutter
 Future<List<r.Route>> getAllUserRoutes(String email) async {
   final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/route/getAllUserRoutes?email=' + email));
 
@@ -95,11 +97,13 @@ Future<List<r.Route>> getAllUserRoutes(String email) async {
   throw 'Something went wrong';
 }
 
+//För att parsa rutter och returnera som en lista
 List<r.Route> parseRoutes(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
   return parsed.map<r.Route>((json) => r.Route.fromJson(json)).toList();
 }
 
+//Get request för att hämta ut alla achievements från databas och returnera som en lista
 Future<List<Achievement>> getAllUserAchievements(String email) async{
   final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/achievement/getAllForUser?email=' + email));
 
@@ -109,6 +113,7 @@ Future<List<Achievement>> getAllUserAchievements(String email) async{
   throw 'Something went wrong';
 }
 
+//För att parsa achievements och returnera som en lista
 List<Achievement> parseAchievements(String responseBody) {
   final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
 

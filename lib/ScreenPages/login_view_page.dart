@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      //Container that stretch to the whole screen that consists of backround image asset
+      //Själva bakrunden till login sidan. Child till denna container är allt som skall finnas på bakrunden, knapper, text fields etc
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,

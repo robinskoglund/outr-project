@@ -13,7 +13,7 @@ class HttpRequestHandler{
   String userRank = '';
   String userExperience = '';
 
-  //Metoden som ska posta geolocation till backend
+  //Get request för att skicka in data till backend för att få tillbaka själva rutten.
   Future<String> getMixRoute(double lat, double long, int duration, double speed) async {
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getmixedroute?originLatitude=' +
         lat.toString() + '&originLongitude=' +
@@ -28,6 +28,7 @@ class HttpRequestHandler{
     return route;
   }
 
+  //Get request för att skicka in data till backend för att få tillbaka själva rutten.
   Future<String> getStrengthRoute(double lat, double long) async {
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getpathtoclosestgym?originLatitude=' +
         lat.toString() + '&originLongitude=' +
@@ -41,6 +42,7 @@ class HttpRequestHandler{
     return route;
   }
 
+  //Get request för att skicka in data till backend för att få tillbaka själva rutten.
   Future<String> getCardioRoute(double lat, double long, int duration, double speed) async {
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/pathfinder/getrandomroute?originLatitude=' +
         lat.toString() + '&originLongitude=' +
@@ -55,6 +57,7 @@ class HttpRequestHandler{
     return route;
   }
 
+  //Get för att få ut användares level
   Future<String> getUserLevel(String email) async {
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/get/level?email=' + email.toLowerCase()));
     if(response.statusCode == 200){
@@ -65,6 +68,7 @@ class HttpRequestHandler{
     return userLevel;
   }
 
+  //Get för att få ut användares streak
   Future<String> getUserStreak(String email) async {
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/get/dailyStreak?email=' + email.toLowerCase()));
     if(response.statusCode == 200){
@@ -75,6 +79,7 @@ class HttpRequestHandler{
     return userStreak;
   }
 
+  //Get för att få ut användares rank
   Future<String> getUserRank(String email) async {
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/get?email=' + email.toLowerCase()));
     if(response.statusCode == 200){
@@ -85,6 +90,7 @@ class HttpRequestHandler{
     return userRank;
   }
 
+  //Get för att få ut användares exp
   Future<String> getUserExp(String email) async {
     final response = await http.get(Uri.parse('https://group-4-15.pvt.dsv.su.se/outr/data/user/get/xp?email=' + email.toLowerCase()));
     if(response.statusCode == 200){

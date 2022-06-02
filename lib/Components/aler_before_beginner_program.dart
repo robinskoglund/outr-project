@@ -6,6 +6,7 @@ class AlertBeforeBeginnerProgram extends StatelessWidget {
 
   AlertBeforeBeginnerProgram({required this.updateAlertBeforeBeginner});
 
+  //Alert popup gällande introduktionsprogrammet
   @override
   Widget build(BuildContext context) {
     return Center(
